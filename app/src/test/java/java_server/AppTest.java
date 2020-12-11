@@ -4,11 +4,18 @@
 package java_server;
 
 import org.junit.Test;
+import org.junit.Before;
+import java.net.*;
+import java.io.*;
+
 import static org.junit.Assert.*;
 
 public class AppTest {
-    @Test public void testAppHasAGreeting() {
+    // @Test public void testAppHasAGreeting() {
+    //    App classUnderTest = new App();
+    //    assertEquals("Hello World!", classUnderTest.getGreeting());
+    // }
+     @Before public void setUpVariables() {
         App classUnderTest = new App();
-        assertEquals("Hello World!", classUnderTest.getGreeting());
-    }
+     }
 }
