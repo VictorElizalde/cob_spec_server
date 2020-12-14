@@ -1,50 +1,34 @@
 package java_server;
 
-import org.junit.Test;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import java.net.*;
-import java.io.*;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 public class ServerTest {
-    @Before public void setUpVariables() {
-        Server classUnderTest = new Server();
+    private Server server;
+
+    @Before
+    public void setUpVariables() throws Exception {
+        server = new Server();
     }
 
-    @Test public void clientServerConnection() throws Exception {
+    @Test
+    public void clientServerConnection() throws Exception {
         Socket clientSocket = new Socket("localhost", 5000);
 
-        assertEquals(true, clientSocket.isConnected());
+        Assert.assertEquals(true, clientSocket.isConnected());
     }
 
-    @Test public void respondOk() throws Exception {
-        Server classUnderTest = new Server();
+    @Test
+    public void respondOk() throws Exception {
+        String response = server.runServer();
 
-        String response = classUnderTest.runServer();
-
-        assertEquals("HTTP/1.1 200 OK\r\n\r\n", response);
+        Assert.assertEquals("HTTP/1.1 200 OK\r\n\r\n", response);
     }
 
-//    @Test public void clientServerConnection() throws Exception {
-//        Socket clientSocket = new Socket("localhost", 5000);
-//
-//        assertEquals("hello client", clientSocket);
-//    }
-
-//    @Before public void setUp() throws Exception {
-//        Request classUnderTest = new Request();
-//        HttpServer httpServer = HttpServer.create(new InetSocketAddress("localhost", 5000), 0)
-//        HttpClient client = HttpClient.newBuilder()
-//                .version(Version.HTTP_1_1)
-//                .build();
-//    }
-
-//    @Test public void connectToSocket() {
-//        classUnderTest.startConnection("127.0.0.1", 5000);
-//        String response = classUnderTest.sendMessage("hello server");
-//        assertEquals("hello client", response);
-//    }
 
 //    @Test public void getFile1Contents()
 //            throws ClientProtocolException, IOException {

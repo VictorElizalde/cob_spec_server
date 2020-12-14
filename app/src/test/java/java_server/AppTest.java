@@ -15,7 +15,7 @@ public class AppTest {
     //    App classUnderTest = new App();
     //    assertEquals("Hello World!", classUnderTest.getGreeting());
     // }
-     @Before public void setUpVariables() {
-        App classUnderTest = new App();
-     }
+//     @Before public void setUpVariables() {
+//        App classUnderTest = new App();
+//     }
 }
