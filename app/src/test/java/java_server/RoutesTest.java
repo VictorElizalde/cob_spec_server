@@ -5,7 +5,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.net.*;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import static org.junit.matchers.JUnitMatchers.hasItems;
 
@@ -19,7 +22,7 @@ public class RoutesTest {
     @Before
     public void setUp() throws Exception {
         request = new Request();
-        String testDirectory = "../cob_spec/public";
+        String testDirectory = "/Users/victorelizalde/Documents/Github/cob_spec/public";
         routes = new Routes(testDirectory);
     }
 
@@ -49,8 +52,7 @@ public class RoutesTest {
 
     @Test
     public void returnsACollectionOfFileNamesWhenGivenADirectory() throws Exception {
-        File file = new File(testDirectory);
-        String[] fileList = file.list();
+        DirectoryStream<Path> fileList = Files.newDirectoryStream(Paths.get(testDirectory));
 
         Assert.assertThat(Arrays.asList(routes.getDirectoryFileNames()), hasItems(fileList));
     }

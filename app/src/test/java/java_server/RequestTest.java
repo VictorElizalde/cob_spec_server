@@ -17,8 +17,8 @@ public class RequestTest {
 
     @Test
     public void returnsTheFullRequest() throws Exception {
-        request.setFullRequest("GET /file1 HTTP/1.1");
-        Assert.assertEquals("GET /file1 HTTP/1.1", request.getFullRequest());
+        request.setFullRequest("GET /file1 HTTP/1.1Range: bytes=0-4Connection: closeHost: localhost:5000");
+        Assert.assertEquals("GET /file1 HTTP/1.1Range: bytes=0-4Connection: closeHost: localhost:5000", request.getFullRequest());
     }
 
     @Test
@@ -37,5 +37,35 @@ public class RequestTest {
     public void returnsTrueIfRequestIsARootRequest() throws Exception {
         request.setURI("/");
         assertTrue(request.isARootRequest());
+    }
+
+    @Test
+    public void returnsTheHeaderField() throws Exception {
+        request.setHeaderField("Range:");
+        Assert.assertEquals("Range:", request.getHeaderField());
+    }
+
+    @Test
+    public void returnsTheByteRange() throws Exception {
+        request.setByteRange("bytes=0-4");
+        Assert.assertEquals("bytes=0-4", request.getByteRange());
+    }
+
+    @Test
+    public void returnsTrueIfRequestHeaderFieldIsAnAuthorizationRequest() throws Exception {
+        request.setBasicRequestStatus(true);
+        assertTrue(request.isABasicAuthRequest());
+    }
+
+    @Test
+    public void returnsBasicAuthCredentials() throws Exception {
+        request.setBasicAuthCredentials("Credentials");
+        Assert.assertEquals("Credentials", request.getBasicAuthCredentials());
+    }
+
+    @Test
+    public void returnsEtag() throws Exception {
+        request.setEtag("12345asdfasdf");
+        Assert.assertEquals("12345asdfasdf", request.getEtag());
     }
 }
