@@ -1,0 +1,125 @@
+package java_server;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+public class RequestParserTest {
+    private Request defaultRequest;
+
+    @Before
+    public void setUp() throws Exception {
+        InputStream inputStream = new ByteArrayInputStream("GET /file1 HTTP/1.1Connection: closeHost: localhost:5000".getBytes());
+        defaultRequest = new RequestParser(inputStream).parse();
+    }
+
+    @Test
+    public void returnsHTTPRequestMethod() throws IOException {
+        Assert.assertEquals("GET", defaultRequest.getHTTPMethod());
+    }
+
+    @Test
+    public void returnsHTTPRequestOPTIONS() throws Exception {
+        InputStream inputStream = new ByteArrayInputStream("OPTIONS /method_options HTTP/1.1Connection: closeHost: localhost: 5000".getBytes());
+        Request request = new RequestParser(inputStream).parse();
+        Assert.assertEquals("OPTIONS", request.getHTTPMethod());
+    }
+
+    @Test
+    public void returnsHTTPRequestURI() throws Exception {
+        Assert.assertEquals("file1", defaultRequest.getURI());
+    }
+
+    @Test
+    public void returnsParameterRequestURI() throws Exception {
+        InputStream inputStream = new ByteArrayInputStream("GET /parameters?variable_1=Operators%20%3C%2C%20%3E%2C%20%3D%2C%20!%3D%3B%20%2B%2C%20-%2C%20*%2C%20%26%2C%20%40%2C%20%23%2C%20%24%2C%20%5B%2C%20%5D%3A%20%22is%20that%20all%22%3F&variable_2=stuff HTTP/1.1Connection: closeHost: localhost:5000".getBytes());
+        Request request = new RequestParser(inputStream).parse();
+        Assert.assertEquals("parameters", request.getURI());
+    }
+
+    @Test
+    public void returnsRootRequestURI() throws Exception {
+        InputStream inputStream = new ByteArrayInputStream("GET / HTTP/1.1Connection: closeHost: localhost:5000".getBytes());
+        Request request = new RequestParser(inputStream).parse();
+        Assert.assertEquals("/", request.getURI());
+    }
+
+    @Test
+    public void returnsRangeRequestHeader() throws Exception {
+        InputStream inputStream = new ByteArrayInputStream("GET /file1 HTTP/1.1Range: bytes=0-4Connection: closeHost: localhost:5000".getBytes());
+        Request request = new RequestParser(inputStream).parse();
+        Assert.assertEquals("Range:", request.getHeaderField());
+    }
+
+    @Test
+    public void returnsAuthorizationRequestHeader() throws Exception {
+        InputStream inputStream = new ByteArrayInputStream("GET /logs HTTP/1.1Authorization: Basic JaASDJ4347qljA43J1SJD==Connection: closeHost: localhost:5000".getBytes());
+        Request request = new RequestParser(inputStream).parse();
+        Assert.assertEquals("Authorization:", request.getHeaderField());
+    }
+
+    @Test
+    public void returnsPartialRequestByteRange() throws Exception {
+        InputStream inputStream = new ByteArrayInputStream("GET /file1 HTTP/1.1Range: bytes=0-4Connection: closeHost: localhost:5000".getBytes());
+        Request request = new RequestParser(inputStream).parse();
+        Assert.assertEquals("0-4", request.getByteRange());
+    }
+
+    @Test
+    public void returnsNegativeRangeByte() throws Exception {
+        InputStream inputStream = new ByteArrayInputStream("GET /file1 HTTP/1.1Range: bytes=-4Connection: closeHost: localhost:5000".getBytes());
+        Request request = new RequestParser(inputStream).parse();
+        Assert.assertEquals("-4", request.getByteRange());
+    }
+
+    @Test
+    public void returnsTheFullHTTPRequest() throws Exception {
+        Assert.assertEquals("GET /file1 HTTP/1.1Connection: closeHost: localhost:5000", defaultRequest.getFullRequest());
+    }
+
+    @Test
+    public void returnsFullRequestOfOPTIONSRequest() throws Exception {
+        InputStream inputStream = new ByteArrayInputStream("OPTIONS /method_options HTTP/1.1Connection: closeHost: localhost: 5000".getBytes());
+        Request request = new RequestParser(inputStream).parse();
+        Assert.assertEquals("OPTIONS /method_options HTTP/1.1Connection: closeHost: localhost: 5000", request.getFullRequest());
+    }
+
+    @Test
+    public void returnsTrueIfAuthRequestIsBasic() throws Exception {
+        InputStream inputStream = new ByteArrayInputStream("GET /logs HTTP/1.1Authorization: Basic dmljdG9yX2VsaXphbGRlOmFzZGZhc2Rm==Connection: closeHost: localhost:5000".getBytes());
+        Request request = new RequestParser(inputStream).parse();
+        Assert.assertEquals(true, request.isABasicAuthRequest());
+    }
+
+    @Test
+    public void returnsFalseIfAuthRequestIsNotBasic() throws Exception {
+        InputStream inputStream = new ByteArrayInputStream("GET /logs HTTP/1.1Authorization: NotBasic dmljdG9yX2VsaXphbGRlOmFzZGZhc2Rm==Connection: closeHost: localhost:5000".getBytes());
+        Request request = new RequestParser(inputStream).parse();
+        Assert.assertEquals(false, request.isABasicAuthRequest());
+    }
+
+    @Test
+    public void returnsTheEtagForPatchRequests() throws Exception {
+        InputStream inputStream = new ByteArrayInputStream("PATCH /patch-content.txt HTTP/1.1Content-Length: 15If-Match: dc50a0d27dda2eee9f65644cd7e4c9cf11de8becConnection: closeHost: localhost:5000Content-Type: application/x-www-form-urlencoded".getBytes());
+        Request request = new RequestParser(inputStream).parse();
+        Assert.assertEquals("dc50a0d27dda2eee9f65644cd7e4c9cf11de8bec", request.getEtag());
+    }
+
+    @Test
+    public void returnsDecodedParameterKeyAndValuePairs() throws Exception {
+        InputStream inputStream = new ByteArrayInputStream("GET /parameters?variable_1=Operators%20%3C%2C%20%3E%2C%20%3D%2C%20!%3D%3B%20%2B%2C%20-%2C%20*%2C%20%26%2C%20%40%2C%20%23%2C%20%24%2C%20%5B%2C%20%5D%3A%20%22is%20that%20all%22%3F&variable_2=stuff HTTP/1.1Connection: closeHost: localhost:5000".getBytes());
+        Request request = new RequestParser(inputStream).parse();
+        Assert.assertEquals("variable_1 = Operators <, >, =, !=; +, -, *, &, @, #, $, [, ]: \"is that all\"? variable_2 = stuff", request.getParameterValues());
+    }
+
+    @Test
+    public void returnsTheDecodedBasicAuthCredentials() throws Exception {
+        InputStream inputStream = new ByteArrayInputStream("GET /logs HTTP/1.1Authorization: Basic dmljdG9yX2VsaXphbGRlOmFzZGZhc2Rm==Connection: closeHost: localhost:5000".getBytes());
+        Request request = new RequestParser(inputStream).parse();
+        Assert.assertEquals("victor_elizalde:asdfasdf", request.getBasicAuthCredentials());
+    }
+}

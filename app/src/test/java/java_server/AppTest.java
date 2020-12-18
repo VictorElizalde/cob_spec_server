@@ -11,11 +11,5 @@ import java.io.*;
 import static org.junit.Assert.*;
 
 public class AppTest {
-    // @Test public void testAppHasAGreeting() {
-    //    App classUnderTest = new App();
-    //    assertEquals("Hello World!", classUnderTest.getGreeting());
-    // }
-//     @Before public void setUpVariables() {
-//        App classUnderTest = new App();
-//     }
+
 }

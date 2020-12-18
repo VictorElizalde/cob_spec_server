@@ -1,7 +1,10 @@
 package java_server;
 
-import java.io.File;
-import java.util.Set;
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Routes {
     private String directory;
@@ -21,8 +24,7 @@ public class Routes {
         return false;
     }
 
-    public String[] getDirectoryFileNames() {
-        File file = new File(directory);
-        return file.list();
+    public DirectoryStream<Path> getDirectoryFileNames() throws IOException {
+        return Files.newDirectoryStream(Paths.get(directory));
     }
 }
