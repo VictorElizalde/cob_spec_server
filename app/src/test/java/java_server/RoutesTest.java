@@ -1,23 +1,17 @@
 package java_server;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
-import static org.junit.matchers.JUnitMatchers.hasItems;
-
-import static org.junit.Assert.assertTrue;
 
 public class RoutesTest {
-    Request request;
-    Routes routes;
-    String testDirectory;
+    private Request request;
+    private Routes routes;
+    private String testDirectory;
 
     @Before
     public void setUp() throws Exception {
@@ -52,17 +46,41 @@ public class RoutesTest {
 
     @Test
     public void returnsACollectionOfFileNamesWhenGivenADirectory() throws Exception {
-        DirectoryStream<Path> fileList = Files.newDirectoryStream(Paths.get(testDirectory));
+        File file = new File("/Users/victorelizalde/Documents/Github/cob_spec/public");
+        String[] fileList = file.list();
 
-        Assert.assertThat(Arrays.asList(routes.getDirectoryFileNames()), hasItems(fileList));
+        Assert.assertThat(Arrays.asList(routes.getDirectoryFileNames()), CoreMatchers.hasItems(fileList));
     }
 
     @Test(expected = NullPointerException.class)
     public void throwsNullPointerExceptionWhenDirectoryDoesNotExist() throws Exception {
-        String directory = "";
-        File file = new File(directory);
+        File file = new File("");
         String[] fileList = file.list();
 
-        Assert.assertThat(Arrays.asList(routes.getDirectoryFileNames()), hasItems(fileList));
+        Assert.assertThat(Arrays.asList(routes.getDirectoryFileNames()), CoreMatchers.hasItems(fileList));
+    }
+
+    @Test
+    public void returnTrueIfFile1URIExistsInDirectory() throws Exception {
+        String[] fileList = {"file1", "file2", "file3"};
+        request.setURI("file1");
+
+        Assert.assertEquals(true, routes.isAnExistingFileInDirectory(fileList, request));
+    }
+
+    @Test
+    public void returnTrueIfFile2URIExistsInDirectory() throws Exception {
+        String[] fileList = {"file1", "file2", "file3"};
+        request.setURI("file2");
+
+        Assert.assertEquals(true, routes.isAnExistingFileInDirectory(fileList, request));
+    }
+
+    @Test
+    public void returnsANullPointerExceptionStringIfURIDoesntExistInDirectory() throws Exception {
+        String [] fileList = {"file1", "file2", "file3"};
+        request.setURI("ghostFile1");
+
+        Assert.assertEquals(false, routes.isAnExistingFileInDirectory(fileList, request));
     }
 }

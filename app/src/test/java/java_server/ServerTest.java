@@ -12,7 +12,7 @@ public class ServerTest {
 
     @Before
     public void setUpVariables() throws Exception {
-        server = new Server();
+        server = new Server(5000, "/Users/victorelizalde/Documents/Github/cob_spec/public");
     }
 
     @Test
@@ -28,20 +28,4 @@ public class ServerTest {
 
         Assert.assertEquals("HTTP/1.1 200 OK\r\n\r\n", response);
     }
-
-
-//    @Test public void getFile1Contents()
-//            throws ClientProtocolException, IOException {
-//
-//        // Given
-//        HttpUriRequest request = new HttpGet("localhost/file1");
-//
-//        // When
-//        HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
-//
-//        // Then
-//        assertThat(
-//                httpResponse.getStatusLine().getStatusCode(),
-//                equalTo(HttpStatus.SC_NOT_FOUND));
-//    }
 }

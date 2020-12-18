@@ -3,12 +3,14 @@
  */
 package java_server;
 
-import java.io.*;
-import java.net.*;
+import java.io.IOException;
+import java.net.ServerSocket;
 
 public class App {
-    public static void main(String[] args) {
-        Server server = new Server();
+    public static void main(String[] args) throws IOException {
+        int port = 5000;
+        String directory = "/Users/victorelizalde/Documents/Github/cob_spec/public";
+        Server server = new Server(port, directory);
         server.runServer();
     }
 }
