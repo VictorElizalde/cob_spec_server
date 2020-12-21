@@ -8,6 +8,8 @@ import org.junit.Test;
 import java.io.File;
 import java.util.Arrays;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+
 public class RoutesTest {
     private Request request;
     private Routes routes;
@@ -82,5 +84,13 @@ public class RoutesTest {
         request.setURI("ghostFile1");
 
         Assert.assertEquals(false, routes.isAnExistingFileInDirectory(fileList, request));
+    }
+
+    @Test
+    public void returnsFileResponseInstanceWhenValid() throws Exception {
+        request.setHTTPMethod("GET");
+        request.setURI("file1");
+
+        Assert.assertThat(routes.getHandler(request), instanceOf(FileResponse.class));
     }
 }
