@@ -1,10 +1,6 @@
 package java_server;
 
-import java.io.IOException;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.File;
 
 public class Routes {
     private String directory;
@@ -24,7 +20,17 @@ public class Routes {
         return false;
     }
 
-    public DirectoryStream<Path> getDirectoryFileNames() throws IOException {
-        return Files.newDirectoryStream(Paths.get(directory));
+    public String[] getDirectoryFileNames() {
+        File file = new File(directory);
+        return file.list();
+    }
+
+    public boolean isAnExistingFileInDirectory(String[] fileList, Request request) {
+        String URI = request.getURI();
+        for (String file : fileList) {
+            if (file.equals(URI)) return true;
+        }
+
+        return false;
     }
 }

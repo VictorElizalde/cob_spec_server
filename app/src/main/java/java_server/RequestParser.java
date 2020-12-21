@@ -26,7 +26,6 @@ public class RequestParser {
         request.setHeaderField(parseHeaderField());
         request.setByteRange(getByteRange());
         request.setBasicRequestStatus(isABasicAuthRequest());
-        request.setBasicAuthCredentials(parseBasicAuthCredentials());
         request.setEtag(parseEtag());
         request.setParameterValues(getDecodedParameterKey());
 
@@ -117,14 +116,6 @@ public class RequestParser {
 
     private boolean isABasicAuthRequest() throws IOException {
         return requestArray[3].equals("Basic");
-    }
-
-    private String parseBasicAuthCredentials() throws IOException {
-        String[] splitAtEndOfCredentials = requestArray[4].split("Connection:");
-
-//        byte[] base64String = DatatypeConverter.parseBase64Binary(splitAtEndOfCredentials[0]);
-        String base64String = splitAtEndOfCredentials[0];
-        return new String(base64String);
     }
 
     public String parseEtag() throws IOException {
