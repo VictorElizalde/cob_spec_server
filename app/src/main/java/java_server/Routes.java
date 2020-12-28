@@ -33,4 +33,9 @@ public class Routes {
 
         return false;
     }
+
+    public FileResponse getHandler(Request request) {
+        if (isURIValid(request) && isAnExistingFileInDirectory(getDirectoryFileNames(), request)) return new FileResponse(directory, request.getURI());
+        return null;
+    }
 }
