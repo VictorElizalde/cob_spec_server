@@ -17,6 +17,7 @@ public class statusCodeTest {
     @Test
     public void returns200OKFor200Code() throws Exception {
         Assert.assertEquals("200 OK", statusCode.getStatus(200));
+        Assert.assertEquals("404 Not Found", statusCode.getStatus(404));
     }
 
     @Test(expected = KeyException.class)

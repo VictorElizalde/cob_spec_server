@@ -35,4 +35,51 @@ public class ResponseTest {
 
         Assert.assertEquals("file1 contents", new String(response.getMessageBody(request)));
     }
+
+    @Test
+    public void returnsTheServerLocation() throws Exception {
+        request.setHTTPMethod("GET");
+        request.setURI("file1");
+
+        Assert.assertEquals("Location: http://localhost:5000/", response.getLocation());
+    }
+
+    @Test
+    public void returnsTheContentTypeForThePageThatIsDisplayedAfterRequestIsMade() throws Exception {
+        request.setHTTPMethod("GET");
+        request.setURI("file1");
+
+        Assert.assertEquals("Content-Type: text/html", response.getContentType(request));
+    }
+
+    @Test
+    public void returnsTheContentTypeForAJPEGImage() throws Exception {
+        request.setHTTPMethod("GET");
+        request.setURI("image.jpg");
+
+        Assert.assertEquals("Content-Type: image/jpeg", response.getContentType(request));
+    }
+
+    @Test
+    public void returnsTheByteLengthForFile1() throws Exception {
+        request.setHTTPMethod("GET");
+        request.setURI("file1");
+
+        Assert.assertEquals("Content-Length: 14", response.getContentLength(request));
+    }
+
+    @Test
+    public void returnsTheByteLengthForAnImageFile() throws Exception {
+        request.setHTTPMethod("GET");
+        request.setURI("image.png");
+
+        Assert.assertEquals("Content-Length: 108763", response.getContentLength(request));
+    }
+
+    @Test
+    public void returnsTheFormattedAllowHeader() throws Exception {
+        request.setURI("file1");
+
+        Assert.assertEquals("Allow: HEAD,DELETE,GET,OPTIONS,PUT", response.getAllowHeader(request));
+    }
 }

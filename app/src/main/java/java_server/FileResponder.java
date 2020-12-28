@@ -5,15 +5,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class FileResponse {
+public class FileResponder implements Responder {
     private String directory;
     private String uri;
 
-    public FileResponse(String directory, String uri) {
+    public FileResponder(String directory, String uri) {
         this.directory = directory;
         this.uri = uri;
     }
 
+    @Override
     public byte[] getMessageBody() {
         try {
             return Files.readAllBytes(getPath());
@@ -23,6 +24,7 @@ public class FileResponse {
         }
     }
 
+    @Override
     public String getStatusCode(statusCode statusCode) {
         return statusCode.getStatus(200);
     }
@@ -31,3 +33,4 @@ public class FileResponse {
         return Paths.get(directory + "/" + uri).toAbsolutePath();
     }
 }
+

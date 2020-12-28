@@ -39,6 +39,14 @@ public class RoutesTest {
     }
 
     @Test
+    public void returnsTrueIfMethodIsRootRequest() throws Exception {
+        request.setHTTPMethod("GET");
+        request.setURI("/");
+
+        Assert.assertEquals(true, routes.isAValidMethod(request));
+    }
+
+    @Test
     public void returnsFalseIfFileIsNotAMatchedFile() throws Exception {
         request.setHTTPMethod("GET");
         request.setURI("file_ghost");
@@ -91,6 +99,22 @@ public class RoutesTest {
         request.setHTTPMethod("GET");
         request.setURI("file1");
 
-        Assert.assertThat(routes.getHandler(request), instanceOf(FileResponse.class));
+        Assert.assertThat(routes.getHandler(request), instanceOf(FileResponder.class));
+    }
+
+    @Test
+    public void returnsTheMethodOptionsForFile1Path() throws Exception {
+        request.setHTTPMethod("OPTIONS");
+        request.setURI("file1");
+
+        Assert.assertEquals("HEAD,DELETE,GET,OPTIONS,PUT", routes.getOptions(request));
+    }
+
+    @Test
+    public void returnsRootHandlerWhenRootRequestIsMade() throws Exception {
+        request.setHTTPMethod("GET");
+        request.setURI("/");
+
+        Assert.assertThat(routes.getHandler(request), instanceOf(RootResponder.class));
     }
 }

@@ -22,13 +22,14 @@ public class ConnectionHandler implements Runnable {
         statusCode statusCode = new statusCode();
         Routes routes = new Routes("/Users/victorelizalde/Documents/Github/cob_spec/public");
         Response response = new Response(statusCode, routes, port);
-        ResponseParser responsePresenter = new ResponseParser(response);
+        ResponseParser responseParser = new ResponseParser(response);
 
         try {
             Request request = requestParser.parse();
             System.out.println(request.getFullRequest());
             DataOutputStream dataOutputStream = new DataOutputStream(requestHandler.getOutputStream());
-            dataOutputStream.write(responsePresenter.present(request));
+            dataOutputStream.write(responseParser.present(request));
+            System.out.println(new String(responseParser.present(request)));
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();

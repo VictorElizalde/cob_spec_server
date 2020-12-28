@@ -1,27 +1,84 @@
 package java_server;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Set;
 
 public class Routes {
     private String directory;
+
+    private HashMap<String, HashMap<String, Responder>> routesMap = new HashMap<String, HashMap<String, Responder>>();
+    private HashMap<String, Responder> rootMap = new HashMap<String, Responder>();
+    private HashMap<String, Responder> fileRouteMap = new HashMap<String, Responder>();
+    private HashMap<String, Responder> logRouteMap = new HashMap<String, Responder>();
+
 
     public Routes(String directory) {
         this.directory = directory;
     }
 
+    private HashMap<String, HashMap<String, Responder>> getRoutesMap(Request request) {
+        routesMap.put("/", getRootMap());
+        routesMap.put("file1", getFileRouteMap(request));
+        routesMap.put("file2", getFileRouteMap(request));
+        routesMap.put("image.jpeg", getFileRouteMap(request));
+        routesMap.put("image.png", getFileRouteMap(request));
+        routesMap.put("image.gif", getFileRouteMap(request));
+        routesMap.put("text-file.txt", getFileRouteMap(request));
+        routesMap.put("logs", getLogRouteMap(request));
+
+        return routesMap;
+    }
+
+    private HashMap<String, Responder> getRootMap() {
+        rootMap.put("GET", new RootResponder("/Users/victorelizalde/Documents/Github/java_server/default-server-views"));
+
+        return rootMap;
+    }
+
+    private HashMap<String, Responder> getFileRouteMap(Request request) {
+        fileRouteMap.put("GET", new FileResponder(directory, request.getURI()));
+        fileRouteMap.put("HEAD", new FileResponder(directory, request.getURI()));
+        fileRouteMap.put("OPTIONS", new FileResponder(directory, request.getURI()));
+        fileRouteMap.put("PUT", new FileResponder(directory, request.getURI()));
+        fileRouteMap.put("DELETE", new FileResponder(directory, request.getURI()));
+        return fileRouteMap;
+    }
+
+    private HashMap<String, Responder> getLogRouteMap(Request request) {
+        logRouteMap.put("GET", new FileResponder(directory, request.getURI()));
+        logRouteMap.put("HEAD", new FileResponder(directory, request.getURI()));
+        logRouteMap.put("OPTIONS", new FileResponder(directory, request.getURI()));
+        return logRouteMap;
+    }
+
+    public String getOptions(Request request) {
+        try {
+            return String.join(",", getRoutesMap(request).get(request.getURI()).keySet());
+        } catch (NullPointerException e) {
+
+            return "GET,HEAD,OPTIONS,PUT,DELETE";
+        }
+    }
+
     public boolean isAValidMethod(Request request) {
-        return isURIValid(request) && request.getHTTPMethod() == "GET";
+        return isURIValid(request) && getRoutesMap(request).get(request.getURI()).containsKey(request.getHTTPMethod());
+    }
+
+    private Set<String> getRouteKeySet(Request request) {
+        return getRoutesMap(request).keySet();
     }
 
     private boolean isURIValid(Request request) {
-        if (request.getURI() == "file1") {
-            return true;
+        for (String uri : getRouteKeySet(request)) {
+            if (request.getURI().equals(uri))  return true;
         }
+
         return false;
     }
 
     public String[] getDirectoryFileNames() {
-        File file = new File(directory);
+        File file = new File("/Users/victorelizalde/Documents/Github/cob_spec/public");
         return file.list();
     }
 
@@ -34,8 +91,10 @@ public class Routes {
         return false;
     }
 
-    public FileResponse getHandler(Request request) {
-        if (isURIValid(request) && isAnExistingFileInDirectory(getDirectoryFileNames(), request)) return new FileResponse(directory, request.getURI());
-        return null;
+    public Responder getHandler(Request request) {
+        if (isAValidMethod(request)) return getRoutesMap(request).get(request.getURI()).get(request.getHTTPMethod());
+        if (request.getHTTPMethod().equals("HEAD") && request.getURI().equals("/")) return new HeadResponder();
+        if (request.getHTTPMethod().equals("OPTIONS")) return new MethodOptionsResponder(getOptions(request));
+        return new NotFoundResponder();
     }
 }
