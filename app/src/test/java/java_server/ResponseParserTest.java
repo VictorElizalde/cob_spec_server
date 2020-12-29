@@ -61,6 +61,6 @@ public class ResponseParserTest {
                 "\r\n" +
                 "file1 contents";
 
-        Assert.assertEquals(response, new String(responseParser.present(request)));
+        Assert.assertEquals(response, new String(responseParser.buildResponse(request)));
     }
 }

@@ -62,14 +62,6 @@ public class RoutesTest {
         Assert.assertThat(Arrays.asList(routes.getDirectoryFileNames()), CoreMatchers.hasItems(fileList));
     }
 
-    @Test(expected = NullPointerException.class)
-    public void throwsNullPointerExceptionWhenDirectoryDoesNotExist() throws Exception {
-        File file = new File("");
-        String[] fileList = file.list();
-
-        Assert.assertThat(Arrays.asList(routes.getDirectoryFileNames()), CoreMatchers.hasItems(fileList));
-    }
-
     @Test
     public void returnTrueIfFile1URIExistsInDirectory() throws Exception {
         String[] fileList = {"file1", "file2", "file3"};

@@ -28,8 +28,7 @@ public class ConnectionHandler implements Runnable {
             Request request = requestParser.parse();
             System.out.println(request.getFullRequest());
             DataOutputStream dataOutputStream = new DataOutputStream(requestHandler.getOutputStream());
-            dataOutputStream.write(responseParser.present(request));
-            System.out.println(new String(responseParser.present(request)));
+            dataOutputStream.write(responseParser.buildResponse(request));
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
