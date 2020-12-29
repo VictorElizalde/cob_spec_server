@@ -4,6 +4,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+
 public class FileResponderTest {
     private statusCode statusCode;
     private String testDirectory;
@@ -15,11 +19,51 @@ public class FileResponderTest {
     }
 
     @Test
-    public void returnsThePathOfTheRequestedURIFile() throws Exception {
+    public void returnsTheContentOfFile1File() throws Exception {
         String uri = "file1";
         FileResponder fileResponse = new FileResponder(testDirectory, uri);
         byte[] fileBytes = fileResponse.getMessageBody();
         Assert.assertEquals("file1 contents", new String(fileBytes));
+
+        Assert.assertEquals("200 OK", fileResponse.getStatusCode(statusCode));
+    }
+
+    @Test
+    public void returnsTheContentOfTextFile() throws Exception {
+        String uri = "text-file.txt";
+        FileResponder fileResponse = new FileResponder(testDirectory, uri);
+        byte[] fileBytes = fileResponse.getMessageBody();
+        Assert.assertEquals("file1 contents", new String(fileBytes));
+
+        Assert.assertEquals("200 OK", fileResponse.getStatusCode(statusCode));
+    }
+
+    @Test
+    public void returnsThePathOfImageJPGFile() throws Exception {
+        String uri = "image.jpeg";
+        FileResponder fileResponse = new FileResponder(testDirectory, uri);
+        byte[] fileBytes = fileResponse.getMessageBody();
+        Assert.assertTrue(Arrays.equals(Files.readAllBytes(Paths.get("/Users/victorelizalde/Documents/Github/cob_spec/public/image.jpeg")), fileBytes));
+
+        Assert.assertEquals("200 OK", fileResponse.getStatusCode(statusCode));
+    }
+
+    @Test
+    public void returnsThePathOfImagePNGFile() throws Exception {
+        String uri = "image.png";
+        FileResponder fileResponse = new FileResponder(testDirectory, uri);
+        byte[] fileBytes = fileResponse.getMessageBody();
+        Assert.assertTrue(Arrays.equals(Files.readAllBytes(Paths.get("/Users/victorelizalde/Documents/Github/cob_spec/public/image.png")), fileBytes));
+
+        Assert.assertEquals("200 OK", fileResponse.getStatusCode(statusCode));
+    }
+
+    @Test
+    public void returnsThePathOfImageGIFFile() throws Exception {
+        String uri = "image.gif";
+        FileResponder fileResponse = new FileResponder(testDirectory, uri);
+        byte[] fileBytes = fileResponse.getMessageBody();
+        Assert.assertTrue(Arrays.equals(Files.readAllBytes(Paths.get("/Users/victorelizalde/Documents/Github/cob_spec/public/image.gif")), fileBytes));
 
         Assert.assertEquals("200 OK", fileResponse.getStatusCode(statusCode));
     }
