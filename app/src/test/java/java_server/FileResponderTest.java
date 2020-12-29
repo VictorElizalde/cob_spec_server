@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class FileResponseTest {
+public class FileResponderTest {
     private statusCode statusCode;
     private String testDirectory;
 
@@ -17,7 +17,7 @@ public class FileResponseTest {
     @Test
     public void returnsThePathOfTheRequestedURIFile() throws Exception {
         String uri = "file1";
-        FileResponse fileResponse = new FileResponse(testDirectory, uri);
+        FileResponder fileResponse = new FileResponder(testDirectory, uri);
         byte[] fileBytes = fileResponse.getMessageBody();
         Assert.assertEquals("file1 contents", new String(fileBytes));
 
@@ -27,9 +27,10 @@ public class FileResponseTest {
     @Test
     public void returnsFileCouldNotBeReadWhenURIInvalid() throws Exception {
         String uri = "GhostURI";
-        FileResponse fileResponse = new FileResponse(testDirectory, uri);
+        FileResponder fileResponse = new FileResponder(testDirectory, uri);
         fileResponse.getMessageBody();
 
         Assert.assertEquals("File Could Not Be Read", new String(fileResponse.getMessageBody()));
     }
 }
+
