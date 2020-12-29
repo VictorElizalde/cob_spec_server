@@ -61,6 +61,30 @@ public class ResponseTest {
     }
 
     @Test
+    public void returnsTheContentTypeForAPNGImage() throws Exception {
+        request.setHTTPMethod("GET");
+        request.setURI("image.png");
+
+        Assert.assertEquals("Content-Type: image/png", response.getContentType(request));
+    }
+
+    @Test
+    public void returnsTheContentTypeForAGIFImage() throws Exception {
+        request.setHTTPMethod("GET");
+        request.setURI("image.gif");
+
+        Assert.assertEquals("Content-Type: image/gif", response.getContentType(request));
+    }
+
+    @Test
+    public void returnsTheContentTypeForATXTFile() throws Exception {
+        request.setHTTPMethod("GET");
+        request.setURI("text-file.txt");
+
+        Assert.assertEquals("Content-Type: text/plain", response.getContentType(request));
+    }
+
+    @Test
     public void returnsTheByteLengthForFile1() throws Exception {
         request.setHTTPMethod("GET");
         request.setURI("file1");
