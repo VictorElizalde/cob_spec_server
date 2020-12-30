@@ -95,6 +95,7 @@ public class Routes {
         if (isAValidMethod(request)) return getRoutesMap(request).get(request.getURI()).get(request.getHTTPMethod());
         if (request.getHTTPMethod().equals("HEAD") && request.getURI().equals("/")) return new HeadResponder();
         if (request.getHTTPMethod().equals("OPTIONS")) return new MethodOptionsResponder(getOptions(request));
+        if (!isAValidMethod(request)) return new MethodNotAllowedResponder();
         return new NotFoundResponder();
     }
 }
