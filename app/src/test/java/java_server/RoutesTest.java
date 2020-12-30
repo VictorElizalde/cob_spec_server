@@ -23,7 +23,7 @@ public class RoutesTest {
     }
 
     @Test
-    public void returnsTrueIfMethodIsValidOnURI() throws Exception {
+    public void returnsTrueIfMethodIsValidOnUri() throws Exception {
         request.setHTTPMethod("GET");
         request.setURI("file1");
 
@@ -31,7 +31,7 @@ public class RoutesTest {
     }
 
     @Test
-    public void returnsFalseIfMethodIsNotValidOnURI() throws Exception {
+    public void returnsFalseIfMethodIsNotValidOnUri() throws Exception {
         request.setHTTPMethod("POST");
         request.setURI("file1");
 
@@ -63,7 +63,7 @@ public class RoutesTest {
     }
 
     @Test
-    public void returnTrueIfFile1URIExistsInDirectory() throws Exception {
+    public void returnTrueIfFile1UriExistsInDirectory() throws Exception {
         String[] fileList = {"file1", "file2", "file3"};
         request.setURI("file1");
 
@@ -71,7 +71,7 @@ public class RoutesTest {
     }
 
     @Test
-    public void returnTrueIfFile2URIExistsInDirectory() throws Exception {
+    public void returnTrueIfFile2UriExistsInDirectory() throws Exception {
         String[] fileList = {"file1", "file2", "file3"};
         request.setURI("file2");
 
@@ -79,7 +79,7 @@ public class RoutesTest {
     }
 
     @Test
-    public void returnsANullPointerExceptionStringIfURIDoesntExistInDirectory() throws Exception {
+    public void returnsANullPointerExceptionStringIfUriDoesntExistInDirectory() throws Exception {
         String [] fileList = {"file1", "file2", "file3"};
         request.setURI("ghostFile1");
 

@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class MethodOptionsResponderTest {
     @Test
-    public void returnsGETOPTIONSForRequest() throws Exception {
+    public void returnsGetOptionsForRequest() throws Exception {
         statusCode statusCode = new statusCode();
         MethodOptionsResponder methodOptionsResponder = new MethodOptionsResponder("GET");
         byte[] fileBytes = methodOptionsResponder.getMessageBody();
@@ -18,7 +18,7 @@ public class MethodOptionsResponderTest {
     }
 
     @Test
-    public void returnsNOOPTIONSForRequest() throws Exception {
+    public void returnsNoOptionsForRequest() throws Exception {
         statusCode statusCode = new statusCode();
         MethodOptionsResponder methodOptionsResponder = new MethodOptionsResponder("");
         byte[] fileBytes = methodOptionsResponder.getMessageBody();
@@ -28,7 +28,7 @@ public class MethodOptionsResponderTest {
     }
 
     @Test
-    public void returnsOPTIONSForRequest() throws Exception {
+    public void returnsOptionsForRequest() throws Exception {
         statusCode statusCode = new statusCode();
         MethodOptionsResponder methodOptionsResponder = new MethodOptionsResponder("GET,HEAD,OPTIONS,PUT,DELETE");
         byte[] fileBytes = methodOptionsResponder.getMessageBody();

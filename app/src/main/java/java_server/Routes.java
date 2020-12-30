@@ -47,10 +47,10 @@ public class Routes {
     }
 
     private HashMap<String, Responder> getLogRouteMap(Request request) {
-        FileResponder fileResponder = new FileResponder(directory, request.getURI());
-        logRouteMap.put("GET", fileResponder);
-        logRouteMap.put("HEAD", fileResponder);
-        logRouteMap.put("OPTIONS", fileResponder);
+        LogResponder logResponder = new LogResponder();
+        logRouteMap.put("GET", logResponder);
+        logRouteMap.put("HEAD", logResponder);
+        logRouteMap.put("OPTIONS", logResponder);
         return logRouteMap;
     }
 

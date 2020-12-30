@@ -11,7 +11,7 @@ public class HeadResponderTest {
         HeadResponder headResponder = new HeadResponder();
         byte[] fileBytes = headResponder.getMessageBody();
 
-        Assert.assertTrue(new String(fileBytes).contains(""));
+        Assert.assertTrue(fileBytes.toString().contains(""));
         Assert.assertEquals("200 OK", headResponder.getStatusCode(statusCode));
     }
 }

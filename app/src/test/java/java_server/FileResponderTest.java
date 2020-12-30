@@ -15,7 +15,7 @@ public class FileResponderTest {
     }
 
     @Test
-    public void returnsThePathOfTheRequestedURIFile() throws Exception {
+    public void returnsThePathOfTheRequestedUriFile() throws Exception {
         String uri = "file1";
         FileResponder fileResponse = new FileResponder(testDirectory, uri);
         byte[] fileBytes = fileResponse.getMessageBody();
@@ -25,7 +25,7 @@ public class FileResponderTest {
     }
 
     @Test
-    public void returnsFileCouldNotBeReadWhenURIInvalid() throws Exception {
+    public void returnsFileCouldNotBeReadWhenUriInvalid() throws Exception {
         String uri = "GhostURI";
         FileResponder fileResponse = new FileResponder(testDirectory, uri);
         fileResponse.getMessageBody();

@@ -22,7 +22,7 @@ public class ResponseParserTest {
     }
 
     @Test
-    public void formatsHTTPStatusMessageHeader() throws Exception {
+    public void formatsHttpStatusMessageHeader() throws Exception {
         Assert.assertEquals("HTTP/1.1 200 OK\r\n", new String(responseParser.formatHTTPStatusMessage(request)));
     }
 
