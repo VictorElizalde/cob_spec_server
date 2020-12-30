@@ -25,7 +25,7 @@ public class FileResponderTest {
         byte[] fileBytes = fileResponse.getMessageBody();
         Assert.assertEquals("file1 contents", new String(fileBytes));
 
-        Assert.assertEquals("200 OK", fileResponse.getStatusCode(statusCode));
+        Assert.assertEquals(statusCode.getStatus(200), fileResponse.getStatusCode(statusCode));
     }
 
     @Test
@@ -35,7 +35,7 @@ public class FileResponderTest {
         byte[] fileBytes = fileResponse.getMessageBody();
         Assert.assertEquals("file1 contents", new String(fileBytes));
 
-        Assert.assertEquals("200 OK", fileResponse.getStatusCode(statusCode));
+        Assert.assertEquals(statusCode.getStatus(200), fileResponse.getStatusCode(statusCode));
     }
 
     @Test
@@ -45,7 +45,7 @@ public class FileResponderTest {
         byte[] fileBytes = fileResponse.getMessageBody();
         Assert.assertTrue(Arrays.equals(Files.readAllBytes(Paths.get("/Users/victorelizalde/Documents/Github/cob_spec/public/image.jpeg")), fileBytes));
 
-        Assert.assertEquals("200 OK", fileResponse.getStatusCode(statusCode));
+        Assert.assertEquals(statusCode.getStatus(200), fileResponse.getStatusCode(statusCode));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class FileResponderTest {
         byte[] fileBytes = fileResponse.getMessageBody();
         Assert.assertTrue(Arrays.equals(Files.readAllBytes(Paths.get("/Users/victorelizalde/Documents/Github/cob_spec/public/image.png")), fileBytes));
 
-        Assert.assertEquals("200 OK", fileResponse.getStatusCode(statusCode));
+        Assert.assertEquals(statusCode.getStatus(200), fileResponse.getStatusCode(statusCode));
     }
 
     @Test
@@ -65,7 +65,7 @@ public class FileResponderTest {
         byte[] fileBytes = fileResponse.getMessageBody();
         Assert.assertTrue(Arrays.equals(Files.readAllBytes(Paths.get("/Users/victorelizalde/Documents/Github/cob_spec/public/image.gif")), fileBytes));
 
-        Assert.assertEquals("200 OK", fileResponse.getStatusCode(statusCode));
+        Assert.assertEquals(statusCode.getStatus(200), fileResponse.getStatusCode(statusCode));
     }
 
     @Test
