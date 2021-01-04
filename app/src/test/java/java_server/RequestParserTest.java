@@ -25,30 +25,30 @@ public class RequestParserTest {
     }
 
     @Test
-    public void returnsHTTPRequestMethod() throws IOException {
+    public void returnsHttpRequestMethod() throws IOException {
         Assert.assertEquals("GET", defaultRequest.getHTTPMethod());
     }
 
     @Test
-    public void returnsHTTPRequestOPTIONS() throws Exception {
+    public void returnsHttpRequestOPTIONS() throws Exception {
         Request request = setRequest("OPTIONS /method_options HTTP/1.1Connection: closeHost: localhost: 5000");
         Assert.assertEquals("OPTIONS", request.getHTTPMethod());
     }
 
     @Test
-    public void returnsHTTPRequestURI() throws Exception {
+    public void returnsHttpRequestURI() throws Exception {
         Assert.assertEquals("file1", defaultRequest.getURI());
     }
 
     @Test
-    public void returnsParameterRequestURI() throws Exception {
+    public void returnsParameterRequestUri() throws Exception {
         Request request = setRequest("GET /parameters?variable_1=Operators%20%3C%2C%20%3E%2C%20%3D%2C%20!%3D%3B%20%2B%2C%20-%2C%20*%2C%20%26%2C%20%40%2C%20%23%2C%20%24%2C%20%5B%2C%20%5D%3A%20%22is%20that%20all%22%3F&variable_2=stuff HTTP/1.1Connection: closeHost: localhost:5000");
 
         Assert.assertEquals("parameters", request.getURI());
     }
 
     @Test
-    public void returnsRootRequestURI() throws Exception {
+    public void returnsRootRequestUri() throws Exception {
         Request request = setRequest("GET / HTTP/1.1Connection: closeHost: localhost:5000");
 
         Assert.assertEquals("/", request.getURI());
@@ -83,12 +83,12 @@ public class RequestParserTest {
     }
 
     @Test
-    public void returnsTheFullHTTPRequest() throws Exception {
+    public void returnsTheFullHttpRequest() throws Exception {
         Assert.assertEquals("GET /file1 HTTP/1.1Connection: closeHost: localhost:5000", defaultRequest.getFullRequest());
     }
 
     @Test
-    public void returnsFullRequestOfOPTIONSRequest() throws Exception {
+    public void returnsFullRequestOfOptionsRequest() throws Exception {
         Request request = setRequest("OPTIONS /method_options HTTP/1.1Connection: closeHost: localhost: 5000");
 
         Assert.assertEquals("OPTIONS /method_options HTTP/1.1Connection: closeHost: localhost: 5000", request.getFullRequest());

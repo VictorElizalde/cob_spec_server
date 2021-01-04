@@ -33,7 +33,7 @@ public class ResponseTest {
         request.setHTTPMethod("GET");
         request.setURI("file1");
 
-        Assert.assertEquals("file1 contents", new String(response.getMessageBody(request)));
+        Assert.assertEquals("file1 contents", response.getMessageBody(request).toString());
     }
 
     @Test

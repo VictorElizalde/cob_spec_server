@@ -37,18 +37,20 @@ public class Routes {
     }
 
     private HashMap<String, Responder> getFileRouteMap(Request request) {
-        fileRouteMap.put("GET", new FileResponder(directory, request.getURI()));
-        fileRouteMap.put("HEAD", new FileResponder(directory, request.getURI()));
-        fileRouteMap.put("OPTIONS", new FileResponder(directory, request.getURI()));
-        fileRouteMap.put("PUT", new FileResponder(directory, request.getURI()));
-        fileRouteMap.put("DELETE", new FileResponder(directory, request.getURI()));
+        FileResponder fileResponder = new FileResponder(directory, request.getURI());
+        fileRouteMap.put("GET", fileResponder);
+        fileRouteMap.put("HEAD", fileResponder);
+        fileRouteMap.put("OPTIONS", fileResponder);
+        fileRouteMap.put("PUT", fileResponder);
+        fileRouteMap.put("DELETE", fileResponder);
         return fileRouteMap;
     }
 
     private HashMap<String, Responder> getLogRouteMap(Request request) {
-        logRouteMap.put("GET", new FileResponder(directory, request.getURI()));
-        logRouteMap.put("HEAD", new FileResponder(directory, request.getURI()));
-        logRouteMap.put("OPTIONS", new FileResponder(directory, request.getURI()));
+        LogResponder logResponder = new LogResponder();
+        logRouteMap.put("GET", logResponder);
+        logRouteMap.put("HEAD", logResponder);
+        logRouteMap.put("OPTIONS", logResponder);
         return logRouteMap;
     }
 

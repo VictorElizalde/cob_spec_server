@@ -22,13 +22,13 @@ public class RequestTest {
     }
 
     @Test
-    public void returnsTheHTTPMethod() throws Exception {
+    public void returnsTheHttpMethod() throws Exception {
         request.setHTTPMethod("GET");
         Assert.assertEquals("GET", request.getHTTPMethod());
     }
 
     @Test
-    public void returnsTheURI() throws Exception {
+    public void returnsTheUri() throws Exception {
         request.setURI("/file1");
         Assert.assertEquals("/file1", request.getURI());
     }
