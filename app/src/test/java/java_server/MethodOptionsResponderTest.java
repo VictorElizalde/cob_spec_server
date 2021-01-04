@@ -34,6 +34,6 @@ public class MethodOptionsResponderTest {
         byte[] fileBytes = methodOptionsResponder.getMessageBody();
 
         Assert.assertTrue(Arrays.equals(fileBytes, "GET,HEAD,OPTIONS,PUT,DELETE".getBytes()));
-        Assert.assertEquals("200 OK", methodOptionsResponder.getStatusCode(statusCode));
+        Assert.assertEquals(statusCode.getStatus(200), methodOptionsResponder.getStatusCode(statusCode));
     }
 }
