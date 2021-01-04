@@ -13,6 +13,6 @@ public class RootResponderTest {
         byte[] fileBytes = rootResponder.getMessageBody();
 
         Assert.assertTrue(new String(fileBytes).contains("Welcome to the index page!"));
-        Assert.assertEquals("200 OK", rootResponder.getStatusCode(statusCode));
+        Assert.assertEquals(statusCode.getStatus(200), rootResponder.getStatusCode(statusCode));
     }
 }
