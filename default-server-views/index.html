@@ -9,6 +9,25 @@
     <li> <a href='/image.png'>image.png</a></li>
     <li> <a href='/image.gif'>image.gif</a></li>
     <li> <a href='/text-file.txt'>text-file.txt</a></li>
+    <li> <a href='/patch-content.txt'>patch-content.txt</a></li>
+    <li> <a href='/partial_content.txt'>partial_content.txt</a></li>
 </ul>
+
+<div id="slideContainer"></div>
 </body>
 </html>
+
+<script>
+  $(document).ready(function(){
+    const testFolder = '/Users/victorelizalde/Documents/Github/cob_spec/public';
+    const fs = require('fs');
+    var str = '<ul>'
+
+    fs.readdirSync(testFolder).forEach(file => {
+      str += '<li> <a href=\'/'+ file + '\'>' + file + '</a> </li>';
+    });
+
+    str += '</ul>';
+    document.getElementById("slideContainer").innerHTML = str;
+  });
+</script>

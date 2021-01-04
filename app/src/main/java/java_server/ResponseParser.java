@@ -44,7 +44,7 @@ public class ResponseParser {
         return contentLength.getBytes();
     }
 
-    public byte[] present(Request request) throws IOException {
+    public byte[] buildResponse(Request request) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         byte[] body = formatMessageBody(request);
 

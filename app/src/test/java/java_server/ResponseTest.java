@@ -25,7 +25,7 @@ public class ResponseTest {
         request.setURI("file1");
         response.getMessageBody(request);
 
-        Assert.assertEquals("200 OK", response.getStatusMessage(request));
+        Assert.assertEquals(statusCode.getStatus(200), response.getStatusMessage(request));
     }
 
     @Test
@@ -33,7 +33,7 @@ public class ResponseTest {
         request.setHTTPMethod("GET");
         request.setURI("file1");
 
-        Assert.assertEquals("file1 contents", new String(response.getMessageBody(request)));
+        Assert.assertEquals("file1 contents", response.getMessageBody(request).toString());
     }
 
     @Test
@@ -58,6 +58,30 @@ public class ResponseTest {
         request.setURI("image.jpg");
 
         Assert.assertEquals("Content-Type: image/jpeg", response.getContentType(request));
+    }
+
+    @Test
+    public void returnsTheContentTypeForAPNGImage() throws Exception {
+        request.setHTTPMethod("GET");
+        request.setURI("image.png");
+
+        Assert.assertEquals("Content-Type: image/png", response.getContentType(request));
+    }
+
+    @Test
+    public void returnsTheContentTypeForAGIFImage() throws Exception {
+        request.setHTTPMethod("GET");
+        request.setURI("image.gif");
+
+        Assert.assertEquals("Content-Type: image/gif", response.getContentType(request));
+    }
+
+    @Test
+    public void returnsTheContentTypeForATXTFile() throws Exception {
+        request.setHTTPMethod("GET");
+        request.setURI("text-file.txt");
+
+        Assert.assertEquals("Content-Type: text/plain", response.getContentType(request));
     }
 
     @Test
