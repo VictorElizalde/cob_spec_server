@@ -13,7 +13,7 @@ public class ResponseTest {
     @Before
     public void setUp() throws Exception {
         statusCode = new statusCode();
-        routes = new Routes("/Users/victorelizalde/Documents/Github/cob_spec/public");
+        routes = new Routes(Constants.DEFAULT_TEST_DIRECTORY);
         int port = 5000;
         response = new Response(statusCode, routes, port);
         request = new Request();
@@ -33,7 +33,7 @@ public class ResponseTest {
         request.setHTTPMethod("GET");
         request.setURI("file1");
 
-        Assert.assertEquals("file1 contents", response.getMessageBody(request).toString());
+        Assert.assertEquals("file1 contents", new String (response.getMessageBody(request)));
     }
 
     @Test

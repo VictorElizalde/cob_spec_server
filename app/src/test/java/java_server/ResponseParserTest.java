@@ -12,7 +12,7 @@ public class ResponseParserTest {
     public void setUp() throws Exception {
         request = new Request();
         statusCode statusCode = new statusCode();
-        Routes routes = new Routes("/Users/victorelizalde/Documents/Github/cob_spec/public");
+        Routes routes = new Routes(Constants.DEFAULT_TEST_DIRECTORY);
         int port = 5000;
         Response response = new Response(statusCode, routes, port);
         responseParser = new ResponseParser(response);

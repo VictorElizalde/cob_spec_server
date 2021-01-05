@@ -18,7 +18,7 @@ public class RoutesTest {
     @Before
     public void setUp() throws Exception {
         request = new Request();
-        String testDirectory = "/Users/victorelizalde/Documents/Github/cob_spec/public";
+        testDirectory = Constants.DEFAULT_TEST_DIRECTORY;
         routes = new Routes(testDirectory);
     }
 
@@ -56,7 +56,7 @@ public class RoutesTest {
 
     @Test
     public void returnsACollectionOfFileNamesWhenGivenADirectory() throws Exception {
-        File file = new File("/Users/victorelizalde/Documents/Github/cob_spec/public");
+        File file = new File(testDirectory);
         String[] fileList = file.list();
 
         Assert.assertThat(Arrays.asList(routes.getDirectoryFileNames()), CoreMatchers.hasItems(fileList));
@@ -108,5 +108,45 @@ public class RoutesTest {
         request.setURI("/");
 
         Assert.assertThat(routes.getHandler(request), instanceOf(RootResponder.class));
+    }
+
+    @Test
+    public void returnsHead() throws Exception {
+        request.setHTTPMethod("HEAD");
+        request.setURI("/");
+
+        Assert.assertThat(routes.getHandler(request), instanceOf(HeadResponder.class));
+    }
+
+    @Test
+    public void returnsOptions() throws Exception {
+        request.setHTTPMethod("OPTIONS");
+        request.setURI("file1");
+
+        Assert.assertThat(routes.getHandler(request), instanceOf(FileResponder.class));
+    }
+
+    @Test
+    public void returnsNotFound() throws Exception {
+        request.setHTTPMethod("GET");
+        request.setURI("foobar");
+
+        Assert.assertThat(routes.getHandler(request), instanceOf(NotFoundResponder.class));
+    }
+
+    @Test
+    public void returnsMethodNotAllowed() throws Exception {
+        request.setHTTPMethod("POST");
+        request.setURI("file1");
+
+        Assert.assertThat(routes.getHandler(request), instanceOf(MethodNotAllowedResponder.class));
+    }
+
+    @Test
+    public void returnsNotImplemented() throws Exception {
+        request.setHTTPMethod("AAFFSS");
+        request.setURI("file1");
+
+        Assert.assertThat(routes.getHandler(request), instanceOf(NotImplementedResponder.class));
     }
 }

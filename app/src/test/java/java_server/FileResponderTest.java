@@ -14,7 +14,7 @@ public class FileResponderTest {
 
     @Before
     public void setUp() throws Exception {
-        testDirectory = "/Users/victorelizalde/Documents/Github/cob_spec/public";
+        testDirectory = Constants.DEFAULT_TEST_DIRECTORY;
         statusCode = new statusCode();
     }
 
@@ -43,7 +43,7 @@ public class FileResponderTest {
         String uri = "image.jpeg";
         FileResponder fileResponse = new FileResponder(testDirectory, uri);
         byte[] fileBytes = fileResponse.getMessageBody();
-        Assert.assertTrue(Arrays.equals(Files.readAllBytes(Paths.get("/Users/victorelizalde/Documents/Github/cob_spec/public/image.jpeg")), fileBytes));
+        Assert.assertTrue(Arrays.equals(Files.readAllBytes(Paths.get(testDirectory + "/image.jpeg")), fileBytes));
 
         Assert.assertEquals(statusCode.getStatus(200), fileResponse.getStatusCode(statusCode));
     }
@@ -53,7 +53,7 @@ public class FileResponderTest {
         String uri = "image.png";
         FileResponder fileResponse = new FileResponder(testDirectory, uri);
         byte[] fileBytes = fileResponse.getMessageBody();
-        Assert.assertTrue(Arrays.equals(Files.readAllBytes(Paths.get("/Users/victorelizalde/Documents/Github/cob_spec/public/image.png")), fileBytes));
+        Assert.assertTrue(Arrays.equals(Files.readAllBytes(Paths.get(testDirectory + "/image.png")), fileBytes));
 
         Assert.assertEquals(statusCode.getStatus(200), fileResponse.getStatusCode(statusCode));
     }
@@ -63,7 +63,7 @@ public class FileResponderTest {
         String uri = "image.gif";
         FileResponder fileResponse = new FileResponder(testDirectory, uri);
         byte[] fileBytes = fileResponse.getMessageBody();
-        Assert.assertTrue(Arrays.equals(Files.readAllBytes(Paths.get("/Users/victorelizalde/Documents/Github/cob_spec/public/image.gif")), fileBytes));
+        Assert.assertTrue(Arrays.equals(Files.readAllBytes(Paths.get(testDirectory + "/image.gif")), fileBytes));
 
         Assert.assertEquals(statusCode.getStatus(200), fileResponse.getStatusCode(statusCode));
     }

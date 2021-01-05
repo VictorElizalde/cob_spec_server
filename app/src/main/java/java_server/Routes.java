@@ -31,7 +31,7 @@ public class Routes {
     }
 
     private HashMap<String, Responder> getRootMap() {
-        rootMap.put("GET", new RootResponder("/Users/victorelizalde/Documents/Github/java_server/default-server-views"));
+        rootMap.put("GET", new RootResponder(Constants.DEFAULT_SERVER_VIEWS_DIRECTORY));
 
         return rootMap;
     }
@@ -80,7 +80,7 @@ public class Routes {
     }
 
     public String[] getDirectoryFileNames() {
-        File file = new File("/Users/victorelizalde/Documents/Github/cob_spec/public");
+        File file = new File(directory);
         return file.list();
     }
 
@@ -94,9 +94,11 @@ public class Routes {
     }
 
     public Responder getHandler(Request request) {
+        if (!"GET,POST,HEAD,OPTIONS,PUT,DELETE".contains(request.getHTTPMethod())) return new NotImplementedResponder();
         if (isAValidMethod(request)) return getRoutesMap(request).get(request.getURI()).get(request.getHTTPMethod());
         if (request.getHTTPMethod().equals("HEAD") && request.getURI().equals("/")) return new HeadResponder();
         if (request.getHTTPMethod().equals("OPTIONS")) return new MethodOptionsResponder(getOptions(request));
+        if (!isAValidMethod(request) && isAnExistingFileInDirectory(getDirectoryFileNames(), request)) return new MethodNotAllowedResponder();
         return new NotFoundResponder();
     }
 }

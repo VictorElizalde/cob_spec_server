@@ -10,9 +10,8 @@ import java.util.concurrent.Executors;
 
 public class App {
     public static void main(String[] args) throws IOException {
-        int port = 5000;
-        String directory = "/Users/victorelizalde/Documents/Github/cob_spec/public";
-        Server server = new Server(port, directory);
+        String directory = Constants.DEFAULT_SERVER_DIRECTORY;
+        Server server = new Server(Constants.DEFAULT_PORT, directory);
         server.runServer();
     }
 }
