@@ -8,7 +8,7 @@ public class RootResponderTest {
     @Test
     public void returnsTheIndexPageWhenRootRequestIsMade() throws Exception {
         statusCode statusCode = new statusCode();
-        String serverViewsDirectory = "/Users/victorelizalde/Documents/Github/java_server/default-server-views";
+        String serverViewsDirectory = Constants.DEFAULT_SERVER_VIEWS_DIRECTORY;
         RootResponder rootResponder = new RootResponder(serverViewsDirectory);
         byte[] fileBytes = rootResponder.getMessageBody();
 

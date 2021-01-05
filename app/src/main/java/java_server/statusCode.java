@@ -11,6 +11,7 @@ public class statusCode {
         statusCodeMap.put(200, "200 OK");
         statusCodeMap.put(404, "404 Not Found");
         statusCodeMap.put(405, "405 Method Not Allowed");
+        statusCodeMap.put(501, "501 Not Implemented");
 
         return statusCodeMap;
     }

@@ -20,7 +20,7 @@ public class ConnectionHandler implements Runnable {
         InputStream inputStream = requestHandler.getInputStream();
         RequestParser requestParser = new RequestParser(inputStream);
         statusCode statusCode = new statusCode();
-        Routes routes = new Routes("/Users/victorelizalde/Documents/Github/cob_spec/public");
+        Routes routes = new Routes(Constants.DEFAULT_SERVER_DIRECTORY);
         Response response = new Response(statusCode, routes, port);
         ResponseParser responseParser = new ResponseParser(response);
 

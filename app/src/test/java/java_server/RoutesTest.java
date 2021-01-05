@@ -18,7 +18,7 @@ public class RoutesTest {
     @Before
     public void setUp() throws Exception {
         request = new Request();
-        String testDirectory = "/Users/victorelizalde/Documents/Github/cob_spec/public";
+        testDirectory = Constants.DEFAULT_TEST_DIRECTORY;
         routes = new Routes(testDirectory);
     }
 
@@ -56,7 +56,7 @@ public class RoutesTest {
 
     @Test
     public void returnsACollectionOfFileNamesWhenGivenADirectory() throws Exception {
-        File file = new File("/Users/victorelizalde/Documents/Github/cob_spec/public");
+        File file = new File(testDirectory);
         String[] fileList = file.list();
 
         Assert.assertThat(Arrays.asList(routes.getDirectoryFileNames()), CoreMatchers.hasItems(fileList));
