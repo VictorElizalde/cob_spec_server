@@ -94,6 +94,7 @@ public class Routes {
     }
 
     public Responder getHandler(Request request) {
+        if (!"GET,POST,HEAD,OPTIONS,PUT,DELETE".contains(request.getHTTPMethod())) return new NotImplementedResponder();
         if (isAValidMethod(request)) return getRoutesMap(request).get(request.getURI()).get(request.getHTTPMethod());
         if (request.getHTTPMethod().equals("HEAD") && request.getURI().equals("/")) return new HeadResponder();
         if (request.getHTTPMethod().equals("OPTIONS")) return new MethodOptionsResponder(getOptions(request));
