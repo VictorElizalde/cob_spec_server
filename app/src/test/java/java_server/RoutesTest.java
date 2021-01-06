@@ -149,4 +149,12 @@ public class RoutesTest {
 
         Assert.assertThat(routes.getHandler(request), instanceOf(NotImplementedResponder.class));
     }
+
+    @Test
+    public void returnsPartialContent() throws Exception {
+        request.setHTTPMethod("GET");
+        request.setURI("partial_content.txt");
+
+        Assert.assertThat(routes.getHandler(request), instanceOf(PartialContentResponder.class));
+    }
 }

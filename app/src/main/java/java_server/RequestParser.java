@@ -26,8 +26,8 @@ public class RequestParser {
         request.setHeaderField(parseHeaderField());
         request.setByteRange(getByteRange());
         request.setBasicRequestStatus(isABasicAuthRequest());
-        request.setEtag(parseEtag());
-        request.setParameterValues(getDecodedParameterKey());
+//        request.setEtag(parseEtag());
+//        request.setParameterValues(getDecodedParameterKey());
 
         return request;
     }
@@ -60,7 +60,7 @@ public class RequestParser {
     }
 
     private String parseURI() throws IOException {
-        if (isAParameterRequest()) return "parameters";
+//        if (isAParameterRequest()) return "parameters";
         if (isARootRequest()) return "/";
 
         String[] splitOnBackslash = requestArray[1].split("/");
@@ -78,8 +78,8 @@ public class RequestParser {
 
     private String getByteRange() throws IOException {
         try {
-            String[] splitOnConnection = requestArray[3].split("Connection:");
-            String[] splitOnBytes = splitOnConnection[0].split("bytes=");
+            String[] splitOnHost = requestArray[3].split("Host:");
+            String[] splitOnBytes = splitOnHost[0].split("bytes=");
             return splitOnBytes[1];
         } catch (ArrayIndexOutOfBoundsException e){
 
@@ -87,40 +87,34 @@ public class RequestParser {
         }
     }
 
-    private boolean isAParameterRequest() throws IOException {
-        try {
-            String parameter = requestArray[1];
-            String[] splitOnMark = parameter.split("\\?");
-            String parameterString = splitOnMark[0];
-
-            return parameterString.equals("/parameters");
-        } catch (ArrayIndexOutOfBoundsException e) {
-
-            return false;
-        }
-    }
-
-    private String getDecodedParameterKey() throws IOException {
-        String[] splitOnMark = requestArray[1].split("\\?");
-
-        try {
-            String parameters = splitOnMark[1];
-            String paramsWithSpace = parameters.replaceAll("=", " = ");
-            String paramsWithAmpSpace = paramsWithSpace.replaceAll("&", " ");
-            return URLDecoder.decode(paramsWithAmpSpace, "UTF-8");
-        } catch (ArrayIndexOutOfBoundsException e) {
-
-            return "Parameter key not given";
-        }
-    }
+//    private boolean isAParameterRequest() throws IOException {
+//        try {
+//            String parameter = requestArray[1];
+//            String[] splitOnMark = parameter.split("\\?");
+//            String parameterString = splitOnMark[0];
+//
+//            return parameterString.equals("/parameters");
+//        } catch (ArrayIndexOutOfBoundsException e) {
+//
+//            return false;
+//        }
+//    }
+//
+//    private String getDecodedParameterKey() throws IOException {
+//        String[] splitOnMark = requestArray[1].split("\\?");
+//
+//        try {
+//            String parameters = splitOnMark[1];
+//            String paramsWithSpace = parameters.replaceAll("=", " = ");
+//            String paramsWithAmpSpace = paramsWithSpace.replaceAll("&", " ");
+//            return URLDecoder.decode(paramsWithAmpSpace, "UTF-8");
+//        } catch (ArrayIndexOutOfBoundsException e) {
+//
+//            return "Parameter key not given";
+//        }
+//    }
 
     private boolean isABasicAuthRequest() throws IOException {
         return requestArray[3].equals("Basic");
-    }
-
-    public String parseEtag() throws IOException {
-        String[] splitOnConnection = requestArray[4].split("Connection:");
-
-        return splitOnConnection[0];
     }
 }

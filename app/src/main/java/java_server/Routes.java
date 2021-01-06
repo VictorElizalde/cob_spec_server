@@ -11,7 +11,7 @@ public class Routes {
     private HashMap<String, Responder> rootMap = new HashMap<String, Responder>();
     private HashMap<String, Responder> fileRouteMap = new HashMap<String, Responder>();
     private HashMap<String, Responder> logRouteMap = new HashMap<String, Responder>();
-
+    private HashMap<String, Responder> partialContentMap = new HashMap<String, Responder>();
 
     public Routes(String directory) {
         this.directory = directory;
@@ -26,6 +26,7 @@ public class Routes {
         routesMap.put("image.gif", getFileRouteMap(request));
         routesMap.put("text-file.txt", getFileRouteMap(request));
         routesMap.put("logs", getLogRouteMap(request));
+        routesMap.put("partial_content.txt", getPartialContentmap(request));
 
         return routesMap;
     }
@@ -61,6 +62,12 @@ public class Routes {
 
             return "GET,HEAD,OPTIONS,PUT,DELETE";
         }
+    }
+
+    private HashMap<String, Responder> getPartialContentmap(Request request) {
+        partialContentMap.put("GET", new PartialContentResponder(directory, request.getURI() ,request.getByteRange()));
+
+        return partialContentMap;
     }
 
     public boolean isAValidMethod(Request request) {

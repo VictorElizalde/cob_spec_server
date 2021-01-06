@@ -63,9 +63,9 @@ public class RequestTest {
         Assert.assertEquals("Credentials", request.getBasicAuthCredentials());
     }
 
-    @Test
-    public void returnsEtag() throws Exception {
-        request.setEtag("12345asdfasdf");
-        Assert.assertEquals("12345asdfasdf", request.getEtag());
-    }
+//    @Test
+//    public void returnsEtag() throws Exception {
+//        request.setEtag("12345asdfasdf");
+//        Assert.assertEquals("12345asdfasdf", request.getEtag());
+//    }
 }

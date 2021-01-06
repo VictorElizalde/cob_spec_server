@@ -35,13 +35,13 @@ public class Request {
         return basicAuthCredentials;
     }
 
-    public String getEtag() {
-        return etag;
-    }
+//    public String getEtag() {
+//        return etag;
+//    }
 
-    public String getParameterValues() {
-        return parameterValues;
-    }
+//    public String getParameterValues() {
+//        return parameterValues;
+//    }
 
     public void setHTTPMethod(String httpMethod) {
         this.httpMethod = httpMethod;
@@ -79,11 +79,11 @@ public class Request {
         this.basicAuthCredentials = basicAuthCredentials;
     }
 
-    public void setEtag(String etag) {
-        this.etag = etag;
-    }
+//    public void setEtag(String etag) {
+//        this.etag = etag;
+//    }
 
-    public void setParameterValues(String parameterValues) {
-        this.parameterValues = parameterValues;
-    }
+//    public void setParameterValues(String parameterValues) {
+//        this.parameterValues = parameterValues;
+//    }
 }
