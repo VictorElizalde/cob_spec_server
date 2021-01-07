@@ -65,7 +65,7 @@ public class Routes {
     }
 
     private HashMap<String, Responder> getPartialContentmap(Request request) {
-        partialContentMap.put("GET", new PartialContentResponder(directory, request.getURI() ,request.getByteRange()));
+        partialContentMap.put("GET", new PartialContentResponder(directory, request.getURI(),request.getByteRange()));
 
         return partialContentMap;
     }
