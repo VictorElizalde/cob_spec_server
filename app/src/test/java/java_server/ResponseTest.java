@@ -23,7 +23,7 @@ public class ResponseTest {
     public void returns200OkStatusWhenSuccessfulGetRequestIsMade() throws Exception {
         request.setHTTPMethod("GET");
         request.setURI("file1");
-        response.getMessageBody(request);
+        response.setResponder(request);
 
         Assert.assertEquals(statusCode.getStatus(200), response.getStatusMessage(request));
     }
@@ -32,6 +32,7 @@ public class ResponseTest {
     public void returnsAFilesContentsInTheMessageBodyWhenASuccessfulRequestIsMade() throws Exception {
         request.setHTTPMethod("GET");
         request.setURI("file1");
+        response.setResponder(request);
 
         Assert.assertEquals("file1 contents", new String (response.getMessageBody(request)));
     }
@@ -88,6 +89,7 @@ public class ResponseTest {
     public void returnsTheByteLengthForFile1() throws Exception {
         request.setHTTPMethod("GET");
         request.setURI("file1");
+        response.setResponder(request);
 
         Assert.assertEquals("Content-Length: 14", response.getContentLength(request));
     }
@@ -96,6 +98,7 @@ public class ResponseTest {
     public void returnsTheByteLengthForAnImageFile() throws Exception {
         request.setHTTPMethod("GET");
         request.setURI("image.png");
+        response.setResponder(request);
 
         Assert.assertEquals("Content-Length: 108763", response.getContentLength(request));
     }

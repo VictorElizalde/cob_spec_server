@@ -6,6 +6,7 @@ public class Response {
     private Routes routes;
     private statusCode statusCode;
     private int port;
+    private Responder responder;
 
     public Response(statusCode statusCode, Routes routes, int port) {
         this.routes = routes;
@@ -13,12 +14,16 @@ public class Response {
         this.port = port;
     }
 
+    public void setResponder(Request request) {
+        this.responder = routes.getHandler(request);
+    }
+
     public String getStatusMessage(Request request) {
-        return routes.getHandler(request).getStatusCode(statusCode);
+        return responder.getStatusCode(statusCode);
     }
 
     public byte[] getMessageBody(Request request) {
-        return routes.getHandler(request).getMessageBody();
+        return responder.getMessageBody();
     }
 
     public String getLocation() {

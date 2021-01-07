@@ -18,6 +18,7 @@ public class ResponseParserTest {
         responseParser = new ResponseParser(response);
         request.setHTTPMethod("GET");
         request.setURI("file1");
+        response.setResponder(request);
         response.getMessageBody(request);
     }
 

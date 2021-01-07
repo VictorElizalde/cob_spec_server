@@ -46,6 +46,7 @@ public class ResponseParser {
 
     public byte[] buildResponse(Request request) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        response.setResponder(request);
         byte[] body = formatMessageBody(request);
 
         byteArrayOutputStream.write(formatHTTPStatusMessage(request));
