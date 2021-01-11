@@ -4,14 +4,13 @@
 package java_server;
 
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class App {
     public static void main(String[] args) throws IOException {
-        String directory = Constants.DEFAULT_SERVER_DIRECTORY;
-        Server server = new Server(Constants.DEFAULT_PORT, directory);
+        ArgsParser argsParser = new ArgsParser(args);
+        int port = argsParser.getPort();
+        String directory = argsParser.getDirectory();
+        Server server = new Server(port, directory);
         server.runServer();
     }
 }
