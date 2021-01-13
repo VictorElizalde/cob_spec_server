@@ -91,6 +91,8 @@ public class ResponseTest {
         request.setURI("file1");
         response.setResponder(request);
 
+        byte[] responseBody = response.getMessageBody(request);
+
         Assert.assertEquals("Content-Length: 14", response.getContentLength(request));
     }
 
@@ -99,6 +101,8 @@ public class ResponseTest {
         request.setHTTPMethod("GET");
         request.setURI("image.png");
         response.setResponder(request);
+
+        byte[] responseBody = response.getMessageBody(request);
 
         Assert.assertEquals("Content-Length: 108763", response.getContentLength(request));
     }
