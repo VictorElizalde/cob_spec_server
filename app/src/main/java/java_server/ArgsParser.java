@@ -1,6 +1,7 @@
 package java_server;
 
 import java.io.File;
+import java.util.Arrays;
 
 public class ArgsParser {
     String[] args;
@@ -9,17 +10,23 @@ public class ArgsParser {
         this.args = args;
     }
 
+    public static int findIndex(String arr[], String t)
+    {
+        int index = Arrays.asList(arr).indexOf(t);
+        return (index < 0) ? -1 : index;
+    }
+
     public int getPort() {
-        return (isAValidPortNumber()) ? Integer.parseInt(args[1]) : Constants.DEFAULT_PORT;
+        return (isAValidPortNumber()) ? Integer.parseInt(args[findIndex(args, "-p") + 1]) : Constants.DEFAULT_PORT;
     }
 
     public String getDirectory() {
-        return (isAValidDirectory()) ? args[0] : Constants.DEFAULT_SERVER_DIRECTORY;
+        return (isAValidDirectory()) ? String.valueOf(args[findIndex(args, "-d") + 1]) : Constants.DEFAULT_SERVER_DIRECTORY;
     }
 
     public boolean isAValidPortNumber() {
         try {
-            return args[1] != null && Integer.parseInt(args[1]) > 0;
+            return args[findIndex(args, "-p") + 1] != null && Integer.parseInt(args[findIndex(args, "-p") + 1]) > 0;
         } catch (ArrayIndexOutOfBoundsException e) {
             return false;
         }
@@ -28,8 +35,8 @@ public class ArgsParser {
     public boolean isAValidDirectory() {
         try {
 
-            if (args[0] != null) {
-                File file = new File(args[0]);
+            if (args[findIndex(args, "-d") + 1] != null) {
+                File file = new File(args[findIndex(args, "-d") + 1]);
                 if (file != null)
                     return true;
             }
