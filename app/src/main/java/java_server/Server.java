@@ -19,6 +19,7 @@ public class Server {
         ServerSocket serverSocket = new ServerSocket(port);
 
         System.out.println("Server Is Listening on port: " + port);
+        System.out.println("Server Is Using directory: " + directory);
 
         while (true) {
             try {
