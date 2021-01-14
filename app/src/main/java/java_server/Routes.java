@@ -20,21 +20,13 @@ public class Routes {
 
     private HashMap<String, HashMap<String, Responder>> getRoutesMap(Request request) {
         routesMap.put("/", getRootMap());
-        routesMap.put("file1", getFileRouteMap(request));
-        routesMap.put("file2", getFileRouteMap(request));
-        routesMap.put("image.jpeg", getFileRouteMap(request));
-        routesMap.put("image.png", getFileRouteMap(request));
-        routesMap.put("image.gif", getFileRouteMap(request));
-        routesMap.put("text-file.txt", getFileRouteMap(request));
         routesMap.put("logs", getLogRouteMap(request));
-        routesMap.put("partial_content.txt", getPartialContentmap(request));
 
         File routesDirectory = new File(directory);
 
         if (routesDirectory != null) {
             for (String file : routesDirectory.list()) {
-                if (!Constants.DEFAULT_FILES.contains(file))
-                    routesMap.put(file, getFileRouteMap(request));
+                routesMap.put(file, getFileRouteMap(request));
             }
         }
 
