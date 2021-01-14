@@ -105,7 +105,7 @@ public class RoutesTest {
     }
 
     @Test
-    public void returnsRootHandlerWhenRootRequestIsMade() throws Exception {
+    public void returnsDirectoryContents() throws Exception {
         request.setHTTPMethod("GET");
         request.setURI("/");
 
