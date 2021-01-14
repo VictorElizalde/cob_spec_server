@@ -11,18 +11,20 @@ public class CRUDResponder implements Responder {
     private String uri;
     private String httpMethod;
     private Integer statusCode;
+    private String content;
     private static HashMap<String, byte[]> CRUDMap = new HashMap<String, byte[]>();
 
-    public CRUDResponder(String directory, String httpMethod, String uri) {
+    public CRUDResponder(String directory, String httpMethod, String uri, String content) {
         this.directory = directory;
         this.httpMethod = httpMethod;
         this.uri = uri;
+        this.content = content;
     }
 
     @Override
     public byte[] getMessageBody() {
         try {
-            writeToCRUD();
+            performCRUD();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -41,18 +43,33 @@ public class CRUDResponder implements Responder {
         return statusCode.getStatus(this.statusCode);
     }
 
-    private Path writeToCRUD() throws IOException {
+    private Path performCRUD() throws IOException {
         if (httpMethod.equals("DELETE")){
-            Files.delete(getPath());
-            statusCode = 200;
-            return getPath();
+            return deletePath();
         } else if(Files.exists(getPath())){
-            statusCode = 200;
-            return Files.write(getPath(), "Some updated text".getBytes());
+            return updatePath();
         }
 
-        statusCode = 201;
-        return Files.write(getPath(), "Some text for a new file".getBytes());
+        return createPath();
+    }
+
+    private Path createPath() throws IOException {
+        return writeToFile(201);
+    }
+
+    private Path updatePath() throws IOException {
+        return writeToFile(200);
+    }
+
+    private Path deletePath() throws IOException {
+        Files.delete(getPath());
+        statusCode = 200;
+        return getPath();
+    }
+
+    private Path writeToFile(Integer statusCode) throws IOException {
+        this.statusCode = statusCode;
+        return Files.write(getPath(), content.getBytes());
     }
 
     private Path getPath() {

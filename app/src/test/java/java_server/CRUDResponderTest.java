@@ -18,8 +18,9 @@ public class CRUDResponderTest {
     public void createdFileWhenPutRequestIsMadeAndReturns201() throws Exception {
         String uri = "new_file.txt";
         String httpMethod = "PUT";
+        String content = "Some text for a new file";
 
-        CRUDResponder crudResponder = new CRUDResponder(testDirectory, httpMethod, uri);
+        CRUDResponder crudResponder = new CRUDResponder(testDirectory, httpMethod, uri, content);
         byte[] fileBytes = crudResponder.getMessageBody();
 
         Assert.assertEquals("Some text for a new file", new String(fileBytes));
@@ -31,8 +32,9 @@ public class CRUDResponderTest {
     public void updatesFileWhenPutRequestIsMadeAndReturns200() throws Exception {
         String uri = "new_file.txt";
         String httpMethod = "PUT";
+        String content = "Some updated text";
 
-        CRUDResponder crudResponder = new CRUDResponder(testDirectory, httpMethod, uri);
+        CRUDResponder crudResponder = new CRUDResponder(testDirectory, httpMethod, uri, content);
         byte[] fileBytes = crudResponder.getMessageBody();
 
         Assert.assertEquals("Some updated text", new String(fileBytes));
@@ -44,8 +46,9 @@ public class CRUDResponderTest {
     public void deletesFileWhenDeleteRequestIsMade() throws Exception {
         String uri = "new_file.txt";
         String httpMethod = "DELETE";
+        String content = "";
 
-        CRUDResponder crudResponder = new CRUDResponder(testDirectory, httpMethod, uri);
+        CRUDResponder crudResponder = new CRUDResponder(testDirectory, httpMethod, uri, content);
         byte[] fileBytes = crudResponder.getMessageBody();
 
         Assert.assertEquals("File Could Not Be Read", new String(fileBytes));

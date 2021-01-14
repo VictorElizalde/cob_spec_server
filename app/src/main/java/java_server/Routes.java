@@ -67,8 +67,8 @@ public class Routes {
 
     private HashMap<String, Responder> getCRUDRouteMap(Request request) {
         CRUDRouteMap.put("GET", new FileResponder(directory, request.getURI()));
-        CRUDRouteMap.put("PUT", new CRUDResponder(directory, request.getHTTPMethod(), request.getURI()));
-        CRUDRouteMap.put("DELETE", new CRUDResponder(directory, request.getHTTPMethod(), request.getURI()));
+        CRUDRouteMap.put("PUT", new CRUDResponder(directory, request.getHTTPMethod(), request.getURI(), request.getData()));
+        CRUDRouteMap.put("DELETE", new CRUDResponder(directory, request.getHTTPMethod(), request.getURI(), request.getData()));
 
         return CRUDRouteMap;
     }
@@ -120,11 +120,11 @@ public class Routes {
 
     public Responder getHandler(Request request) {
         if (request.getHTTPMethod().equals("PUT")) {
-            return new CRUDResponder(directory, request.getHTTPMethod(), request.getURI());
+            return new CRUDResponder(directory, request.getHTTPMethod(), request.getURI(), request.getData());
         }
 
         if (request.getHTTPMethod().equals("DELETE")) {
-            return new CRUDResponder(directory, request.getHTTPMethod(), request.getURI());
+            return new CRUDResponder(directory, request.getHTTPMethod(), request.getURI(), request.getData());
         }
 
         if (!"GET,POST,HEAD,OPTIONS,PUT,DELETE".contains(request.getHTTPMethod())) return new NotImplementedResponder();
