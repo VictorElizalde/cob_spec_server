@@ -47,12 +47,10 @@ public class CRUDResponder implements Responder {
             statusCode = 200;
             return getPath();
         } else if(Files.exists(getPath())){
-            System.out.println("Hello");
             statusCode = 200;
             return Files.write(getPath(), "Some updated text".getBytes());
         }
 
-        System.out.println("Goodbye");
         statusCode = 201;
         return Files.write(getPath(), "Some text for a new file".getBytes());
     }
