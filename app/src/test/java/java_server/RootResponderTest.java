@@ -30,4 +30,15 @@ public class RootResponderTest {
         assertTrue(new String(fileBytes).contains("href='/test-file-2.txt'"));
         assertEquals(statusCode.getStatus(200), rootResponder.getStatusCode(statusCode));
     }
+
+    @Test
+    public void returnsEmptyStringWhenDirectoryHasNoContents() throws Exception {
+        statusCode statusCode = new statusCode();
+        String serverViewsDirectory = "../../java_server/empty-test-directory";
+        RootResponder rootResponder = new RootResponder(serverViewsDirectory);
+        byte[] fileBytes = rootResponder.getMessageBody();
+
+        assertTrue(new String(fileBytes).equals(""));
+        assertEquals(statusCode.getStatus(200), rootResponder.getStatusCode(statusCode));
+    }
 }
