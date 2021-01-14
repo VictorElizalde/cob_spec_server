@@ -13,7 +13,7 @@ public class ArgsParser {
     public static int findIndex(String arr[], String t)
     {
         int index = Arrays.asList(arr).indexOf(t);
-        return (index < 0) ? -1 : index;
+        return index;
     }
 
     public int getPort() {
@@ -26,7 +26,7 @@ public class ArgsParser {
 
     public boolean isAValidPortNumber() {
         try {
-            return args[findIndex(args, "-p") + 1] != null && Integer.parseInt(args[findIndex(args, "-p") + 1]) > 0;
+            return findIndex(args, "-p") != -1 && args[findIndex(args, "-p") + 1] != null && Integer.parseInt(args[findIndex(args, "-p") + 1]) > 0;
         } catch (ArrayIndexOutOfBoundsException e) {
             return false;
         }
@@ -35,7 +35,7 @@ public class ArgsParser {
     public boolean isAValidDirectory() {
         try {
 
-            if (args[findIndex(args, "-d") + 1] != null) {
+            if (findIndex(args, "-d") != -1 && args[findIndex(args, "-d") + 1] != null) {
                 File file = new File(args[findIndex(args, "-d") + 1]);
                 if (file != null)
                     return true;
