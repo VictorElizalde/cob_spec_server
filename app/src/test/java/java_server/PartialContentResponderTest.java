@@ -20,7 +20,7 @@ public class PartialContentResponderTest {
     @Test
     public void returnsPartialContentsBasedOnByteRangeRequest() throws Exception {
         Assert.assertEquals(" 206.\n" , new String(partialContentResponder.getMessageBody()));
-        Assert.assertEquals("206 Partial Content", partialContentResponder.getStatusCode(statusCode));
+        Assert.assertEquals("206 Partial Content", partialContentResponder.getStatusCode());
     }
 
     @Test
@@ -30,6 +30,6 @@ public class PartialContentResponderTest {
         PartialContentResponder partialContentResponder = new PartialContentResponder(testDirectory, uri, byteRange);
 
         Assert.assertEquals("This is" , new String(partialContentResponder.getMessageBody()));
-        Assert.assertEquals("206 Partial Content", partialContentResponder.getStatusCode(statusCode));
+        Assert.assertEquals("206 Partial Content", partialContentResponder.getStatusCode());
     }
 }

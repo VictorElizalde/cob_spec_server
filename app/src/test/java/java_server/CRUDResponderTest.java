@@ -11,7 +11,6 @@ public class CRUDResponderTest {
     @Before
     public void setUp() {
         testDirectory = Constants.DEFAULT_TEST_DIRECTORY;
-        statusCode = new statusCode();
     }
 
     @Test
@@ -25,7 +24,7 @@ public class CRUDResponderTest {
 
         Assert.assertEquals("Some text for a new file", new String(fileBytes));
 
-        Assert.assertEquals("201 Created", crudResponder.getStatusCode(statusCode));
+        Assert.assertEquals("201 Created", crudResponder.getStatusCode());
     }
 
     @Test
@@ -39,7 +38,7 @@ public class CRUDResponderTest {
 
         Assert.assertEquals("Some updated text", new String(fileBytes));
 
-        Assert.assertEquals("200 OK", crudResponder.getStatusCode(statusCode));
+        Assert.assertEquals("200 OK", crudResponder.getStatusCode());
     }
 
     @Test
@@ -53,6 +52,6 @@ public class CRUDResponderTest {
 
         Assert.assertEquals("File Could Not Be Read", new String(fileBytes));
 
-        Assert.assertEquals("200 OK", crudResponder.getStatusCode(statusCode));
+        Assert.assertEquals("200 OK", crudResponder.getStatusCode());
     }
 }

@@ -7,13 +7,13 @@ public class PartialContentResponder implements Responder {
     private String directory;
     private String uri;
     private String byteRange;
-    private Integer statusCode;
+    private String statusCode;
 
     public PartialContentResponder(String directory, String uri, String byteRange) {
         this.directory = directory;
         this.uri = uri;
         this.byteRange = byteRange;
-        this.statusCode = 206;
+        this.statusCode = statusMessageCode.PARTIAL_CONTENT;
     }
 
     @Override
@@ -25,12 +25,12 @@ public class PartialContentResponder implements Responder {
             e.printStackTrace();
         }
 
-        this.statusCode = 416;
+        this.statusCode = statusMessageCode.REQUEST_RANGE_NOT_SATISFIABLE;
         return "Request Invalid".getBytes();
     }
 
     @Override
-    public String getStatusCode(statusCode statusCode) {
-        return statusCode.getStatus(this.statusCode);
+    public String getStatusCode() {
+        return statusCode;
     }
 }

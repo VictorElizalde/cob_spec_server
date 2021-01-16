@@ -12,6 +12,6 @@ public class NotFoundResponderTest {
         byte[] fileBytes = notFoundResponder.getMessageBody();
 
         Assert.assertTrue(new String(fileBytes).contains("404 File Not Found"));
-        Assert.assertEquals("404 Not Found", notFoundResponder.getStatusCode(statusCode));
+        Assert.assertEquals("404 Not Found", notFoundResponder.getStatusCode());
     }
 }

@@ -20,7 +20,7 @@ public class Response {
     }
 
     public String getStatusMessage(Request request) {
-        return responder.getStatusCode(statusCode);
+        return responder.getStatusCode();
     }
 
     public byte[] getMessageBody(Request request) {

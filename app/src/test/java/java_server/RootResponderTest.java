@@ -16,7 +16,7 @@ public class RootResponderTest {
         byte[] fileBytes = rootResponder.getMessageBody();
 
         assertTrue(new String(fileBytes).contains("href='/test-file.txt'"));
-        assertEquals(statusCode.getStatus(200), rootResponder.getStatusCode(statusCode));
+        assertEquals(statusCode.OK, rootResponder.getStatusCode());
     }
 
     @Test
@@ -28,7 +28,7 @@ public class RootResponderTest {
 
         assertTrue(new String(fileBytes).contains("href='/test-file.txt'"));
         assertTrue(new String(fileBytes).contains("href='/test-file-2.txt'"));
-        assertEquals(statusCode.getStatus(200), rootResponder.getStatusCode(statusCode));
+        assertEquals(statusCode.OK, rootResponder.getStatusCode());
     }
 
     @Test
@@ -39,6 +39,6 @@ public class RootResponderTest {
         byte[] fileBytes = rootResponder.getMessageBody();
 
         assertTrue(new String(fileBytes).equals(""));
-        assertEquals(statusCode.getStatus(200), rootResponder.getStatusCode(statusCode));
+        assertEquals(statusCode.OK, rootResponder.getStatusCode());
     }
 }

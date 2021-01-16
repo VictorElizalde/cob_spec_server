@@ -25,7 +25,7 @@ public class FileResponderTest {
         byte[] fileBytes = fileResponse.getMessageBody();
         Assert.assertEquals("file1 contents", new String(fileBytes));
 
-        Assert.assertEquals(statusCode.getStatus(200), fileResponse.getStatusCode(statusCode));
+        Assert.assertEquals(statusCode.OK, fileResponse.getStatusCode());
     }
 
     @Test
@@ -35,7 +35,7 @@ public class FileResponderTest {
         byte[] fileBytes = fileResponse.getMessageBody();
         Assert.assertEquals("file1 contents", new String(fileBytes));
 
-        Assert.assertEquals(statusCode.getStatus(200), fileResponse.getStatusCode(statusCode));
+        Assert.assertEquals(statusCode.OK, fileResponse.getStatusCode());
     }
 
     @Test
@@ -45,7 +45,7 @@ public class FileResponderTest {
         byte[] fileBytes = fileResponse.getMessageBody();
         Assert.assertTrue(Arrays.equals(Files.readAllBytes(Paths.get(testDirectory + "/image.jpeg")), fileBytes));
 
-        Assert.assertEquals(statusCode.getStatus(200), fileResponse.getStatusCode(statusCode));
+        Assert.assertEquals(statusCode.OK, fileResponse.getStatusCode());
     }
 
     @Test
@@ -55,7 +55,7 @@ public class FileResponderTest {
         byte[] fileBytes = fileResponse.getMessageBody();
         Assert.assertTrue(Arrays.equals(Files.readAllBytes(Paths.get(testDirectory + "/image.png")), fileBytes));
 
-        Assert.assertEquals(statusCode.getStatus(200), fileResponse.getStatusCode(statusCode));
+        Assert.assertEquals(statusCode.OK, fileResponse.getStatusCode());
     }
 
     @Test
@@ -65,7 +65,7 @@ public class FileResponderTest {
         byte[] fileBytes = fileResponse.getMessageBody();
         Assert.assertTrue(Arrays.equals(Files.readAllBytes(Paths.get(testDirectory + "/image.gif")), fileBytes));
 
-        Assert.assertEquals(statusCode.getStatus(200), fileResponse.getStatusCode(statusCode));
+        Assert.assertEquals(statusCode.OK, fileResponse.getStatusCode());
     }
 
     @Test

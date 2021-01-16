@@ -25,7 +25,7 @@ public class ResponseTest {
         request.setURI("file1");
         response.setResponder(request);
 
-        Assert.assertEquals(statusCode.getStatus(200), response.getStatusMessage(request));
+        Assert.assertEquals(statusCode.OK, response.getStatusMessage(request));
     }
 
     @Test

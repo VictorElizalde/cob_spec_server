@@ -11,6 +11,6 @@ public class NotImplementedResponderTest {
         byte[] fileBytes = notImplementedResponder.getMessageBody();
 
         Assert.assertTrue(new String(fileBytes).contains("501 Not Implemented"));
-        Assert.assertEquals("501 Not Implemented", notImplementedResponder.getStatusCode(statusCode));
+        Assert.assertEquals("501 Not Implemented", notImplementedResponder.getStatusCode());
     }
 }
