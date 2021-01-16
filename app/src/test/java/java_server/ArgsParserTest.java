@@ -5,19 +5,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ArgsParserTest {
-    @Test
-    public void returnsTrueIfPortIsValid() throws Exception {
-        String[] args = {"-p", "5000"};
-        ArgsParser argsParser = new ArgsParser(args);
-        Assert.assertTrue(argsParser.isAValidPortNumber());
-        Assert.assertEquals(Constants.DEFAULT_SERVER_DIRECTORY, argsParser.getDirectory());
-    }
 
     @Test
     public void returnsFalseIfPortIsNotValid() throws Exception {
         String[] args = {"-p", "-1"};
         ArgsParser argsParser = new ArgsParser(args);
-        Assert.assertFalse(argsParser.isAValidPortNumber());
+        Assert.assertEquals(Constants.DEFAULT_PORT, argsParser.getPort());
         Assert.assertEquals(Constants.DEFAULT_SERVER_DIRECTORY, argsParser.getDirectory());
     }
 
@@ -25,7 +18,7 @@ public class ArgsParserTest {
     public void returnsFalseIfPortIsNull() throws Exception {
         String[] args = {"-p", null};
         ArgsParser argsParser = new ArgsParser(args);
-        Assert.assertFalse(argsParser.isAValidPortNumber());
+        Assert.assertEquals(Constants.DEFAULT_PORT, argsParser.getPort());
         Assert.assertEquals(Constants.DEFAULT_SERVER_DIRECTORY, argsParser.getDirectory());
     }
 
@@ -34,7 +27,7 @@ public class ArgsParserTest {
         String[] args = {"-p","5000"};
         ArgsParser argsParser = new ArgsParser(args);
 
-        Assert.assertEquals(Constants.DEFAULT_PORT, argsParser.getPort());
+        Assert.assertEquals(5000, argsParser.getPort());
         Assert.assertEquals(Constants.DEFAULT_SERVER_DIRECTORY, argsParser.getDirectory());
     }
 
