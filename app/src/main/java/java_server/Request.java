@@ -6,6 +6,7 @@ public class Request {
     private String fullRequest;
     private String headerField;
     private String byteRange;
+    private String data;
     private String basicAuthCredentials;
     private boolean basic;
     private String etag;
@@ -35,13 +36,9 @@ public class Request {
         return basicAuthCredentials;
     }
 
-//    public String getEtag() {
-//        return etag;
-//    }
-
-//    public String getParameterValues() {
-//        return parameterValues;
-//    }
+    public String getData() {
+        return data;
+    }
 
     public void setHTTPMethod(String httpMethod) {
         this.httpMethod = httpMethod;
@@ -79,11 +76,7 @@ public class Request {
         this.basicAuthCredentials = basicAuthCredentials;
     }
 
-//    public void setEtag(String etag) {
-//        this.etag = etag;
-//    }
-
-//    public void setParameterValues(String parameterValues) {
-//        this.parameterValues = parameterValues;
-//    }
+    public void setData(String data) {
+        this.data = data;
+    }
 }

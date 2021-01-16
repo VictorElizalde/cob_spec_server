@@ -9,6 +9,7 @@ public class statusCode {
 
     public static HashMap<Integer, String> getStatusCode() {
         statusCodeMap.put(200, "200 OK");
+        statusCodeMap.put(201, "201 Created");
         statusCodeMap.put(206, "206 Partial Content");
         statusCodeMap.put(404, "404 Not Found");
         statusCodeMap.put(405, "405 Method Not Allowed");

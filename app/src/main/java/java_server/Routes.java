@@ -12,6 +12,7 @@ public class Routes {
     private HashMap<String, Responder> fileRouteMap = new HashMap<String, Responder>();
     private HashMap<String, Responder> logRouteMap = new HashMap<String, Responder>();
     private HashMap<String, Responder> partialContentMap = new HashMap<String, Responder>();
+    private HashMap<String, Responder> CRUDRouteMap = new HashMap<String, Responder>();
 
     public Routes(String directory) {
         this.directory = directory;
@@ -19,20 +20,21 @@ public class Routes {
 
     private HashMap<String, HashMap<String, Responder>> getRoutesMap(Request request) {
         routesMap.put("/", getRootMap());
-        routesMap.put("file1", getFileRouteMap(request));
-        routesMap.put("file2", getFileRouteMap(request));
-        routesMap.put("image.jpeg", getFileRouteMap(request));
-        routesMap.put("image.png", getFileRouteMap(request));
-        routesMap.put("image.gif", getFileRouteMap(request));
-        routesMap.put("text-file.txt", getFileRouteMap(request));
         routesMap.put("logs", getLogRouteMap(request));
-        routesMap.put("partial_content.txt", getPartialContentmap(request));
+
+        File routesDirectory = new File(directory);
+
+        if (routesDirectory != null) {
+            for (String file : routesDirectory.list()) {
+                routesMap.put(file, getFileRouteMap(request));
+            }
+        }
 
         return routesMap;
     }
 
     private HashMap<String, Responder> getRootMap() {
-        rootMap.put("GET", new RootResponder(Constants.DEFAULT_SERVER_VIEWS_DIRECTORY));
+        rootMap.put("GET", new RootResponder(directory));
 
         return rootMap;
     }
@@ -53,6 +55,14 @@ public class Routes {
         logRouteMap.put("HEAD", logResponder);
         logRouteMap.put("OPTIONS", logResponder);
         return logRouteMap;
+    }
+
+    private HashMap<String, Responder> getCRUDRouteMap(Request request) {
+        CRUDRouteMap.put("GET", new FileResponder(directory, request.getURI()));
+        CRUDRouteMap.put("PUT", new CRUDResponder(directory, request.getHTTPMethod(), request.getURI(), request.getData()));
+        CRUDRouteMap.put("DELETE", new CRUDResponder(directory, request.getHTTPMethod(), request.getURI(), request.getData()));
+
+        return CRUDRouteMap;
     }
 
     public String getOptions(Request request) {
@@ -101,6 +111,14 @@ public class Routes {
     }
 
     public Responder getHandler(Request request) {
+        if (request.getHTTPMethod().equals("PUT")) {
+            return new CRUDResponder(directory, request.getHTTPMethod(), request.getURI(), request.getData());
+        }
+
+        if (request.getHTTPMethod().equals("DELETE")) {
+            return new CRUDResponder(directory, request.getHTTPMethod(), request.getURI(), request.getData());
+        }
+
         if (!"GET,POST,HEAD,OPTIONS,PUT,DELETE".contains(request.getHTTPMethod())) return new NotImplementedResponder();
         if (isAValidMethod(request)) return getRoutesMap(request).get(request.getURI()).get(request.getHTTPMethod());
         if (request.getHTTPMethod().equals("HEAD") && request.getURI().equals("/")) return new HeadResponder();

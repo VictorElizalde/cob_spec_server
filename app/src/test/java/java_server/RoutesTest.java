@@ -8,7 +8,9 @@ import org.junit.Test;
 import java.io.File;
 import java.util.Arrays;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.assertTrue;
 
 public class RoutesTest {
     private Request request;
@@ -103,11 +105,15 @@ public class RoutesTest {
     }
 
     @Test
-    public void returnsRootHandlerWhenRootRequestIsMade() throws Exception {
+    public void returnsDirectoryContents() throws Exception {
         request.setHTTPMethod("GET");
         request.setURI("/");
 
-        Assert.assertThat(routes.getHandler(request), instanceOf(RootResponder.class));
+        Responder rootResponder = routes.getHandler(request);
+        String messageBody = new String(rootResponder.getMessageBody());
+
+        Assert.assertThat(messageBody, containsString("href='/file1'"));
+        Assert.assertThat(messageBody, containsString("href='/image.gif'"));
     }
 
     @Test
@@ -150,11 +156,11 @@ public class RoutesTest {
         Assert.assertThat(routes.getHandler(request), instanceOf(NotImplementedResponder.class));
     }
 
-    @Test
-    public void returnsPartialContent() throws Exception {
-        request.setHTTPMethod("GET");
-        request.setURI("partial_content.txt");
-
-        Assert.assertThat(routes.getHandler(request), instanceOf(PartialContentResponder.class));
-    }
+//    @Test
+//    public void returnsPartialContent() throws Exception {
+//        request.setHTTPMethod("GET");
+//        request.setURI("partial_content.txt");
+//
+//        Assert.assertThat(routes.getHandler(request), instanceOf(PartialContentResponder.class));
+//    }
 }

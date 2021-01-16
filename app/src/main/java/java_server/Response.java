@@ -7,6 +7,7 @@ public class Response {
     private statusCode statusCode;
     private int port;
     private Responder responder;
+    private byte[] responseBody;
 
     public Response(statusCode statusCode, Routes routes, int port) {
         this.routes = routes;
@@ -23,7 +24,8 @@ public class Response {
     }
 
     public byte[] getMessageBody(Request request) {
-        return responder.getMessageBody();
+        responseBody = responder.getMessageBody();
+        return responseBody;
     }
 
     public String getLocation() {
@@ -41,7 +43,7 @@ public class Response {
     }
 
     public String getContentLength(Request request) {
-        String httpMessageBodySize = Integer.toString(getMessageBody(request).length);
+        String httpMessageBodySize = Integer.toString(responseBody.length);
         return "Content-Length: " + httpMessageBodySize;
     }
 

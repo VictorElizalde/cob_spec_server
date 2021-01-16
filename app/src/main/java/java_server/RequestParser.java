@@ -1,11 +1,9 @@
 package java_server;
 
-//import javax.xml.bind.DatatypeConverter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URLDecoder;
 
 public class RequestParser {
     private InputStream inputStream;
@@ -26,8 +24,7 @@ public class RequestParser {
         request.setHeaderField(parseHeaderField());
         request.setByteRange(getByteRange());
         request.setBasicRequestStatus(isABasicAuthRequest());
-//        request.setEtag(parseEtag());
-//        request.setParameterValues(getDecodedParameterKey());
+        request.setData(parseData());
 
         return request;
     }
@@ -60,7 +57,6 @@ public class RequestParser {
     }
 
     private String parseURI() throws IOException {
-//        if (isAParameterRequest()) return "parameters";
         if (isARootRequest()) return "/";
 
         String[] splitOnBackslash = requestArray[1].split("/");
@@ -87,32 +83,9 @@ public class RequestParser {
         }
     }
 
-//    private boolean isAParameterRequest() throws IOException {
-//        try {
-//            String parameter = requestArray[1];
-//            String[] splitOnMark = parameter.split("\\?");
-//            String parameterString = splitOnMark[0];
-//
-//            return parameterString.equals("/parameters");
-//        } catch (ArrayIndexOutOfBoundsException e) {
-//
-//            return false;
-//        }
-//    }
-//
-//    private String getDecodedParameterKey() throws IOException {
-//        String[] splitOnMark = requestArray[1].split("\\?");
-//
-//        try {
-//            String parameters = splitOnMark[1];
-//            String paramsWithSpace = parameters.replaceAll("=", " = ");
-//            String paramsWithAmpSpace = paramsWithSpace.replaceAll("&", " ");
-//            return URLDecoder.decode(paramsWithAmpSpace, "UTF-8");
-//        } catch (ArrayIndexOutOfBoundsException e) {
-//
-//            return "Parameter key not given";
-//        }
-//    }
+    private String parseData() throws IOException {
+        return "Some text for a new file";
+    }
 
     private boolean isABasicAuthRequest() throws IOException {
         return requestArray[3].equals("Basic");
