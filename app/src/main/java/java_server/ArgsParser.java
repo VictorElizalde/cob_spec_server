@@ -12,8 +12,7 @@ public class ArgsParser {
 
     public static int findIndex(String arr[], String t)
     {
-        int index = Arrays.asList(arr).indexOf(t);
-        return index;
+        return Arrays.asList(arr).indexOf(t);
     }
 
     public int getPort() {
