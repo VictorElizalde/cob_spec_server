@@ -14,10 +14,10 @@ import static org.junit.Assert.assertEquals;
 public class ConnectionHandlerTest {
     @Test
     public void returnsFullRequestString() throws Exception {
-        InputStream inputStream = new ByteArrayInputStream("GET /file1 HTTP/1.1Host: localhost:5000".getBytes());
+        InputStream inputStream = new ByteArrayInputStream("GET /file1 HTTP/1.1\nHost: localhost:5000".getBytes());
         RequestParser requestParser = new RequestParser(inputStream);
 
         Request request = requestParser.parse();
-        assertEquals("GET /file1 HTTP/1.1Host: localhost:5000", request.getFullRequest());
+        assertEquals("GET /file1 HTTP/1.1\nHost: localhost:5000", request.getFullRequest());
     }
 }

@@ -17,8 +17,8 @@ public class RequestTest {
 
     @Test
     public void returnsTheFullRequest() throws Exception {
-        request.setFullRequest("GET /file1 HTTP/1.1Range: bytes=0-4Connection: closeHost: localhost:5000");
-        Assert.assertEquals("GET /file1 HTTP/1.1Range: bytes=0-4Connection: closeHost: localhost:5000", request.getFullRequest());
+        request.setFullRequest("GET /file1 HTTP/1.1\nRange: bytes=0-4\nHost: localhost:5000");
+        Assert.assertEquals("GET /file1 HTTP/1.1\nRange: bytes=0-4\nHost: localhost:5000", request.getFullRequest());
     }
 
     @Test
@@ -62,10 +62,4 @@ public class RequestTest {
         request.setBasicAuthCredentials("Credentials");
         Assert.assertEquals("Credentials", request.getBasicAuthCredentials());
     }
-
-//    @Test
-//    public void returnsEtag() throws Exception {
-//        request.setEtag("12345asdfasdf");
-//        Assert.assertEquals("12345asdfasdf", request.getEtag());
-//    }
 }
