@@ -6,13 +6,13 @@ import org.junit.Test;
 
 public class ResponseTest {
     private Request request;
-    private statusCode statusCode;
+    private StatusCode statusCode;
     private Response response;
     private Routes routes;
 
     @Before
     public void setUp() throws Exception {
-        statusCode = new statusCode();
+        statusCode = new StatusCode();
         routes = new Routes(Constants.DEFAULT_TEST_DIRECTORY);
         int port = 5000;
         response = new Response(statusCode, routes, port);
@@ -25,7 +25,7 @@ public class ResponseTest {
         request.setURI("file1");
         response.setResponder(request);
 
-        Assert.assertEquals(statusCode.getStatus(200), response.getStatusMessage(request));
+        Assert.assertEquals(statusCode.OK, response.getStatusMessage(request));
     }
 
     @Test

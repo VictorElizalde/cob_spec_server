@@ -8,7 +8,7 @@ public class MethodNotAllowedResponder implements Responder {
     }
 
     @Override
-    public String getStatusCode(statusCode statusCode) {
-        return statusCode.getStatus(405);
+    public String getStatusCode() {
+        return statusMessageCode.METHOD_NOT_ALLOWED;
     }
 }
