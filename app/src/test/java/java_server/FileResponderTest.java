@@ -9,13 +9,13 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 
 public class FileResponderTest {
-    private statusCode statusCode;
+    private StatusCode statusCode;
     private String testDirectory;
 
     @Before
     public void setUp() throws Exception {
         testDirectory = Constants.DEFAULT_TEST_DIRECTORY;
-        statusCode = new statusCode();
+        statusCode = new StatusCode();
     }
 
     @Test

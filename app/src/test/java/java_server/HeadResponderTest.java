@@ -7,7 +7,7 @@ import org.junit.Test;
 public class HeadResponderTest {
     @Test
     public void returns200WhenHeadIsNull() throws Exception {
-        statusCode statusCode = new statusCode();
+        StatusCode statusCode = new StatusCode();
         HeadResponder headResponder = new HeadResponder();
         byte[] fileBytes = headResponder.getMessageBody();
 

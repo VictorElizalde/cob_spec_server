@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class CRUDResponderTest {
-    private statusCode statusCode;
+    private StatusCode statusCode;
     private String testDirectory;
 
     @Before

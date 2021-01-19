@@ -8,9 +8,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class RootResponderTest {
+    private StatusCode statusCode;
+
+    @Before
+    public void setUp() throws Exception {
+        statusCode = new StatusCode();
+    }
+
     @Test
     public void returnsTestFileLink() throws Exception {
-        statusCode statusCode = new statusCode();
         String serverViewsDirectory = "../../java_server/test-2";
         RootResponder rootResponder = new RootResponder(serverViewsDirectory);
         byte[] fileBytes = rootResponder.getMessageBody();
@@ -21,7 +27,6 @@ public class RootResponderTest {
 
     @Test
     public void returnsDirectoryLinks() throws Exception {
-        statusCode statusCode = new statusCode();
         String serverViewsDirectory = "../../java_server/test-2";
         RootResponder rootResponder = new RootResponder(serverViewsDirectory);
         byte[] fileBytes = rootResponder.getMessageBody();
@@ -33,7 +38,6 @@ public class RootResponderTest {
 
     @Test
     public void returnsEmptyStringWhenDirectoryHasNoContents() throws Exception {
-        statusCode statusCode = new statusCode();
         String serverViewsDirectory = "../../java_server/empty-test-directory";
         RootResponder rootResponder = new RootResponder(serverViewsDirectory);
         byte[] fileBytes = rootResponder.getMessageBody();

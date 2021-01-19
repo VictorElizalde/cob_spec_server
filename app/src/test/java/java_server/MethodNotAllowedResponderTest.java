@@ -7,11 +7,11 @@ import org.junit.Test;
 public class MethodNotAllowedResponderTest {
     @Test
     public void returns405MethodNotAllowedWhenMethodNotAllowed() throws Exception {
-        statusCode statusCode = new statusCode();
+        StatusCode statusCode = new StatusCode();
         MethodNotAllowedResponder methodNotAllowedResponder = new MethodNotAllowedResponder();
         byte[] fileBytes = methodNotAllowedResponder.getMessageBody();
 
         Assert.assertTrue(new String(fileBytes).contains("405 Method Not Allowed"));
-        Assert.assertEquals("405 Method Not Allowed", methodNotAllowedResponder.getStatusCode());
+        Assert.assertEquals(statusCode.METHOD_NOT_ALLOWED, methodNotAllowedResponder.getStatusCode());
     }
 }

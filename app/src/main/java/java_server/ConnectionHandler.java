@@ -19,7 +19,7 @@ public class ConnectionHandler implements Runnable {
     public void run() {
         InputStream inputStream = requestHandler.getInputStream();
         RequestParser requestParser = new RequestParser(inputStream);
-        statusCode statusCode = new statusCode();
+        StatusCode statusCode = new StatusCode();
         Routes routes = new Routes(directory);
         Response response = new Response(statusCode, routes, port);
         ResponseParser responseParser = new ResponseParser(response);

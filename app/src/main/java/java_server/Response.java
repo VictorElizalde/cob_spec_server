@@ -4,12 +4,12 @@ import java.net.URLConnection;
 
 public class Response {
     private Routes routes;
-    private statusCode statusCode;
+    private StatusCode statusCode;
     private int port;
     private Responder responder;
     private byte[] responseBody;
 
-    public Response(statusCode statusCode, Routes routes, int port) {
+    public Response(StatusCode statusCode, Routes routes, int port) {
         this.routes = routes;
         this.statusCode = statusCode;
         this.port = port;

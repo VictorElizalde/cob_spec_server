@@ -7,11 +7,11 @@ import org.junit.Test;
 public class NotFoundResponderTest {
     @Test
     public void returns404NotFoundAsResponse() throws Exception {
-        statusCode statusCode = new statusCode();
+        StatusCode statusCode = new StatusCode();
         NotFoundResponder notFoundResponder = new NotFoundResponder();
         byte[] fileBytes = notFoundResponder.getMessageBody();
 
         Assert.assertTrue(new String(fileBytes).contains("404 File Not Found"));
-        Assert.assertEquals("404 Not Found", notFoundResponder.getStatusCode());
+        Assert.assertEquals(statusCode.NOT_FOUND, notFoundResponder.getStatusCode());
     }
 }
