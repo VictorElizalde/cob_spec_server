@@ -12,7 +12,7 @@ public class MethodNotAllowedResponderTest {
         MethodNotAllowedResponder methodNotAllowedResponder = new MethodNotAllowedResponder();
         byte[] fileBytes = methodNotAllowedResponder.getMessageBody();
 
-        Assert.assertTrue(new String(fileBytes).contains("405 Method Not Allowed"));
+        Assert.assertTrue(new String(fileBytes).contains(statusCode.METHOD_NOT_ALLOWED));
         Assert.assertEquals(statusCode.METHOD_NOT_ALLOWED, methodNotAllowedResponder.getStatusCode());
     }
 }

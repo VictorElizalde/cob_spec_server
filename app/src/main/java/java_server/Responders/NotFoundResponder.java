@@ -3,7 +3,7 @@ package java_server.Responders;
 public class NotFoundResponder implements Responder {
     @Override
     public byte[] getMessageBody() {
-        return "404 File Not Found".getBytes();
+        return statusMessageCode.NOT_FOUND.getBytes();
     }
 
     @Override

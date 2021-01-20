@@ -4,7 +4,7 @@ public class NotImplementedResponder implements Responder {
 
     @Override
     public byte[] getMessageBody() {
-        return "501 Not Implemented".getBytes();
+        return statusMessageCode.NOT_IMPLEMENTED.getBytes();
     }
 
     @Override

@@ -4,7 +4,7 @@ public class MethodNotAllowedResponder implements Responder {
 
     @Override
     public byte[] getMessageBody() {
-        return "405 Method Not Allowed".getBytes();
+        return statusMessageCode.METHOD_NOT_ALLOWED.getBytes();
     }
 
     @Override
