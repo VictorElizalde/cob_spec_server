@@ -16,7 +16,7 @@ public class RequestParser {
     public Request parse() throws IOException {
         Request request = new Request();
         String requestString = convertRequestToString();
-        requestArray = requestString.split(" ");
+        requestArray = requestString.split("\n");
 
         request.setFullRequest(requestString);
         request.setHTTPMethod(parseHTTPMethod());
@@ -34,48 +34,41 @@ public class RequestParser {
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
         StringBuilder requestBuilder = new StringBuilder();
-        String line;
+
         try {
             do {
-                line = bufferedReader.readLine();
-                requestBuilder.append(line);
-                if (line.equals("")) break;
+                int c = bufferedReader.read();
+                if (c > -1) requestBuilder.append((char) c);
+                else break;
             } while (bufferedReader.ready());
         } catch (Exception e) {
             System.out.println("Request not readable");
         }
-
         return requestBuilder.toString();
     }
 
     private String parseHTTPMethod() throws IOException {
-        return requestArray[0];
+        return requestArray[0].split(" ")[0];
     }
 
     private boolean isARootRequest() {
-        return (requestArray[1].equals("/"));
+        return (requestArray[0].split(" ")[1].equals("/"));
     }
 
     private String parseURI() throws IOException {
         if (isARootRequest()) return "/";
 
-        String[] splitOnBackslash = requestArray[1].split("/");
+        String[] splitOnBackslash = requestArray[0].split(" ")[1].split("/");
         return splitOnBackslash[1];
     }
 
     private String parseHeaderField() throws IOException {
-        String header = requestArray[2];
-        int lastIndex = header.lastIndexOf("1");
-        String protocol = header.substring(0, lastIndex + 1);
-        String[] splitOnProtocol = header.split(protocol);
-
-        return splitOnProtocol[1];
+        return requestArray[1].split(" ")[0];
     }
 
     private String getByteRange() throws IOException {
         try {
-            String[] splitOnHost = requestArray[3].split("Host:");
-            String[] splitOnBytes = splitOnHost[0].split("bytes=");
+            String[] splitOnBytes = requestArray[1].split("bytes=");
             return splitOnBytes[1];
         } catch (ArrayIndexOutOfBoundsException e){
 
@@ -84,10 +77,10 @@ public class RequestParser {
     }
 
     private String parseData() throws IOException {
-        return "Some text for a new file";
+        return requestArray[requestArray.length-1];
     }
 
     private boolean isABasicAuthRequest() throws IOException {
-        return requestArray[3].equals("Basic");
+        return requestArray[1].split(" ")[1].equals("Basic");
     }
 }
