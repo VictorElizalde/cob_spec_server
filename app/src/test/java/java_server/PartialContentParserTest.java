@@ -43,18 +43,18 @@ public class PartialContentParserTest {
     @Test
     public void returnsPartialContentForByteRangeZeroToSixRequest() throws Exception {
         String byteRange = "0-6";
-        PartialContentParser partialContentParser = new PartialContentParser(byteRange);
+        PartialContentParser aaa = new PartialContentParser(byteRange);
 
-        Assert.assertEquals("This is" , new String(partialContentParser.getPartialContent(data)));
+        Assert.assertEquals("This is" , new String(aaa.getPartialContent(data)));
     }
 
     @Test
-    public void returnswhenNegativeRangeExceedsTotal() {
+    public void returnsWhenNegativeRangeExceedsTotal() {
         Assert.assertEquals(-1, partialContentParser.getMinRange(null, "77", data.length));
     }
 
     @Test
-    public void returnswhenNegativeRangeEqualsTotal() {
+    public void returnsWhenNegativeRangeEqualsTotal() {
         Assert.assertEquals(0, partialContentParser.getMinRange(null, "76", data.length));
     }
 }

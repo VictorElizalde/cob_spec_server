@@ -39,9 +39,15 @@ public class ResponseParser {
     }
 
     public byte[] formatContentLength(Request request) {
-        String contentLength = response.getContentLength(request) + NEW_LINE + NEW_LINE;
+        String contentLength = response.getContentLength() + NEW_LINE + NEW_LINE;
 
         return contentLength.getBytes();
+    }
+
+    public byte[] formatContentRange(Request request) {
+        String contentRange = response.getContentRange(request) + NEW_LINE;
+
+        return contentRange.getBytes();
     }
 
     public byte[] buildResponse(Request request) throws IOException {
@@ -53,6 +59,7 @@ public class ResponseParser {
         byteArrayOutputStream.write(formatLocationHeader());
         byteArrayOutputStream.write(formatContentTypeHeader(request));
         byteArrayOutputStream.write(formatAllowHeader(request));
+        if (request.getByteRange() != null) byteArrayOutputStream.write(formatContentRange(request));
         byteArrayOutputStream.write(formatContentLength(request));
         byteArrayOutputStream.write(body);
 

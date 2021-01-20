@@ -6,6 +6,7 @@ public class Request {
     private String fullRequest;
     private String headerField;
     private String byteRange;
+    private String byteLength;
     private String data;
     private String basicAuthCredentials;
     private boolean basic;
@@ -30,6 +31,10 @@ public class Request {
 
     public String getByteRange() {
         return byteRange;
+    }
+
+    public String getByteLength() {
+        return byteLength;
     }
 
     public String getBasicAuthCredentials() {
@@ -62,6 +67,10 @@ public class Request {
 
     public void setByteRange(String byteRange) {
         this.byteRange = byteRange;
+    }
+
+    public void setByteLength(String byteLength) {
+        this.byteLength = byteLength;
     }
 
     public void setBasicRequestStatus(boolean basic) {

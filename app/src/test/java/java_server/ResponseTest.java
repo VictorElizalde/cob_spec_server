@@ -15,7 +15,7 @@ public class ResponseTest {
         statusCode = new StatusCode();
         routes = new Routes(Constants.DEFAULT_TEST_DIRECTORY);
         int port = 5000;
-        response = new Response(statusCode, routes, port);
+        response = new Response(statusCode, routes, port, Constants.DEFAULT_TEST_DIRECTORY);
         request = new Request();
     }
 
@@ -93,7 +93,7 @@ public class ResponseTest {
 
         byte[] responseBody = response.getMessageBody(request);
 
-        Assert.assertEquals("Content-Length: 14", response.getContentLength(request));
+        Assert.assertEquals("Content-Length: 14", response.getContentLength());
     }
 
     @Test
@@ -104,7 +104,7 @@ public class ResponseTest {
 
         byte[] responseBody = response.getMessageBody(request);
 
-        Assert.assertEquals("Content-Length: 108763", response.getContentLength(request));
+        Assert.assertEquals("Content-Length: 108763", response.getContentLength());
     }
 
     @Test
@@ -112,5 +112,18 @@ public class ResponseTest {
         request.setURI("file1");
 
         Assert.assertEquals("Allow: HEAD,DELETE,GET,OPTIONS,PUT", response.getAllowHeader(request));
+    }
+
+    @Test
+    public void returnContentRangeForPartialContentFile() throws Exception {
+        request.setHTTPMethod("GET");
+        request.setURI("partial_content.txt");
+        request.setByteRange("0-4");
+        request.setByteLength("77");
+        response.setResponder(request);
+
+        byte[] responseBody = response.getMessageBody(request);
+
+        Assert.assertEquals("Content-Range: bytes 0-4/77", response.getContentRange(request));
     }
 }

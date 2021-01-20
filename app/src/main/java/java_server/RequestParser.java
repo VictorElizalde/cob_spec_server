@@ -4,17 +4,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class RequestParser {
     private InputStream inputStream;
     private String[] requestArray;
+    private String directory;
+    private Request request;
 
-    public RequestParser(InputStream inputStream) {
+    public RequestParser(InputStream inputStream, String directory) {
         this.inputStream = inputStream;
+        this.directory = directory;
     }
 
     public Request parse() throws IOException {
-        Request request = new Request();
+        request = new Request();
         String requestString = convertRequestToString();
         requestArray = requestString.split("\n");
 
@@ -23,6 +28,7 @@ public class RequestParser {
         request.setURI(parseURI());
         request.setHeaderField(parseHeaderField());
         request.setByteRange(getByteRange());
+        request.setByteLength(getByteLength());
         request.setBasicRequestStatus(isABasicAuthRequest());
         request.setData(parseData());
 
@@ -69,10 +75,18 @@ public class RequestParser {
     private String getByteRange() throws IOException {
         try {
             String[] splitOnBytes = requestArray[1].split("bytes=");
-            return splitOnBytes[1];
+            String cleanBytes = splitOnBytes[1].replace("\n", "").replace("\r", "");
+            return cleanBytes;
         } catch (ArrayIndexOutOfBoundsException e){
-
             return "Range not given";
+        }
+    }
+
+    private String getByteLength() throws IOException {
+        try {
+            return Integer.toString(Files.readAllBytes(Paths.get(directory + "/" + request.getURI())).length);
+        } catch (IOException e){
+            return "File doesn't exist";
         }
     }
 

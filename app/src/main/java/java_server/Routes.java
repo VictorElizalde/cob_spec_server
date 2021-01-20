@@ -74,8 +74,8 @@ public class Routes {
         }
     }
 
-    private HashMap<String, Responder> getPartialContentmap(Request request) {
-        partialContentMap.put("GET", new PartialContentResponder(directory, request.getURI(),request.getByteRange()));
+    private HashMap<String, Responder> getPartialContentMap(Request request) {
+        partialContentMap.put("GET", new PartialContentResponder(directory, request.getURI(), request.getByteRange()));
 
         return partialContentMap;
     }
@@ -111,14 +111,12 @@ public class Routes {
     }
 
     public Responder getHandler(Request request) {
-        if (request.getHTTPMethod().equals("PUT")) {
-            return new CRUDResponder(directory, request.getHTTPMethod(), request.getURI(), request.getData());
+        if (request.getByteRange() != null && !request.getByteRange().equals("Range not given") && isAnExistingFileInDirectory(getDirectoryFileNames(), request)) {
+            return getPartialContentMap(request).get(request.getHTTPMethod());
         }
-
-        if (request.getHTTPMethod().equals("DELETE")) {
-            return new CRUDResponder(directory, request.getHTTPMethod(), request.getURI(), request.getData());
+        if (request.getHTTPMethod().equals("PUT") || (request.getHTTPMethod().equals("DELETE") && isAnExistingFileInDirectory(getDirectoryFileNames(), request))) {
+            return getCRUDRouteMap(request).get(request.getHTTPMethod());
         }
-
         if (!"GET,POST,HEAD,OPTIONS,PUT,DELETE".contains(request.getHTTPMethod())) return new NotImplementedResponder();
         if (isAValidMethod(request)) return getRoutesMap(request).get(request.getURI()).get(request.getHTTPMethod());
         if (request.getHTTPMethod().equals("HEAD") && request.getURI().equals("/")) return new HeadResponder();

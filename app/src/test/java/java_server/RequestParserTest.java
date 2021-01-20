@@ -12,16 +12,18 @@ public class RequestParserTest {
     private Request defaultRequest;
 
     public Request setRequest(String request_body) throws Exception {
+        String directory = Constants.DEFAULT_TEST_DIRECTORY;
         InputStream inputStream = new ByteArrayInputStream(request_body.getBytes());
-        Request request = new RequestParser(inputStream).parse();
+        Request request = new RequestParser(inputStream, directory).parse();
 
         return request;
     }
 
     @Before
     public void setUp() throws Exception {
+        String directory = Constants.DEFAULT_TEST_DIRECTORY;
         InputStream inputStream = new ByteArrayInputStream("GET /file1 HTTP/1.1\nHost: localhost:5000".getBytes());
-        defaultRequest = new RequestParser(inputStream).parse();
+        defaultRequest = new RequestParser(inputStream, directory).parse();
     }
 
     @Test
@@ -73,6 +75,14 @@ public class RequestParserTest {
         Request request = setRequest("GET /file1 HTTP/1.1\nRange: bytes=-4\nHost: localhost:5000");
 
         Assert.assertEquals("-4", request.getByteRange());
+    }
+
+    @Test
+    public void returnsByteLength() throws Exception {
+        Request request = setRequest("GET /partial_content.txt HTTP/1.1\nRange: bytes=0-4\nHost: localhost:5000");
+
+        Assert.assertEquals("0-4", request.getByteRange());
+        Assert.assertEquals("77", request.getByteLength());
     }
 
     @Test

@@ -18,10 +18,10 @@ public class ConnectionHandler implements Runnable {
     @Override
     public void run() {
         InputStream inputStream = requestHandler.getInputStream();
-        RequestParser requestParser = new RequestParser(inputStream);
+        RequestParser requestParser = new RequestParser(inputStream, directory);
         StatusCode statusCode = new StatusCode();
         Routes routes = new Routes(directory);
-        Response response = new Response(statusCode, routes, port);
+        Response response = new Response(statusCode, routes, port, directory);
         ResponseParser responseParser = new ResponseParser(response);
 
         try {

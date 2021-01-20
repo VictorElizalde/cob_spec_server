@@ -14,11 +14,10 @@ public class PartialContentParser {
 
     public byte[] getPartialContent(byte[] data) throws Exception {
         Matcher byteMatcher = bytePattern.matcher(byteRange);
-        byteMatcher.matches();
+        byteMatcher.find();
 
         int minRange = getMinRange(byteMatcher.group(1), byteMatcher.group(2), data.length);
         int maxRange = getMaxRange(byteMatcher.group(1), byteMatcher.group(2), data.length);
-
         return Arrays.copyOfRange(data, minRange, maxRange);
     }
 

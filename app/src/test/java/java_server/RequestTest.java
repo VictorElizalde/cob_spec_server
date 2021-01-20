@@ -52,6 +52,12 @@ public class RequestTest {
     }
 
     @Test
+    public void returnsTheByteLength() throws Exception {
+        request.setByteLength("77");
+        Assert.assertEquals("77", request.getByteLength());
+    }
+
+    @Test
     public void returnsTrueIfRequestHeaderFieldIsAnAuthorizationRequest() throws Exception {
         request.setBasicRequestStatus(true);
         assertTrue(request.isABasicAuthRequest());

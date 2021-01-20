@@ -14,7 +14,7 @@ public class ResponseParserTest {
         StatusCode statusCode = new StatusCode();
         Routes routes = new Routes(Constants.DEFAULT_TEST_DIRECTORY);
         int port = 5000;
-        Response response = new Response(statusCode, routes, port);
+        Response response = new Response(statusCode, routes, port, Constants.DEFAULT_TEST_DIRECTORY);
         responseParser = new ResponseParser(response);
         request.setHTTPMethod("GET");
         request.setURI("file1");
@@ -53,6 +53,15 @@ public class ResponseParserTest {
     }
 
     @Test
+    public void formatsContentRange() throws Exception {
+        request.setHTTPMethod("GET");
+        request.setURI("partial_content.txt");
+        request.setByteRange("0-4");
+        request.setByteLength("77");
+        Assert.assertEquals("Content-Range: bytes 0-4/77\r\n", new String(responseParser.formatContentRange(request)));
+    }
+
+    @Test
     public void presentsTheResponseInAnOutputStream() throws Exception {
         String response = "HTTP/1.1 200 OK\r\n" +
                 "Location: http://localhost:5000/\r\n" +
@@ -61,6 +70,25 @@ public class ResponseParserTest {
                 "Content-Length: 14\r\n" +
                 "\r\n" +
                 "file1 contents";
+
+        Assert.assertEquals(response, new String(responseParser.buildResponse(request)));
+    }
+
+    @Test
+    public void presentsTheResponseInAnOutputStreamForRange() throws Exception {
+        request.setHTTPMethod("GET");
+        request.setURI("partial_content.txt");
+        request.setByteRange("0-4");
+        request.setByteLength("77");
+
+        String response = "HTTP/1.1 206 Partial Content\r\n" +
+                "Location: http://localhost:5000/\r\n" +
+                "Content-Type: text/plain\r\n" +
+                "Allow: HEAD,DELETE,GET,OPTIONS,PUT\r\n" +
+                "Content-Range: bytes 0-4/77\r\n" +
+                "Content-Length: 5\r\n" +
+                "\r\n" +
+                "This ";
 
         Assert.assertEquals(response, new String(responseParser.buildResponse(request)));
     }

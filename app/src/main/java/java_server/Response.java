@@ -1,18 +1,23 @@
 package java_server;
 
+import java.io.IOException;
 import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Response {
     private Routes routes;
     private StatusCode statusCode;
     private int port;
+    private String directory;
     private Responder responder;
     private byte[] responseBody;
 
-    public Response(StatusCode statusCode, Routes routes, int port) {
+    public Response(StatusCode statusCode, Routes routes, int port, String directory) {
         this.routes = routes;
         this.statusCode = statusCode;
         this.port = port;
+        this.directory = directory;
     }
 
     public void setResponder(Request request) {
@@ -42,9 +47,13 @@ public class Response {
         return "Content-Type: " + type;
     }
 
-    public String getContentLength(Request request) {
+    public String getContentLength() {
         String httpMessageBodySize = Integer.toString(responseBody.length);
         return "Content-Length: " + httpMessageBodySize;
+    }
+
+    public String getContentRange(Request request) {
+        return "Content-Range: bytes " + request.getByteRange() + "/" + request.getByteLength();
     }
 
     public String getAllowHeader(Request request) {
