@@ -11,7 +11,7 @@ public class ResponseParserTest {
     @Before
     public void setUp() throws Exception {
         request = new Request();
-        statusCode statusCode = new statusCode();
+        StatusCode statusCode = new StatusCode();
         Routes routes = new Routes(Constants.DEFAULT_TEST_DIRECTORY);
         int port = 5000;
         Response response = new Response(statusCode, routes, port);

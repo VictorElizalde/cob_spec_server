@@ -10,7 +10,7 @@ public class CRUDResponder implements Responder {
     private String directory;
     private String uri;
     private String httpMethod;
-    private Integer statusCode;
+    private String statusCode;
     private String content;
     private static HashMap<String, byte[]> CRUDMap = new HashMap<String, byte[]>();
 
@@ -39,8 +39,8 @@ public class CRUDResponder implements Responder {
     }
 
     @Override
-    public String getStatusCode(statusCode statusCode) {
-        return statusCode.getStatus(this.statusCode);
+    public String getStatusCode() {
+        return statusCode;
     }
 
     private Path performCRUD() throws IOException {
@@ -54,21 +54,22 @@ public class CRUDResponder implements Responder {
     }
 
     private Path createPath() throws IOException {
-        return writeToFile(201);
+        statusCode = statusMessageCode.CREATED;
+        return writeToFile();
     }
 
     private Path updatePath() throws IOException {
-        return writeToFile(200);
+        statusCode = statusMessageCode.OK;
+        return writeToFile();
     }
 
     private Path deletePath() throws IOException {
         Files.delete(getPath());
-        statusCode = 200;
+        statusCode = statusMessageCode.OK;
         return getPath();
     }
 
-    private Path writeToFile(Integer statusCode) throws IOException {
-        this.statusCode = statusCode;
+    private Path writeToFile() throws IOException {
         return Files.write(getPath(), content.getBytes());
     }
 

@@ -7,7 +7,7 @@ public class NotFoundResponder implements Responder {
     }
 
     @Override
-    public String getStatusCode(statusCode statusCode) {
-        return statusCode.getStatus(404);
+    public String getStatusCode() {
+        return statusMessageCode.NOT_FOUND;
     }
 }
