@@ -120,7 +120,7 @@ public class ResponseTest {
     }
 
     @Test
-    public void returnContentRangeForPartialContentFile() throws Exception {
+    public void returnContentRangeForPartialContentFileWithDefinedRange() throws Exception {
         request.setHTTPMethod("GET");
         request.setURI("partial_content.txt");
         request.setByteRange("0-4");
@@ -130,5 +130,44 @@ public class ResponseTest {
         byte[] responseBody = response.getMessageBody(request);
 
         Assert.assertEquals("Content-Range: bytes 0-4/77", response.getContentRange(request));
+    }
+
+    @Test
+    public void returnContentRangeForPartialContentFileWithOnlyMaxRange() throws Exception {
+        request.setHTTPMethod("GET");
+        request.setURI("partial_content.txt");
+        request.setByteRange("-6");
+        request.setByteLength("77");
+        response.setResponder(request);
+
+        byte[] responseBody = response.getMessageBody(request);
+
+        Assert.assertEquals("Content-Range: bytes 71-76/77", response.getContentRange(request));
+    }
+
+    @Test
+    public void returnContentRangeForPartialContentFileWithOnlyMinRange() throws Exception {
+        request.setHTTPMethod("GET");
+        request.setURI("partial_content.txt");
+        request.setByteRange("4-");
+        request.setByteLength("77");
+        response.setResponder(request);
+
+        byte[] responseBody = response.getMessageBody(request);
+
+        Assert.assertEquals("Content-Range: bytes 4-76/77", response.getContentRange(request));
+    }
+
+    @Test
+    public void returnContentRangeForPartialContentFileWithWrongRange() throws Exception {
+        request.setHTTPMethod("GET");
+        request.setURI("partial_content.txt");
+        request.setByteRange("5-0");
+        request.setByteLength("77");
+        response.setResponder(request);
+
+        byte[] responseBody = response.getMessageBody(request);
+
+        Assert.assertEquals("Content-Range: bytes */77", response.getContentRange(request));
     }
 }
