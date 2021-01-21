@@ -1,11 +1,12 @@
 package java_server.Parsers;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PartialContentParser {
-    private static final Pattern bytePattern = Pattern.compile("^([0-9])?-([0-9])?$");
+    private static final Pattern bytePattern = Pattern.compile("^([0-9]*)-([0-9]*)$");
     private String byteRange;
 
     public PartialContentParser(String byteRange) {
@@ -13,31 +14,52 @@ public class PartialContentParser {
     }
 
     public byte[] getPartialContent(byte[] data) throws Exception {
-        Matcher byteMatcher = bytePattern.matcher(byteRange);
-        byteMatcher.find();
+        String[] minMaxRange;
+        minMaxRange = getRanges(data);
 
-        int minRange = getMinRange(byteMatcher.group(1), byteMatcher.group(2), data.length);
-        int maxRange = getMaxRange(byteMatcher.group(1), byteMatcher.group(2), data.length);
-        return Arrays.copyOfRange(data, minRange, maxRange);
+        return Arrays.copyOfRange(data, Integer.parseInt(minMaxRange[0]), Integer.parseInt(minMaxRange[1]));
+    }
+
+    public String[] getRanges(byte[] data) throws Exception {
+        String[] minMaxRange = new String[2];
+        Matcher byteMatcher = bytePattern.matcher(byteRange);
+        byteMatcher.matches();
+
+        if (!byteMatcher.group(1).equals("") && !byteMatcher.group(2).equals("")) {
+            if (Integer.parseInt(byteMatcher.group(1)) > Integer.parseInt(byteMatcher.group(2)))
+                throw new Exception("Wrong byte format");
+        } else if (!byteMatcher.group(1).equals("")) {
+            if (data.length == Integer.parseInt(byteMatcher.group(1)))
+                throw new Exception("Wrong byte format");
+        }
+
+        minMaxRange[0] = String.valueOf(getMinRange(byteMatcher.group(1), byteMatcher.group(2), data.length));
+        minMaxRange[1] = String.valueOf(getMaxRange(byteMatcher.group(1), byteMatcher.group(2), data.length));
+
+        return minMaxRange;
     }
 
     public int getMinRange(String minMatch, String maxMatch, int dataContentLength) {
-        if (minMatch != null) {
+        if (!minMatch.equals("")) {
             return Integer.parseInt(minMatch);
-        } else {
+        } else if (Integer.parseInt(maxMatch) <= dataContentLength) {
             return dataContentLength - (Integer.parseInt(maxMatch));
+        } else {
+            return 0;
         }
     }
 
     public int getMaxRange(String minMatch, String maxMatch, int dataContentLength) {
-        if (maxMatch != null) {
-            if (minMatch == null) {
-                return dataContentLength;
-            } else {
-                return Integer.parseInt(maxMatch) + 1;
+        if (!maxMatch.equals("")) {
+            if (Integer.parseInt(maxMatch) <= dataContentLength) {
+                if (minMatch.equals("")) {
+                    return dataContentLength;
+                } else {
+                    return Integer.parseInt(maxMatch) + 1;
+                }
             }
-        } else {
-            return dataContentLength;
         }
+
+        return dataContentLength;
     }
 }

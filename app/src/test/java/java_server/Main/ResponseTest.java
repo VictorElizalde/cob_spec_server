@@ -170,4 +170,17 @@ public class ResponseTest {
 
         Assert.assertEquals("Content-Range: bytes */77", response.getContentRange(request));
     }
+
+    @Test
+    public void returnContentRangeForPartialContentFileWithEqualToTotalRange() throws Exception {
+        request.setHTTPMethod("GET");
+        request.setURI("partial_content.txt");
+        request.setByteRange("77-");
+        request.setByteLength("77");
+        response.setResponder(request);
+
+        byte[] responseBody = response.getMessageBody(request);
+
+        Assert.assertEquals("Content-Range: bytes */77", response.getContentRange(request));
+    }
 }

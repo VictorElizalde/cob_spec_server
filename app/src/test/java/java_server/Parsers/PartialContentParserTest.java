@@ -18,7 +18,7 @@ public class PartialContentParserTest {
 
     @Test
     public void returnsTotalSizeMinusNegativeRange() throws Exception {
-        Assert.assertEquals(data.length - 5, partialContentParser.getMinRange(null, "5", data.length));
+        Assert.assertEquals(data.length - 5, partialContentParser.getMinRange("", "5", data.length));
     }
 
     @Test
@@ -28,12 +28,17 @@ public class PartialContentParserTest {
 
     @Test
     public void returnsTheMaxRangePositive76WhenMinMatchIs4() throws Exception {
-        Assert.assertEquals(data.length, partialContentParser.getMaxRange("4", null, data.length));
+        Assert.assertEquals(data.length, partialContentParser.getMaxRange("4", "", data.length));
     }
 
     @Test
-    public void returnsTheMaxRangePositive5WhenMinmatchIs0AndMaxMatchIs4() throws Exception {
+    public void returnsTheMaxRangePositive5WhenMinMatchIs0AndMaxMatchIs4() throws Exception {
         Assert.assertEquals(5, partialContentParser.getMaxRange("0", "4", data.length));
+    }
+
+    @Test
+    public void returnsTheMaxRangePositive76WhenMinMatchIs0AndMaxMatchIs78() throws Exception {
+        Assert.assertEquals(76, partialContentParser.getMaxRange("", "78", data.length));
     }
 
     @Test
@@ -44,18 +49,21 @@ public class PartialContentParserTest {
     @Test
     public void returnsPartialContentForByteRangeZeroToSixRequest() throws Exception {
         String byteRange = "0-6";
-        PartialContentParser aaa = new PartialContentParser(byteRange);
+        PartialContentParser partialContentParser = new PartialContentParser(byteRange);
 
-        Assert.assertEquals("This is" , new String(aaa.getPartialContent(data)));
+        Assert.assertEquals("This is" , new String(partialContentParser.getPartialContent(data)));
     }
 
     @Test
-    public void returnsWhenNegativeRangeExceedsTotal() {
-        Assert.assertEquals(-1, partialContentParser.getMinRange(null, "77", data.length));
+    public void returnsPartialContentForByteRangeThatExceeds() throws Exception {
+        String byteRange = "-78";
+        PartialContentParser partialContentParser = new PartialContentParser(byteRange);
+
+        Assert.assertEquals("This is a file that contains text to read part of in order to fulfill a 206." , new String(partialContentParser.getPartialContent(data)));
     }
 
     @Test
-    public void returnsWhenNegativeRangeEqualsTotal() {
-        Assert.assertEquals(0, partialContentParser.getMinRange(null, "76", data.length));
+    public void returns0WhenRangeExceedsTotal() {
+        Assert.assertEquals(0, partialContentParser.getMinRange("", "78", data.length));
     }
 }

@@ -27,12 +27,12 @@ public class PartialContentResponderTest {
     }
 
     @Test
-    public void returnsPartialContentForByteRangeZeroToSixRequest() throws Exception {
+    public void returnsPartialContentForMultipleDigitRange() throws Exception {
         String uri = "partial_content.txt";
-        String byteRange = "0-6";
+        String byteRange = "75-80";
         PartialContentResponder partialContentResponder = new PartialContentResponder(testDirectory, uri, byteRange);
 
-        Assert.assertEquals("This is" , new String(partialContentResponder.getMessageBody()));
+        Assert.assertEquals(".\n" , new String(partialContentResponder.getMessageBody()));
         Assert.assertEquals(statusCode.PARTIAL_CONTENT, partialContentResponder.getStatusCode());
     }
 }
