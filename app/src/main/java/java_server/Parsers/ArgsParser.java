@@ -25,7 +25,7 @@ public class ArgsParser {
         return (isAValidDirectory()) ? String.valueOf(args[findIndex(args, "-d") + 1]) : Constants.DEFAULT_SERVER_DIRECTORY;
     }
 
-    public boolean isAValidPortNumber() {
+    private boolean isAValidPortNumber() {
         try {
             return findIndex(args, "-p") != -1 && args[findIndex(args, "-p") + 1] != null && Integer.parseInt(args[findIndex(args, "-p") + 1]) > 0;
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -33,7 +33,7 @@ public class ArgsParser {
         }
     }
 
-    public boolean isAValidDirectory() {
+    private boolean isAValidDirectory() {
         try {
 
             if (findIndex(args, "-d") != -1 && args[findIndex(args, "-d") + 1] != null) {

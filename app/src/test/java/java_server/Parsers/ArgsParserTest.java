@@ -8,19 +8,17 @@ import org.junit.Test;
 public class ArgsParserTest {
 
     @Test
-    public void returnsFalseIfPortIsNotValid() throws Exception {
+    public void setsPortToDefaultWhenInvalid() throws Exception {
         String[] args = {"-p", "-1"};
         ArgsParser argsParser = new ArgsParser(args);
         Assert.assertEquals(Constants.DEFAULT_PORT, argsParser.getPort());
-        Assert.assertEquals(Constants.DEFAULT_SERVER_DIRECTORY, argsParser.getDirectory());
     }
 
     @Test
-    public void returnsFalseIfPortIsNull() throws Exception {
+    public void setsPortToDefaultIfPortIsNull() throws Exception {
         String[] args = {"-p", null};
         ArgsParser argsParser = new ArgsParser(args);
         Assert.assertEquals(Constants.DEFAULT_PORT, argsParser.getPort());
-        Assert.assertEquals(Constants.DEFAULT_SERVER_DIRECTORY, argsParser.getDirectory());
     }
 
     @Test
@@ -37,7 +35,6 @@ public class ArgsParserTest {
         String[] args = {"-p", "-1"};
         ArgsParser argsParser = new ArgsParser(args);
         Assert.assertEquals(Constants.DEFAULT_PORT, argsParser.getPort());
-        Assert.assertEquals(Constants.DEFAULT_SERVER_DIRECTORY, argsParser.getDirectory());
     }
 
     @Test
@@ -49,10 +46,9 @@ public class ArgsParserTest {
     }
 
     @Test
-    public void returnsTheDefaultOptionsWhenPassingDirectoryWithNoInfo() throws Exception {
+    public void returnsTheDefaultDirectoryWhenPassingDirectoryWithNoInfo() throws Exception {
         String[] args = {"-d"};
         ArgsParser argsParser = new ArgsParser(args);
-        Assert.assertEquals(Constants.DEFAULT_PORT, argsParser.getPort());
         Assert.assertEquals(Constants.DEFAULT_SERVER_DIRECTORY, argsParser.getDirectory());
     }
 
@@ -69,7 +65,6 @@ public class ArgsParserTest {
         String[] args = {};
         ArgsParser argsParser = new ArgsParser(args);
         Assert.assertEquals(Constants.DEFAULT_PORT, argsParser.getPort());
-        Assert.assertEquals(Constants.DEFAULT_SERVER_DIRECTORY, argsParser.getDirectory());
     }
 
     @Test
@@ -77,7 +72,6 @@ public class ArgsParserTest {
         String[] args = {"-d", Constants.DEFAULT_TEST_DIRECTORY};
         ArgsParser argsParser = new ArgsParser(args);
         Assert.assertEquals(Constants.DEFAULT_TEST_DIRECTORY, argsParser.getDirectory());
-        Assert.assertEquals(Constants.DEFAULT_PORT, argsParser.getPort());
     }
 
     @Test
@@ -85,22 +79,19 @@ public class ArgsParserTest {
         String[] args = {};
         ArgsParser argsParser = new ArgsParser(args);
         Assert.assertEquals(Constants.DEFAULT_SERVER_DIRECTORY, argsParser.getDirectory());
-        Assert.assertEquals(Constants.DEFAULT_PORT, argsParser.getPort());
     }
 
     @Test
-    public void returnsTrueIfDirectoryIsAValidString() throws Exception {
+    public void returnsDirectoryIfIsAValidString() throws Exception {
         String[] args = {"-d", Constants.DEFAULT_TEST_DIRECTORY};
         ArgsParser argsParser = new ArgsParser(args);
-        Assert.assertTrue(argsParser.isAValidDirectory());
-        Assert.assertEquals(Constants.DEFAULT_PORT, argsParser.getPort());
+        Assert.assertEquals(Constants.DEFAULT_TEST_DIRECTORY, argsParser.getDirectory());
     }
 
     @Test
-    public void returnsFalseIfDirectoryIsNotValid() throws Exception {
+    public void returnsDefaultIfDirectoryIsNotValid() throws Exception {
         String[] args = {"-d", null};
         ArgsParser argsParser = new ArgsParser(args);
-        Assert.assertFalse(argsParser.isAValidDirectory());
-        Assert.assertEquals(Constants.DEFAULT_PORT, argsParser.getPort());
+        Assert.assertEquals(Constants.DEFAULT_SERVER_DIRECTORY, argsParser.getDirectory());
     }
 }
