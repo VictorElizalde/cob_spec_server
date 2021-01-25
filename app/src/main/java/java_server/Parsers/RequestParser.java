@@ -2,6 +2,7 @@ package java_server.Parsers;
 
 import java_server.Main.Request;
 
+import javax.xml.bind.DatatypeConverter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,6 +33,8 @@ public class RequestParser {
         request.setByteRange(getByteRange());
         request.setByteLength(getByteLength());
         request.setBasicRequestStatus(isABasicAuthRequest());
+        if (request.isABasicAuthRequest())
+            request.setBasicAuthCredentials(parseBasicAuthCredentials());
         request.setData(parseData());
 
         return request;
@@ -98,5 +101,12 @@ public class RequestParser {
 
     private boolean isABasicAuthRequest() throws IOException {
         return requestArray[1].split(" ")[1].equals("Basic");
+    }
+
+    private String parseBasicAuthCredentials() throws IOException {
+        String splitAtEndOfCredentials = requestArray[1].split(" ")[2];
+
+        byte[] base64String = DatatypeConverter.parseBase64Binary(splitAtEndOfCredentials);
+        return new String(base64String);
     }
 }

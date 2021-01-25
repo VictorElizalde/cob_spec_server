@@ -62,7 +62,7 @@ public class ResponseParser {
         byteArrayOutputStream.write(formatLocationHeader());
         byteArrayOutputStream.write(formatContentTypeHeader(request));
         byteArrayOutputStream.write(formatAllowHeader(request));
-        if (request.getByteRange() != null) byteArrayOutputStream.write(formatContentRange(request));
+        if (request.getByteRange() != null && !request.getByteRange().equals("Range not given")) byteArrayOutputStream.write(formatContentRange(request));
         byteArrayOutputStream.write(formatContentLength(request));
         byteArrayOutputStream.write(body);
 
