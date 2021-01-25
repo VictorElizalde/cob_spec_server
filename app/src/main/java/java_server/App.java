@@ -3,6 +3,9 @@
  */
 package java_server;
 
+import java_server.Main.Server;
+import java_server.Parsers.ArgsParser;
+
 import java.io.IOException;
 
 public class App {
