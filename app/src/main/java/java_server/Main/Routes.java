@@ -12,7 +12,7 @@ public class Routes {
     private HashMap<String, HashMap<String, Responder>> routesMap = new HashMap<String, HashMap<String, Responder>>();
     private HashMap<String, Responder> rootMap = new HashMap<String, Responder>();
     private HashMap<String, Responder> fileRouteMap = new HashMap<String, Responder>();
-    private HashMap<String, Responder> logRouteMap = new HashMap<String, Responder>();
+    private HashMap<String, Responder> basicAuthRouteMap = new HashMap<String, Responder>();
     private HashMap<String, Responder> partialContentMap = new HashMap<String, Responder>();
     private HashMap<String, Responder> CRUDRouteMap = new HashMap<String, Responder>();
 
@@ -22,7 +22,8 @@ public class Routes {
 
     private HashMap<String, HashMap<String, Responder>> getRoutesMap(Request request) {
         routesMap.put("/", getRootMap());
-        routesMap.put("logs", getLogRouteMap(request));
+        routesMap.put("logs", getBasicAuthMap(request));
+        routesMap.put("requests", getBasicAuthMap(request));
 
         File routesDirectory = new File(directory);
 
@@ -51,12 +52,12 @@ public class Routes {
         return fileRouteMap;
     }
 
-    private HashMap<String, Responder> getLogRouteMap(Request request) {
-        LogResponder logResponder = new LogResponder();
-        logRouteMap.put("GET", logResponder);
-        logRouteMap.put("HEAD", logResponder);
-        logRouteMap.put("OPTIONS", logResponder);
-        return logRouteMap;
+    private HashMap<String, Responder> getBasicAuthMap(Request request) {
+        BasicAuthResponder basicAuthResponder = new BasicAuthResponder(directory, request.getURI(), request.getBasicAuthCredentials());
+        basicAuthRouteMap.put("GET", basicAuthResponder);
+        basicAuthRouteMap.put("HEAD", basicAuthResponder);
+        basicAuthRouteMap.put("OPTIONS", basicAuthResponder);
+        return basicAuthRouteMap;
     }
 
     private HashMap<String, Responder> getCRUDRouteMap(Request request) {
@@ -120,9 +121,9 @@ public class Routes {
             return getCRUDRouteMap(request).get(request.getHTTPMethod());
         }
         if (!"GET,POST,HEAD,OPTIONS,PUT,DELETE".contains(request.getHTTPMethod())) return new NotImplementedResponder();
-        if (isAValidMethod(request)) return getRoutesMap(request).get(request.getURI()).get(request.getHTTPMethod());
         if (request.getHTTPMethod().equals("HEAD") && request.getURI().equals("/")) return new HeadResponder();
         if (request.getHTTPMethod().equals("OPTIONS")) return new MethodOptionsResponder(getOptions(request));
+        if (isAValidMethod(request)) return getRoutesMap(request).get(request.getURI()).get(request.getHTTPMethod());
         if (!isAValidMethod(request) && isAnExistingFileInDirectory(getDirectoryFileNames(), request)) return new MethodNotAllowedResponder();
         return new NotFoundResponder();
     }

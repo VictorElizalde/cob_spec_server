@@ -133,7 +133,7 @@ public class RoutesTest {
         request.setHTTPMethod("OPTIONS");
         request.setURI("file1");
 
-        Assert.assertThat(routes.getHandler(request), instanceOf(FileResponder.class));
+        Assert.assertThat(routes.getHandler(request), instanceOf(MethodOptionsResponder.class));
     }
 
     @Test

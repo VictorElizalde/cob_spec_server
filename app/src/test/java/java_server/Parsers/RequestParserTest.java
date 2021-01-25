@@ -61,7 +61,7 @@ public class RequestParserTest {
 
     @Test
     public void returnsAuthorizationRequestHeader() throws Exception {
-        Request request = setRequest("GET /logs HTTP/1.1\nAuthorization: Basic JaASDJ4347qljA43J1SJD==\nHost: localhost:5000");
+        Request request = setRequest("GET /logs HTTP/1.1\nAuthorization: Basic YWRtaW46aHVudGVyMg==\nHost: localhost:5000");
 
         Assert.assertEquals("Authorization:", request.getHeaderField());
     }
@@ -102,15 +102,22 @@ public class RequestParserTest {
 
     @Test
     public void returnsTrueIfAuthRequestIsBasic() throws Exception {
-        Request request = setRequest("GET /logs HTTP/1.1\nAuthorization: Basic dmljdG9yX2VsaXphbGRlOmFzZGZhc2Rm==\nHost: localhost:5000");
+        Request request = setRequest("GET /logs HTTP/1.1\nAuthorization: Basic YWRtaW46aHVudGVyMg==\nHost: localhost:5000");
 
         Assert.assertEquals(true, request.isABasicAuthRequest());
     }
 
     @Test
     public void returnsFalseIfAuthRequestIsNotBasic() throws Exception {
-        Request request = setRequest("GET /logs HTTP/1.1\nAuthorization: NotBasic dmljdG9yX2VsaXphbGRlOmFzZGZhc2Rm==\nHost: localhost:5000");
+        Request request = setRequest("GET /logs HTTP/1.1\nAuthorization: NotBasic YWRtaW46aHVudGVyMg==\nHost: localhost:5000");
 
         Assert.assertEquals(false, request.isABasicAuthRequest());
+    }
+
+    @Test
+    public void returnsTheDecodedBasicAuthCredentials() throws Exception {
+        Request request = setRequest("GET /logs HTTP/1.1\nAuthorization: Basic YWRtaW46aHVudGVyMg==\nHost: localhost:5000");
+
+        Assert.assertEquals("admin:hunter2", request.getBasicAuthCredentials());
     }
 }
