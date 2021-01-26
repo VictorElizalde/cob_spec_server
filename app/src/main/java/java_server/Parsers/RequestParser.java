@@ -100,13 +100,16 @@ public class RequestParser {
     }
 
     private boolean isABasicAuthRequest() throws IOException {
-        return requestArray[1].split(" ")[1].equals("Basic");
+        return requestArray[1].split(" ")[1].equals("Basic") || (request.getURI().equals("logs") && !requestArray[1].split(" ")[1].equals("NotBasic"));
     }
 
     private String parseBasicAuthCredentials() throws IOException {
-        String splitAtEndOfCredentials = requestArray[1].split(" ")[2].replace("\r", "");
+        if (requestArray[1].contains("Authorization")) {
+            String splitAtEndOfCredentials = requestArray[1].split(" ")[2].replace("\r", "");
+            byte[] base64String = Base64.getDecoder().decode(splitAtEndOfCredentials);
+            return new String(base64String);
+        }
 
-        byte[] base64String = Base64.getDecoder().decode(splitAtEndOfCredentials);
-        return new String(base64String);
+        return null;
     }
 }

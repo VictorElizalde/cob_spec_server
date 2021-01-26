@@ -115,10 +115,10 @@ public class RequestParserTest {
     }
 
     @Test
-    public void returnsFalseIfNoAuthRequest() throws Exception {
+    public void returnsTrueIfLogsRequest() throws Exception {
         Request request = setRequest("GET /logs HTTP/1.1\nHost: localhost:5000");
 
-        Assert.assertEquals(false, request.isABasicAuthRequest());
+        Assert.assertEquals(true, request.isABasicAuthRequest());
     }
 
     @Test

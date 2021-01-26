@@ -63,10 +63,11 @@ public class ResponseParser {
         byteArrayOutputStream.write(formatLocationHeader());
         byteArrayOutputStream.write(formatContentTypeHeader(request));
         byteArrayOutputStream.write(formatAllowHeader(request));
-        if (request.getByteRange() != null && !request.getByteRange().equals("Range not given")) byteArrayOutputStream.write(formatContentRange(request));
+        if (request.getByteRange() != null && !request.getByteRange().equals("Range not given"))
+            byteArrayOutputStream.write(formatContentRange(request));
+        if (request.isABasicAuthRequest())
+            byteArrayOutputStream.write("WWW-Authenticate: Basic realm=\"WallyWorld\"\r\n".getBytes());
         byteArrayOutputStream.write(formatContentLength(request));
-//        if (request.isABasicAuthRequest())
-//            byteArrayOutputStream.write("WWW-Authenticate: Basic realm=\"WallyWorld\"".getBytes());
         byteArrayOutputStream.write(body);
 
         return byteArrayOutputStream.toByteArray();
