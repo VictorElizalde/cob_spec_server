@@ -2,13 +2,13 @@ package java_server.Parsers;
 
 import java_server.Main.Request;
 
-import javax.xml.bind.DatatypeConverter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Base64;
 
 public class RequestParser {
     private InputStream inputStream;
@@ -104,9 +104,9 @@ public class RequestParser {
     }
 
     private String parseBasicAuthCredentials() throws IOException {
-        String splitAtEndOfCredentials = requestArray[1].split(" ")[2];
+        String splitAtEndOfCredentials = requestArray[1].split(" ")[2].replace("\r", "");
 
-        byte[] base64String = DatatypeConverter.parseBase64Binary(splitAtEndOfCredentials);
+        byte[] base64String = Base64.getDecoder().decode(splitAtEndOfCredentials);
         return new String(base64String);
     }
 }

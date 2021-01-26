@@ -23,7 +23,6 @@ public class Routes {
     private HashMap<String, HashMap<String, Responder>> getRoutesMap(Request request) {
         routesMap.put("/", getRootMap());
         routesMap.put("logs", getBasicAuthMap(request));
-        routesMap.put("requests", getBasicAuthMap(request));
 
         File routesDirectory = new File(directory);
 
@@ -124,7 +123,7 @@ public class Routes {
         if (request.getHTTPMethod().equals("HEAD") && request.getURI().equals("/")) return new HeadResponder();
         if (request.getHTTPMethod().equals("OPTIONS")) return new MethodOptionsResponder(getOptions(request));
         if (isAValidMethod(request)) return getRoutesMap(request).get(request.getURI()).get(request.getHTTPMethod());
-        if (!isAValidMethod(request) && isAnExistingFileInDirectory(getDirectoryFileNames(), request)) return new MethodNotAllowedResponder();
+        if (!isAValidMethod(request) && (isAnExistingFileInDirectory(getDirectoryFileNames(), request) || request.getURI().equals("logs"))) return new MethodNotAllowedResponder();
         return new NotFoundResponder();
     }
 }

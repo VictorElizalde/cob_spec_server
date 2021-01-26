@@ -160,11 +160,12 @@ public class RoutesTest {
         Assert.assertThat(routes.getHandler(request), instanceOf(NotImplementedResponder.class));
     }
 
-//    @Test
-//    public void returnsPartialContent() throws Exception {
-//        request.setHTTPMethod("GET");
-//        request.setURI("partial_content.txt");
-//
-//        Assert.assertThat(routes.getHandler(request), instanceOf(PartialContentResponder.class));
-//    }
+    @Test
+    public void returnsMethodNotAllowedForBasiAuth() throws Exception {
+        request.setHTTPMethod("POST");
+        request.setURI("logs");
+        request.setBasicAuthCredentials("admin:hunter2");
+
+        Assert.assertThat(routes.getHandler(request), instanceOf(MethodNotAllowedResponder.class));
+    }
 }

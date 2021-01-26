@@ -5,6 +5,7 @@ import java_server.Main.Response;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 public class ResponseParser {
     private Response response;
@@ -64,6 +65,8 @@ public class ResponseParser {
         byteArrayOutputStream.write(formatAllowHeader(request));
         if (request.getByteRange() != null && !request.getByteRange().equals("Range not given")) byteArrayOutputStream.write(formatContentRange(request));
         byteArrayOutputStream.write(formatContentLength(request));
+//        if (request.isABasicAuthRequest())
+//            byteArrayOutputStream.write("WWW-Authenticate: Basic realm=\"WallyWorld\"".getBytes());
         byteArrayOutputStream.write(body);
 
         return byteArrayOutputStream.toByteArray();

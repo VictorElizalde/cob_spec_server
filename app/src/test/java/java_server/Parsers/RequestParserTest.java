@@ -115,8 +115,16 @@ public class RequestParserTest {
     }
 
     @Test
+    public void returnsFalseIfNoAuthRequest() throws Exception {
+        Request request = setRequest("GET /logs HTTP/1.1\nHost: localhost:5000");
+
+        Assert.assertEquals(false, request.isABasicAuthRequest());
+    }
+
+    @Test
     public void returnsTheDecodedBasicAuthCredentials() throws Exception {
-        Request request = setRequest("GET /logs HTTP/1.1\nAuthorization: Basic YWRtaW46aHVudGVyMg==\nHost: localhost:5000");
+        Request request = setRequest("GET /logs HTTP/1.1\n\rAuthorization: Basic YWRtaW46aHVudGVyMg==\n\rHost: localhost:5000");
+
 
         Assert.assertEquals("admin:hunter2", request.getBasicAuthCredentials());
     }
