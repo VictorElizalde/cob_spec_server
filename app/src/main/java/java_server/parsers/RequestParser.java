@@ -1,6 +1,6 @@
-package java_server.Parsers;
+package java_server.parsers;
 
-import java_server.Main.Request;
+import java_server.main.Request;
 
 import java.io.BufferedReader;
 import java.io.IOException;

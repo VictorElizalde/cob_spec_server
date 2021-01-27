@@ -1,6 +1,6 @@
-package java_server.Parsers;
+package java_server.parsers;
 
-import java_server.Helpers.Constants;
+import java_server.constants.Constants;
 
 import java.io.File;
 import java.util.Arrays;

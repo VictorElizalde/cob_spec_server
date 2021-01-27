@@ -1,6 +1,5 @@
-package java_server.Parsers;
+package java_server.parsers;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

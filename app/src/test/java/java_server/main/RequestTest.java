@@ -1,6 +1,5 @@
-package java_server.Main;
+package java_server.main;
 
-import java_server.Main.Request;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,6 +1,5 @@
-package java_server.Parsers;
+package java_server.parsers;
 
-import java_server.Parsers.PartialContentParser;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

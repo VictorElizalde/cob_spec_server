@@ -1,6 +1,4 @@
-package java_server.Handlers;
-
-import java_server.Handlers.RequestHandler;
+package java_server.handlers;
 
 import java.io.InputStream;
 import java.io.OutputStream;

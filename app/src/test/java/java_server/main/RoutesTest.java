@@ -1,9 +1,7 @@
-package java_server.Main;
+package java_server.main;
 
-import java_server.Helpers.Constants;
-import java_server.Main.Request;
-import java_server.Main.Routes;
-import java_server.Responders.*;
+import java_server.constants.Constants;
+import java_server.responders.*;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Before;

@@ -1,12 +1,11 @@
-package java_server.Parsers;
+package java_server.parsers;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java_server.Helpers.Constants;
-import java_server.Main.Request;
-import java_server.Parsers.RequestParser;
+import java_server.constants.Constants;
+import java_server.main.Request;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

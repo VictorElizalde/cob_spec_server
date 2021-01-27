@@ -1,4 +1,4 @@
-package java_server.Helpers;
+package java_server.constants;
 
 public final class Constants {
     private Constants() {}

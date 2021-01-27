@@ -1,10 +1,9 @@
-package java_server.Main;
+package java_server.main;
 
-import java_server.Parsers.PartialContentParser;
-import java_server.Responders.Responder;
-import java_server.Helpers.StatusCode;
+import java_server.parsers.PartialContentParser;
+import java_server.responders.Responder;
+import java_server.constants.StatusCode;
 
-import java.io.IOException;
 import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Paths;

@@ -1,8 +1,7 @@
-package java_server.Responders;
+package java_server.responders;
 
-import java_server.Helpers.Constants;
-import java_server.Helpers.StatusCode;
-import java_server.Responders.PartialContentResponder;
+import java_server.constants.Constants;
+import java_server.constants.StatusCode;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

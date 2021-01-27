@@ -1,4 +1,4 @@
-package java_server.Main;
+package java_server.main;
 
 public class Request {
     private String httpMethod;

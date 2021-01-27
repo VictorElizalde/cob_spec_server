@@ -1,7 +1,7 @@
-package java_server.Main;
+package java_server.main;
 
-import java_server.Handlers.ConnectionHandler;
-import java_server.Handlers.RequestHandler;
+import java_server.handlers.ConnectionHandler;
+import java_server.handlers.RequestHandler;
 
 import java.io.*;
 import java.net.*;

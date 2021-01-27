@@ -1,4 +1,4 @@
-package java_server.Responders;
+package java_server.responders;
 
 import java.io.IOException;
 import java.nio.file.Files;

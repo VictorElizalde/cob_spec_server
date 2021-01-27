@@ -1,7 +1,6 @@
-package java_server.Parsers;
+package java_server.parsers;
 
-import java_server.Helpers.Constants;
-import java_server.Parsers.ArgsParser;
+import java_server.constants.Constants;
 import org.junit.Assert;
 import org.junit.Test;
 

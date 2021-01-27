@@ -1,8 +1,8 @@
-package java_server.Handlers;
+package java_server.handlers;
 
-import java_server.Helpers.Constants;
-import java_server.Main.Request;
-import java_server.Parsers.RequestParser;
+import java_server.constants.Constants;
+import java_server.main.Request;
+import java_server.parsers.RequestParser;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;

@@ -1,6 +1,6 @@
-package java_server.Main;
+package java_server.main;
 
-import java_server.Responders.*;
+import java_server.responders.*;
 
 import java.io.File;
 import java.util.HashMap;

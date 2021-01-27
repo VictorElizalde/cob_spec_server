@@ -1,4 +1,4 @@
-package java_server.Responders;
+package java_server.responders;
 
 public class LogResponder implements Responder {
     @Override

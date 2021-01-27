@@ -1,4 +1,4 @@
-package java_server.Handlers;
+package java_server.handlers;
 
 import java.io.IOException;
 import java.io.InputStream;

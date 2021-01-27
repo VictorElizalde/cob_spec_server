@@ -1,7 +1,6 @@
-package java_server.Responders;
+package java_server.responders;
 
-import java_server.Helpers.StatusCode;
-import java_server.Responders.HeadResponder;
+import java_server.constants.StatusCode;
 import org.junit.Assert;
 import org.junit.Test;
 
