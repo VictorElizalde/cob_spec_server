@@ -113,4 +113,18 @@ public class RequestParserTest {
 
         Assert.assertEquals(false, request.isABasicAuthRequest());
     }
+
+    @Test
+    public void returnsDataFromOneLine() throws Exception {
+        Request request = setRequest("PUT /new_file.txt HTTP/1.1\nHost: localhost:5000\nContent-Type: application/x-www-form-urlencoded\nnull\nhello");
+
+        Assert.assertEquals("hello", request.getData());
+    }
+
+    @Test
+    public void returnsDataFromMultipleLines() throws Exception {
+        Request request = setRequest("PUT /new_file.txt HTTP/1.1\nHost: localhost:5000\nContent-Type: application/x-www-form-urlencoded\nnull\nhello\ngoodbye");
+
+        Assert.assertEquals("hellogoodbye", request.getData());
+    }
 }

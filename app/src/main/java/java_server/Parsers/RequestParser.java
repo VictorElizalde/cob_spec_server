@@ -93,7 +93,23 @@ public class RequestParser {
     }
 
     private String parseData() throws IOException {
-        return requestArray[requestArray.length-1];
+        int i;
+        String data = null;
+
+        for (i = 0; i < requestArray.length-1; i++) {
+            if (requestArray[i].contains("Content-Type"))
+                break;
+        }
+
+        if (requestArray[i].contains("Content-Type")) {
+            for (i = i + 2; i < requestArray.length; i++) {
+                data += requestArray[i];
+            }
+        } else {
+            data = requestArray[requestArray.length-1];
+        }
+
+        return data.replace("null", "");
     }
 
     private boolean isABasicAuthRequest() throws IOException {
