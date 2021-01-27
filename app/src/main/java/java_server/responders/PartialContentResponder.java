@@ -1,6 +1,6 @@
-package java_server.Responders;
+package java_server.responders;
 
-import java_server.Parsers.PartialContentParser;
+import java_server.parsers.PartialContentParser;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -9,13 +9,12 @@ public class PartialContentResponder implements Responder {
     private String directory;
     private String uri;
     private String byteRange;
-    private String statusCode;
 
     public PartialContentResponder(String directory, String uri, String byteRange) {
         this.directory = directory;
         this.uri = uri;
         this.byteRange = byteRange;
-        this.statusCode = statusMessageCode.PARTIAL_CONTENT;
+        statusMessageCode.setActiveStatus(statusMessageCode.PARTIAL_CONTENT);
     }
 
     @Override
@@ -27,12 +26,12 @@ public class PartialContentResponder implements Responder {
             e.printStackTrace();
         }
 
-        this.statusCode = statusMessageCode.REQUEST_RANGE_NOT_SATISFIABLE;
+        statusMessageCode.setActiveStatus(statusMessageCode.REQUEST_RANGE_NOT_SATISFIABLE);
         return "Request Invalid".getBytes();
     }
 
     @Override
     public String getStatusCode() {
-        return statusCode;
+        return statusMessageCode.getActiveStatus();
     }
 }

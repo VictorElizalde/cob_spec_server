@@ -1,4 +1,4 @@
-package java_server.Responders;
+package java_server.responders;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,7 +10,6 @@ public class CRUDResponder implements Responder {
     private String directory;
     private String uri;
     private String httpMethod;
-    private String statusCode;
     private String content;
     private static HashMap<String, byte[]> CRUDMap = new HashMap<String, byte[]>();
 
@@ -40,7 +39,7 @@ public class CRUDResponder implements Responder {
 
     @Override
     public String getStatusCode() {
-        return statusCode;
+        return statusMessageCode.getActiveStatus();
     }
 
     private Path performCRUD() throws IOException {
@@ -54,18 +53,18 @@ public class CRUDResponder implements Responder {
     }
 
     private Path createPath() throws IOException {
-        statusCode = statusMessageCode.CREATED;
+        statusMessageCode.setActiveStatus(statusMessageCode.CREATED);
         return writeToFile();
     }
 
     private Path updatePath() throws IOException {
-        statusCode = statusMessageCode.OK;
+        statusMessageCode.setActiveStatus(statusMessageCode.OK);
         return writeToFile();
     }
 
     private Path deletePath() throws IOException {
         Files.delete(getPath());
-        statusCode = statusMessageCode.OK;
+        statusMessageCode.setActiveStatus(statusMessageCode.OK);
         return getPath();
     }
 
