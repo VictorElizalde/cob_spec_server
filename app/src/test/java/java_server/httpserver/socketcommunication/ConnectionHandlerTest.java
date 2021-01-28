@@ -1,8 +1,8 @@
-package java_server.handlers;
+package java_server.httpserver.socketcommunication;
 
 import java_server.Constants;
 import java_server.httpserver.Request;
-import java_server.parsers.RequestParser;
+import java_server.httpserver.parsers.RequestParser;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;

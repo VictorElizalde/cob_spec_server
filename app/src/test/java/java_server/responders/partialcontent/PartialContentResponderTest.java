@@ -1,7 +1,8 @@
-package java_server.responders;
+package java_server.responders.partialcontent;
 
 import java_server.Constants;
 import java_server.httpserver.StatusCode;
+import java_server.responders.partialcontent.PartialContentResponder;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -3,8 +3,8 @@
  */
 package java_server;
 
-import java_server.httpserver.Server;
-import java_server.parsers.ArgsParser;
+import java_server.httpserver.socketcommunication.Server;
+import java_server.httpserver.socketcommunication.ArgsParser;
 
 import java.io.IOException;
 

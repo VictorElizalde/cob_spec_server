@@ -1,4 +1,4 @@
-package java_server.parsers;
+package java_server.responders.partialcontent;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,6 +13,7 @@ public class PartialContentParserTest {
         String byteRange = "-6";
         partialContentParser = new PartialContentParser(byteRange);
         data =  "This is a file that contains text to read part of in order to fulfill a 206.".getBytes();
+        
     }
 
     @Test

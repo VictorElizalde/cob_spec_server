@@ -1,4 +1,4 @@
-package java_server.parsers;
+package java_server.responders.partialcontent;
 
 import java.util.Arrays;
 import java.util.regex.Matcher;

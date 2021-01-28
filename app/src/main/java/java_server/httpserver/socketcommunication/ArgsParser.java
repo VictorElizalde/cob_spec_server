@@ -1,4 +1,4 @@
-package java_server.parsers;
+package java_server.httpserver.socketcommunication;
 
 import java_server.Constants;
 

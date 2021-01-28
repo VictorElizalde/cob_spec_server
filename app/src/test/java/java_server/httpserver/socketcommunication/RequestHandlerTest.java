@@ -1,4 +1,6 @@
-package java_server.handlers;
+package java_server.httpserver.socketcommunication;
+
+import java_server.httpserver.socketcommunication.RequestHandler;
 
 import java.io.InputStream;
 import java.io.OutputStream;

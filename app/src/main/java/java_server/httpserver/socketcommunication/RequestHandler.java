@@ -1,4 +1,4 @@
-package java_server.handlers;
+package java_server.httpserver.socketcommunication;
 
 import java.io.IOException;
 import java.io.InputStream;

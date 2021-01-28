@@ -1,6 +1,7 @@
-package java_server.parsers;
+package java_server.httpserver.socketcommunication;
 
 import java_server.Constants;
+import java_server.httpserver.socketcommunication.ArgsParser;
 import org.junit.Assert;
 import org.junit.Test;
 

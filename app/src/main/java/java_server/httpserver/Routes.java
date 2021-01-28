@@ -1,6 +1,7 @@
 package java_server.httpserver;
 
 import java_server.responders.*;
+import java_server.responders.partialcontent.PartialContentResponder;
 
 import java.io.File;
 import java.util.HashMap;

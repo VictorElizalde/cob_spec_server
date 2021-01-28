@@ -1,6 +1,6 @@
 package java_server.httpserver;
 
-import java_server.parsers.PartialContentParser;
+import java_server.responders.partialcontent.PartialContentParser;
 import java_server.responders.Responder;
 
 import java.net.URLConnection;

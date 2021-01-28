@@ -1,4 +1,4 @@
-package java_server.parsers;
+package java_server.httpserver.parsers;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -6,6 +6,7 @@ import java.io.InputStream;
 
 import java_server.Constants;
 import java_server.httpserver.Request;
+import java_server.httpserver.parsers.RequestParser;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

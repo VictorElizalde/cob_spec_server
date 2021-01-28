@@ -1,6 +1,6 @@
-package java_server.responders;
+package java_server.responders.partialcontent;
 
-import java_server.parsers.PartialContentParser;
+import java_server.responders.Responder;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;

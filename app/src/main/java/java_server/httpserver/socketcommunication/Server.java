@@ -1,7 +1,4 @@
-package java_server.httpserver;
-
-import java_server.handlers.ConnectionHandler;
-import java_server.handlers.RequestHandler;
+package java_server.httpserver.socketcommunication;
 
 import java.io.*;
 import java.net.*;
