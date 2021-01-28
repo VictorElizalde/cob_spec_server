@@ -96,13 +96,13 @@ public class RequestParser {
         int i;
         String data = null;
 
-        for (i = 0; i < requestArray.length-1; i++) {
-            if (requestArray[i].contains("Content-Type"))
+        for (i = requestArray.length - 1; i > 0; i--) {
+            if (requestArray[i].equals("\r") || requestArray[i].equals("\r\n"))
                 break;
         }
 
-        if (requestArray[i].contains("Content-Type")) {
-            for (i = i + 2; i < requestArray.length; i++) {
+        if (requestArray[i].equals("\r")  || requestArray[i].equals("\r\n")) {
+            for (i = i+1; i < requestArray.length; i++) {
                 data += requestArray[i];
             }
         } else {
