@@ -1,7 +1,7 @@
 package java_server.responders;
 
-import java_server.constants.Constants;
-import java_server.constants.StatusCode;
+import java_server.Constants;
+import java_server.httpserver.StatusCode;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

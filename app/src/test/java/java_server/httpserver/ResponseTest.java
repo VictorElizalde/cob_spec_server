@@ -1,7 +1,6 @@
-package java_server.main;
+package java_server.httpserver;
 
-import java_server.constants.Constants;
-import java_server.constants.StatusCode;
+import java_server.Constants;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

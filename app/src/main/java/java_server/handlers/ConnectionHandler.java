@@ -1,11 +1,11 @@
 package java_server.handlers;
 
 import java_server.parsers.RequestParser;
-import java_server.main.Request;
-import java_server.main.Response;
+import java_server.httpserver.Request;
+import java_server.httpserver.Response;
 import java_server.parsers.ResponseParser;
-import java_server.main.Routes;
-import java_server.constants.StatusCode;
+import java_server.httpserver.Routes;
+import java_server.httpserver.StatusCode;
 
 import java.io.DataOutputStream;
 import java.io.IOException;

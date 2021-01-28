@@ -1,6 +1,6 @@
-package java_server.main;
+package java_server.httpserver;
 
-import java_server.constants.Constants;
+import java_server.Constants;
 import java_server.responders.*;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;

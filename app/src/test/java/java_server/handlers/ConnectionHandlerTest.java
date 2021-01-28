@@ -1,7 +1,7 @@
 package java_server.handlers;
 
-import java_server.constants.Constants;
-import java_server.main.Request;
+import java_server.Constants;
+import java_server.httpserver.Request;
 import java_server.parsers.RequestParser;
 import org.junit.Test;
 

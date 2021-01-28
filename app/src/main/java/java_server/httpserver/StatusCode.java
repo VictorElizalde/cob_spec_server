@@ -1,4 +1,4 @@
-package java_server.constants;
+package java_server.httpserver;
 
 public class StatusCode {
     public static final String OK = "200 OK";

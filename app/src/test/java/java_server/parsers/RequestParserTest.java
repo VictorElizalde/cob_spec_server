@@ -4,8 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java_server.constants.Constants;
-import java_server.main.Request;
+import java_server.Constants;
+import java_server.httpserver.Request;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

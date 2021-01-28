@@ -3,7 +3,7 @@
  */
 package java_server;
 
-import java_server.main.Server;
+import java_server.httpserver.Server;
 import java_server.parsers.ArgsParser;
 
 import java.io.IOException;

@@ -1,6 +1,6 @@
 package java_server.responders;
 
-import java_server.constants.StatusCode;
+import java_server.httpserver.StatusCode;
 
 public interface Responder {
     public StatusCode statusMessageCode = new StatusCode();

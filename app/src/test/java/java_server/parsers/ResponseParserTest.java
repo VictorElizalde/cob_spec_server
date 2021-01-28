@@ -1,10 +1,10 @@
 package java_server.parsers;
 
-import java_server.constants.Constants;
-import java_server.constants.StatusCode;
-import java_server.main.Request;
-import java_server.main.Response;
-import java_server.main.Routes;
+import java_server.Constants;
+import java_server.httpserver.StatusCode;
+import java_server.httpserver.Request;
+import java_server.httpserver.Response;
+import java_server.httpserver.Routes;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

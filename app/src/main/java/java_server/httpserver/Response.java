@@ -1,8 +1,7 @@
-package java_server.main;
+package java_server.httpserver;
 
 import java_server.parsers.PartialContentParser;
 import java_server.responders.Responder;
-import java_server.constants.StatusCode;
 
 import java.net.URLConnection;
 import java.nio.file.Files;

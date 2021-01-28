@@ -1,4 +1,4 @@
-package java_server.main;
+package java_server.httpserver;
 
 import org.junit.Assert;
 import org.junit.Before;

@@ -1,7 +1,7 @@
 package java_server.parsers;
 
-import java_server.main.Request;
-import java_server.main.Response;
+import java_server.httpserver.Request;
+import java_server.httpserver.Response;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
