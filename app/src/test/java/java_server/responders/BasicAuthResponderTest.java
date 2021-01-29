@@ -21,6 +21,7 @@ public class BasicAuthResponderTest {
     public void returnsAuthenticationRequiredIfRequestDoesNotHaveCredentials() throws Exception {
         String basicAuthCredentials = "invalid:credentials";
         BasicAuthResponder basicAuthResponder = new BasicAuthResponder(testDirectory, uri, basicAuthCredentials);
+        basicAuthResponder.processResponse();
 
         assertEquals("Authentication required", new String(basicAuthResponder.getMessageBody()));
         assertEquals(statusCode.UNAUTHORIZED, basicAuthResponder.getStatusCode());
@@ -30,7 +31,7 @@ public class BasicAuthResponderTest {
     public void returnsOkWhenSuccessfulAuthentication() throws Exception {
         String basicAuthCredentials = "admin:hunter2";
         BasicAuthResponder basicAuthResponder = new BasicAuthResponder(testDirectory, uri, basicAuthCredentials);
-        basicAuthResponder.getMessageBody();
+        basicAuthResponder.processResponse();
 
         assertEquals(statusCode.OK, basicAuthResponder.getStatusCode());
     }
@@ -39,7 +40,7 @@ public class BasicAuthResponderTest {
     public void returnsAuthenticationRequiredWhenNullCredentials() throws Exception {
         String basicAuthCredentials = null;
         BasicAuthResponder basicAuthResponder = new BasicAuthResponder(testDirectory, uri, basicAuthCredentials);
-        basicAuthResponder.getMessageBody();
+        basicAuthResponder.processResponse();
 
         assertEquals("Authentication required", new String(basicAuthResponder.getMessageBody()));
         assertEquals(statusCode.UNAUTHORIZED, basicAuthResponder.getStatusCode());
