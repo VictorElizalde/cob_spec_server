@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 public class FileResponder implements Responder {
     private String directory;
     private String uri;
+    public byte[] body;
 
     public FileResponder(String directory, String uri) {
         this.directory = directory;
@@ -16,17 +17,21 @@ public class FileResponder implements Responder {
 
     @Override
     public byte[] getMessageBody() {
-        try {
-            return Files.readAllBytes(getPath());
-        } catch (IOException e) {
-
-            return "File Could Not Be Read".getBytes();
-        }
+        return body;
     }
 
     @Override
     public String getStatusCode() {
         return statusMessageCode.OK;
+    }
+
+    @Override
+    public void processResponse() {
+        try {
+            body = Files.readAllBytes(getPath());
+        } catch (IOException e) {
+            body = "File Could Not Be Read".getBytes();
+        }
     }
 
     private Path getPath() {

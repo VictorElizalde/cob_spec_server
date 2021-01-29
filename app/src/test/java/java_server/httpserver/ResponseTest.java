@@ -25,6 +25,7 @@ public class ResponseTest {
         request.setHTTPMethod("GET");
         request.setURI("file1");
         response.setResponder(request);
+        response.getResponder().processResponse();
 
         Assert.assertEquals(statusCode.OK, response.getStatusMessage(request));
     }
@@ -34,8 +35,9 @@ public class ResponseTest {
         request.setHTTPMethod("GET");
         request.setURI("file1");
         response.setResponder(request);
+        response.getResponder().processResponse();
 
-        Assert.assertEquals("file1 contents", new String (response.getMessageBody(request)));
+        Assert.assertEquals("file1 contents", new String (response.getMessageBody()));
     }
 
     @Test
@@ -91,8 +93,8 @@ public class ResponseTest {
         request.setHTTPMethod("GET");
         request.setURI("file1");
         response.setResponder(request);
-
-        byte[] responseBody = response.getMessageBody(request);
+        response.getResponder().processResponse();
+        byte[] responseBody = response.getMessageBody();
 
         Assert.assertEquals("Content-Length: 14", response.getContentLength());
     }
@@ -102,8 +104,8 @@ public class ResponseTest {
         request.setHTTPMethod("GET");
         request.setURI("image.png");
         response.setResponder(request);
-
-        byte[] responseBody = response.getMessageBody(request);
+        response.getResponder().processResponse();
+        byte[] responseBody = response.getMessageBody();
 
         Assert.assertEquals("Content-Length: 108763", response.getContentLength());
     }
@@ -122,8 +124,8 @@ public class ResponseTest {
         request.setByteRange("0-4");
         request.setByteLength("77");
         response.setResponder(request);
-
-        byte[] responseBody = response.getMessageBody(request);
+        response.getResponder().processResponse();
+        byte[] responseBody = response.getMessageBody();
 
         Assert.assertEquals("Content-Range: bytes 0-4/77", response.getContentRange(request));
     }
@@ -135,8 +137,8 @@ public class ResponseTest {
         request.setByteRange("-6");
         request.setByteLength("77");
         response.setResponder(request);
-
-        byte[] responseBody = response.getMessageBody(request);
+        response.getResponder().processResponse();
+        byte[] responseBody = response.getMessageBody();
 
         Assert.assertEquals("Content-Range: bytes 71-76/77", response.getContentRange(request));
     }
@@ -148,8 +150,8 @@ public class ResponseTest {
         request.setByteRange("4-");
         request.setByteLength("77");
         response.setResponder(request);
-
-        byte[] responseBody = response.getMessageBody(request);
+        response.getResponder().processResponse();
+        byte[] responseBody = response.getMessageBody();
 
         Assert.assertEquals("Content-Range: bytes 4-76/77", response.getContentRange(request));
     }
@@ -161,8 +163,8 @@ public class ResponseTest {
         request.setByteRange("5-0");
         request.setByteLength("77");
         response.setResponder(request);
-
-        byte[] responseBody = response.getMessageBody(request);
+        response.getResponder().processResponse();
+        byte[] responseBody = response.getMessageBody();
 
         Assert.assertEquals("Content-Range: bytes */77", response.getContentRange(request));
     }
@@ -174,8 +176,8 @@ public class ResponseTest {
         request.setByteRange("77-");
         request.setByteLength("77");
         response.setResponder(request);
-
-        byte[] responseBody = response.getMessageBody(request);
+        response.getResponder().processResponse();
+        byte[] responseBody = response.getMessageBody();
 
         Assert.assertEquals("Content-Range: bytes */77", response.getContentRange(request));
     }

@@ -9,6 +9,7 @@ public class NotFoundResponderTest {
     public void returns404NotFoundAsResponse() throws Exception {
         StatusCode statusCode = new StatusCode();
         NotFoundResponder notFoundResponder = new NotFoundResponder();
+        notFoundResponder.processResponse();
         byte[] fileBytes = notFoundResponder.getMessageBody();
 
         Assert.assertTrue(new String(fileBytes).contains(statusCode.NOT_FOUND));

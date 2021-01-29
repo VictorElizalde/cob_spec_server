@@ -18,6 +18,7 @@ public class MethodOptionsResponderTest {
     @Test
     public void returnsGetOptionsForRequest() throws Exception {
         MethodOptionsResponder methodOptionsResponder = new MethodOptionsResponder("GET");
+        methodOptionsResponder.processResponse();
         byte[] fileBytes = methodOptionsResponder.getMessageBody();
 
         Assert.assertTrue(Arrays.equals(fileBytes, "GET".getBytes()));
@@ -27,6 +28,7 @@ public class MethodOptionsResponderTest {
     @Test
     public void returnsNoOptionsForRequest() throws Exception {
         MethodOptionsResponder methodOptionsResponder = new MethodOptionsResponder("");
+        methodOptionsResponder.processResponse();
         byte[] fileBytes = methodOptionsResponder.getMessageBody();
 
         Assert.assertTrue(Arrays.equals(fileBytes, "".getBytes()));
@@ -36,6 +38,7 @@ public class MethodOptionsResponderTest {
     @Test
     public void returnsOptionsForRequest() throws Exception {
         MethodOptionsResponder methodOptionsResponder = new MethodOptionsResponder("GET,HEAD,OPTIONS,PUT,DELETE");
+        methodOptionsResponder.processResponse();
         byte[] fileBytes = methodOptionsResponder.getMessageBody();
 
         Assert.assertTrue(Arrays.equals(fileBytes, "GET,HEAD,OPTIONS,PUT,DELETE".getBytes()));

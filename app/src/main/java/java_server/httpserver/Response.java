@@ -26,11 +26,15 @@ public class Response {
         this.responder = routes.getHandler(request);
     }
 
+    public Responder getResponder() {
+        return responder;
+    }
+
     public String getStatusMessage(Request request) {
         return responder.getStatusCode();
     }
 
-    public byte[] getMessageBody(Request request) {
+    public byte[] getMessageBody() {
         responseBody = responder.getMessageBody();
         return responseBody;
     }

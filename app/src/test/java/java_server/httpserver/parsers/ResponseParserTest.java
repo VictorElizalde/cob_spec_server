@@ -24,7 +24,8 @@ public class ResponseParserTest {
         request.setHTTPMethod("GET");
         request.setURI("file1");
         response.setResponder(request);
-        response.getMessageBody(request);
+        response.getResponder().processResponse();
+        response.getMessageBody();
     }
 
     @Test
@@ -34,7 +35,7 @@ public class ResponseParserTest {
 
     @Test
     public void returnsTheResponseMessageBody() throws Exception {
-        Assert.assertEquals("file1 contents", new String(responseParser.formatMessageBody(request)));
+        Assert.assertEquals("file1 contents", new String(responseParser.formatMessageBody()));
     }
 
     @Test

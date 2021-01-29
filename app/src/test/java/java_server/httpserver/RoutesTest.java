@@ -111,6 +111,7 @@ public class RoutesTest {
         request.setURI("/");
 
         Responder rootResponder = routes.getHandler(request);
+        rootResponder.processResponse();
         String messageBody = new String(rootResponder.getMessageBody());
 
         Assert.assertThat(messageBody, containsString("href='/file1'"));

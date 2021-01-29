@@ -19,6 +19,7 @@ public class RootResponderTest {
     public void returnsTestFileLink() throws Exception {
         String serverViewsDirectory = "../../java_server/test-2";
         RootResponder rootResponder = new RootResponder(serverViewsDirectory);
+        rootResponder.processResponse();
         byte[] fileBytes = rootResponder.getMessageBody();
 
         assertTrue(new String(fileBytes).contains("href='/test-file.txt'"));
@@ -29,6 +30,7 @@ public class RootResponderTest {
     public void returnsDirectoryLinks() throws Exception {
         String serverViewsDirectory = "../../java_server/test-2";
         RootResponder rootResponder = new RootResponder(serverViewsDirectory);
+        rootResponder.processResponse();
         byte[] fileBytes = rootResponder.getMessageBody();
 
         assertTrue(new String(fileBytes).contains("href='/test-file.txt'"));
@@ -40,6 +42,7 @@ public class RootResponderTest {
     public void returnsEmptyStringWhenDirectoryHasNoContents() throws Exception {
         String serverViewsDirectory = "../../java_server/empty-test-directory";
         RootResponder rootResponder = new RootResponder(serverViewsDirectory);
+        rootResponder.processResponse();
         byte[] fileBytes = rootResponder.getMessageBody();
 
         assertTrue(new String(fileBytes).equals(""));
