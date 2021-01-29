@@ -12,7 +12,6 @@ import java.util.Arrays;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertTrue;
 
 public class RoutesTest {
     private Request request;
@@ -131,7 +130,7 @@ public class RoutesTest {
         request.setHTTPMethod("OPTIONS");
         request.setURI("file1");
 
-        Assert.assertThat(routes.getHandler(request), instanceOf(FileResponder.class));
+        Assert.assertThat(routes.getHandler(request), instanceOf(MethodOptionsResponder.class));
     }
 
     @Test
@@ -158,11 +157,12 @@ public class RoutesTest {
         Assert.assertThat(routes.getHandler(request), instanceOf(NotImplementedResponder.class));
     }
 
-//    @Test
-//    public void returnsPartialContent() throws Exception {
-//        request.setHTTPMethod("GET");
-//        request.setURI("partial_content.txt");
-//
-//        Assert.assertThat(routes.getHandler(request), instanceOf(PartialContentResponder.class));
-//    }
+    @Test
+    public void returnsMethodNotAllowedForBasiAuth() throws Exception {
+        request.setHTTPMethod("POST");
+        request.setURI("logs");
+        request.setBasicAuthCredentials("admin:hunter2");
+
+        Assert.assertThat(routes.getHandler(request), instanceOf(MethodNotAllowedResponder.class));
+    }
 }

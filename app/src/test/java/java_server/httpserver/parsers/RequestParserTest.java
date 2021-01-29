@@ -1,15 +1,14 @@
 package java_server.httpserver.parsers;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
 import java_server.Constants;
 import java_server.httpserver.Request;
-import java_server.httpserver.parsers.RequestParser;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class RequestParserTest {
     private Request defaultRequest;
@@ -78,7 +77,7 @@ public class RequestParserTest {
     public void returnsAuthorizationRequestHeader() throws Exception {
         Request request = setRequest(
                 "GET /logs HTTP/1.1\n" +
-                "Authorization: Basic JaASDJ4347qljA43J1SJD==\n" +
+                "Authorization: Basic YWRtaW46aHVudGVyMg==\n" +
                 "Host: localhost:5000"
         );
 
@@ -138,7 +137,7 @@ public class RequestParserTest {
     public void returnsTrueIfAuthRequestIsBasic() throws Exception {
         Request request = setRequest(
                 "GET /logs HTTP/1.1\n" +
-                "Authorization: Basic dmljdG9yX2VsaXphbGRlOmFzZGZhc2Rm==\n" +
+                "Authorization: Basic YWRtaW46aHVudGVyMg==\n" +
                 "Host: localhost:5000"
         );
 
@@ -149,7 +148,7 @@ public class RequestParserTest {
     public void returnsFalseIfAuthRequestIsNotBasic() throws Exception {
         Request request = setRequest(
                 "GET /logs HTTP/1.1\n" +
-                "Authorization: NotBasic dmljdG9yX2VsaXphbGRlOmFzZGZhc2Rm==\n" +
+                "Authorization: NotBasic YWRtaW46aHVudGVyMg==\n" +
                 "Host: localhost:5000"
         );
 

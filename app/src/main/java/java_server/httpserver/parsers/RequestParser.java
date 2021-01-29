@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Base64;
 
 public class RequestParser {
     private InputStream inputStream;
@@ -32,6 +33,8 @@ public class RequestParser {
         request.setByteRange(getByteRange());
         request.setByteLength(getByteLength());
         request.setBasicRequestStatus(isABasicAuthRequest());
+        if (request.isABasicAuthRequest())
+            request.setBasicAuthCredentials(parseBasicAuthCredentials());
         request.setData(parseData());
 
         return request;
@@ -94,7 +97,7 @@ public class RequestParser {
 
     private String parseData() throws IOException {
         int i;
-        String data = null;
+        String data = "";
 
         for (i = requestArray.length - 1; i > 0; i--) {
             if (requestArray[i].equals("\r") || requestArray[i].equals("\r\n"))
@@ -113,6 +116,16 @@ public class RequestParser {
     }
 
     private boolean isABasicAuthRequest() throws IOException {
-        return requestArray[1].split(" ")[1].equals("Basic");
+        return requestArray[1].split(" ")[1].equals("Basic") || (request.getURI().equals("logs") && !requestArray[1].split(" ")[1].equals("NotBasic"));
+    }
+
+    private String parseBasicAuthCredentials() throws IOException {
+        if (requestArray[1].contains("Authorization")) {
+            String splitAtEndOfCredentials = requestArray[1].split(" ")[2].replace("\r", "");
+            byte[] base64String = Base64.getDecoder().decode(splitAtEndOfCredentials);
+            return new String(base64String);
+        }
+
+        return null;
     }
 }
