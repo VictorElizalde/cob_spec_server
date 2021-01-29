@@ -11,6 +11,7 @@ public class CRUDResponder implements Responder {
     private String uri;
     private String httpMethod;
     private String content;
+    public byte[] body;
     private static HashMap<String, byte[]> CRUDMap = new HashMap<String, byte[]>();
 
     public CRUDResponder(String directory, String httpMethod, String uri, String content) {
@@ -22,24 +23,29 @@ public class CRUDResponder implements Responder {
 
     @Override
     public byte[] getMessageBody() {
-        try {
-            performCRUD();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            return Files.readAllBytes(getPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return "File Could Not Be Read".getBytes();
+        return body;
     }
 
     @Override
     public String getStatusCode() {
         return statusMessageCode.getActiveStatus();
+    }
+
+    @Override
+    public void processResponse() {
+        try {
+            performCRUD();
+        } catch (Exception e) {
+            body = "File Could Not Be Read".getBytes();
+            e.printStackTrace();
+        }
+
+        try {
+            body = Files.readAllBytes(getPath());
+        } catch (IOException e) {
+            body = "File Could Not Be Read".getBytes();
+            e.printStackTrace();
+        }
     }
 
     private Path performCRUD() throws IOException {

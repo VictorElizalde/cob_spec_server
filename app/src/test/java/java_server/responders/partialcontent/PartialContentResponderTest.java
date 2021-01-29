@@ -2,7 +2,6 @@ package java_server.responders.partialcontent;
 
 import java_server.Constants;
 import java_server.httpserver.StatusCode;
-import java_server.responders.partialcontent.PartialContentResponder;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +21,7 @@ public class PartialContentResponderTest {
 
     @Test
     public void returnsPartialContentsBasedOnByteRangeRequest() throws Exception {
+        partialContentResponder.processResponse();
         Assert.assertEquals(" 206.\n" , new String(partialContentResponder.getMessageBody()));
         Assert.assertEquals(statusCode.PARTIAL_CONTENT, partialContentResponder.getStatusCode());
     }
@@ -31,6 +31,7 @@ public class PartialContentResponderTest {
         String uri = "partial_content.txt";
         String byteRange = "75-80";
         PartialContentResponder partialContentResponder = new PartialContentResponder(testDirectory, uri, byteRange);
+        partialContentResponder.processResponse();
 
         Assert.assertEquals(".\n" , new String(partialContentResponder.getMessageBody()));
         Assert.assertEquals(statusCode.PARTIAL_CONTENT, partialContentResponder.getStatusCode());

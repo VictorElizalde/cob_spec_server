@@ -9,6 +9,7 @@ public class NotImplementedResponderTest {
     public void returns405MethodNotAllowedWhenMethodNotAllowed() throws Exception {
         StatusCode statusCode = new StatusCode();
         NotImplementedResponder notImplementedResponder = new NotImplementedResponder();
+        notImplementedResponder.processResponse();
         byte[] fileBytes = notImplementedResponder.getMessageBody();
 
         Assert.assertTrue(new String(fileBytes).contains(statusCode.NOT_IMPLEMENTED));

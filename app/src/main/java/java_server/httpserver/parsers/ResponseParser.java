@@ -19,8 +19,8 @@ public class ResponseParser {
         return message.getBytes();
     }
 
-    public byte[] formatMessageBody(Request request) {
-        return response.getMessageBody(request);
+    public byte[] formatMessageBody() {
+        return response.getMessageBody();
     }
 
     public byte[] formatLocationHeader() {
@@ -56,7 +56,9 @@ public class ResponseParser {
     public byte[] buildResponse(Request request) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         response.setResponder(request);
-        byte[] body = formatMessageBody(request);
+        response.getResponder().processResponse();
+
+        byte[] body = formatMessageBody();
 
         byteArrayOutputStream.write(formatHTTPStatusMessage(request));
         byteArrayOutputStream.write(formatLocationHeader());

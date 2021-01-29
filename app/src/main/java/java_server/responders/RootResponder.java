@@ -5,6 +5,7 @@ import java.io.File;
 public class RootResponder implements Responder {
     private String serverViewsDirectory;
     private String directoryLinks;
+    public byte[] body;
 
     public RootResponder(String serverViewsDirectory) {
         this.serverViewsDirectory = serverViewsDirectory;
@@ -12,6 +13,16 @@ public class RootResponder implements Responder {
 
     @Override
     public byte[] getMessageBody() {
+        return body;
+    }
+
+    @Override
+    public String getStatusCode() {
+        return statusMessageCode.OK;
+    }
+
+    @Override
+    public void processResponse() {
         File directory = new File(serverViewsDirectory);
 
         if (directory != null) {
@@ -19,16 +30,10 @@ public class RootResponder implements Responder {
             for (String file : directory.list()) {
                 directoryLinks += addLinkHTML(file);
             }
-
-            return directoryLinks.getBytes();
+            body = directoryLinks.getBytes();
+        } else {
+            body = "File Could Not Be Read".getBytes();
         }
-
-        return "File Could Not Be Read".getBytes();
-    }
-
-    @Override
-    public String getStatusCode() {
-        return statusMessageCode.OK;
     }
 
     private String addLinkHTML(String fileName){

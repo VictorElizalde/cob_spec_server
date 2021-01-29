@@ -9,6 +9,7 @@ public class HeadResponderTest {
     public void returns200WhenHeadIsNull() throws Exception {
         StatusCode statusCode = new StatusCode();
         HeadResponder headResponder = new HeadResponder();
+        headResponder.processResponse();
         byte[] fileBytes = headResponder.getMessageBody();
 
         Assert.assertTrue(fileBytes.toString().contains(""));

@@ -24,9 +24,10 @@ public class FileResponderTest {
     public void returnsTheContentOfFile1File() throws Exception {
         String uri = "file1";
         FileResponder fileResponse = new FileResponder(testDirectory, uri);
+        fileResponse.processResponse();
         byte[] fileBytes = fileResponse.getMessageBody();
-        Assert.assertEquals("file1 contents", new String(fileBytes));
 
+        Assert.assertEquals("file1 contents", new String(fileBytes));
         Assert.assertEquals(statusCode.OK, fileResponse.getStatusCode());
     }
 
@@ -34,9 +35,10 @@ public class FileResponderTest {
     public void returnsTheContentOfTextFile() throws Exception {
         String uri = "text-file.txt";
         FileResponder fileResponse = new FileResponder(testDirectory, uri);
+        fileResponse.processResponse();
         byte[] fileBytes = fileResponse.getMessageBody();
-        Assert.assertEquals("file1 contents", new String(fileBytes));
 
+        Assert.assertEquals("file1 contents", new String(fileBytes));
         Assert.assertEquals(statusCode.OK, fileResponse.getStatusCode());
     }
 
@@ -44,9 +46,10 @@ public class FileResponderTest {
     public void returnsThePathOfImageJPGFile() throws Exception {
         String uri = "image.jpeg";
         FileResponder fileResponse = new FileResponder(testDirectory, uri);
+        fileResponse.processResponse();
         byte[] fileBytes = fileResponse.getMessageBody();
-        Assert.assertTrue(Arrays.equals(Files.readAllBytes(Paths.get(testDirectory + "/image.jpeg")), fileBytes));
 
+        Assert.assertTrue(Arrays.equals(Files.readAllBytes(Paths.get(testDirectory + "/image.jpeg")), fileBytes));
         Assert.assertEquals(statusCode.OK, fileResponse.getStatusCode());
     }
 
@@ -54,9 +57,10 @@ public class FileResponderTest {
     public void returnsThePathOfImagePNGFile() throws Exception {
         String uri = "image.png";
         FileResponder fileResponse = new FileResponder(testDirectory, uri);
+        fileResponse.processResponse();
         byte[] fileBytes = fileResponse.getMessageBody();
-        Assert.assertTrue(Arrays.equals(Files.readAllBytes(Paths.get(testDirectory + "/image.png")), fileBytes));
 
+        Assert.assertTrue(Arrays.equals(Files.readAllBytes(Paths.get(testDirectory + "/image.png")), fileBytes));
         Assert.assertEquals(statusCode.OK, fileResponse.getStatusCode());
     }
 
@@ -64,9 +68,10 @@ public class FileResponderTest {
     public void returnsThePathOfImageGIFFile() throws Exception {
         String uri = "image.gif";
         FileResponder fileResponse = new FileResponder(testDirectory, uri);
+        fileResponse.processResponse();
         byte[] fileBytes = fileResponse.getMessageBody();
-        Assert.assertTrue(Arrays.equals(Files.readAllBytes(Paths.get(testDirectory + "/image.gif")), fileBytes));
 
+        Assert.assertTrue(Arrays.equals(Files.readAllBytes(Paths.get(testDirectory + "/image.gif")), fileBytes));
         Assert.assertEquals(statusCode.OK, fileResponse.getStatusCode());
     }
 
@@ -74,6 +79,7 @@ public class FileResponderTest {
     public void returnsFileCouldNotBeReadWhenUriInvalid() throws Exception {
         String uri = "GhostURI";
         FileResponder fileResponse = new FileResponder(testDirectory, uri);
+        fileResponse.processResponse();
         fileResponse.getMessageBody();
 
         Assert.assertEquals("File Could Not Be Read", new String(fileResponse.getMessageBody()));

@@ -12,7 +12,6 @@ import java.util.Arrays;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertTrue;
 
 public class RoutesTest {
     private Request request;
@@ -112,6 +111,7 @@ public class RoutesTest {
         request.setURI("/");
 
         Responder rootResponder = routes.getHandler(request);
+        rootResponder.processResponse();
         String messageBody = new String(rootResponder.getMessageBody());
 
         Assert.assertThat(messageBody, containsString("href='/file1'"));
