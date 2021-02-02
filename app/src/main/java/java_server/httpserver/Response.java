@@ -1,5 +1,6 @@
 package java_server.httpserver;
 
+import java_server.httpserver.router.Routes;
 import java_server.responders.partialcontent.PartialContentParser;
 import java_server.responders.Responder;
 
@@ -23,7 +24,7 @@ public class Response {
     }
 
     public void setResponder(Request request) {
-        this.responder = routes.getHandler(request);
+        this.responder = routes.getResponder(request);
     }
 
     public Responder getResponder() {

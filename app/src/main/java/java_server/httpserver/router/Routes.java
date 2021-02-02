@@ -1,7 +1,7 @@
-package java_server.httpserver;
+package java_server.httpserver.router;
 
+import java_server.httpserver.Request;
 import java_server.responders.*;
-import java_server.responders.partialcontent.PartialContentResponder;
 
 import java.io.File;
 import java.util.HashMap;
@@ -9,19 +9,30 @@ import java.util.Set;
 
 public class Routes {
     private String directory;
+    private Responder responder;
+    private PartialContentHandler partialContentHandler;
+    private CRUDHandler crudHandler;
+    private NotImplementedHandler notImplementedHandler;
+    private HeadHandler headHandler;
+    private MethodOptionsHandler methodOptionsHandler;
+    private MethodNotAllowedHandler methodNotAllowedHandler;
 
     private HashMap<String, HashMap<String, Responder>> routesMap = new HashMap<String, HashMap<String, Responder>>();
     private HashMap<String, Responder> rootMap = new HashMap<String, Responder>();
     private HashMap<String, Responder> fileRouteMap = new HashMap<String, Responder>();
     private HashMap<String, Responder> basicAuthRouteMap = new HashMap<String, Responder>();
-    private HashMap<String, Responder> partialContentMap = new HashMap<String, Responder>();
-    private HashMap<String, Responder> CRUDRouteMap = new HashMap<String, Responder>();
 
     public Routes(String directory) {
         this.directory = directory;
+        this.partialContentHandler = new PartialContentHandler(directory, this);
+        this.crudHandler = new CRUDHandler(directory, this);
+        this.notImplementedHandler = new NotImplementedHandler();
+        this.headHandler = new HeadHandler();
+        this.methodOptionsHandler = new MethodOptionsHandler(this);
+        this.methodNotAllowedHandler = new MethodNotAllowedHandler(this);
     }
 
-    private HashMap<String, HashMap<String, Responder>> getRoutesMap(Request request) {
+    public HashMap<String, HashMap<String, Responder>> getRoutesMap(Request request) {
         routesMap.put("/", getRootMap());
         routesMap.put("logs", getBasicAuthMap(request));
 
@@ -60,14 +71,6 @@ public class Routes {
         return basicAuthRouteMap;
     }
 
-    private HashMap<String, Responder> getCRUDRouteMap(Request request) {
-        CRUDRouteMap.put("GET", new FileResponder(directory, request.getURI()));
-        CRUDRouteMap.put("PUT", new CRUDResponder(directory, request.getHTTPMethod(), request.getURI(), request.getData()));
-        CRUDRouteMap.put("DELETE", new CRUDResponder(directory, request.getHTTPMethod(), request.getURI(), request.getData()));
-
-        return CRUDRouteMap;
-    }
-
     public String getOptions(Request request) {
         try {
             return String.join(",", getRoutesMap(request).get(request.getURI()).keySet());
@@ -75,12 +78,6 @@ public class Routes {
 
             return "GET,HEAD,OPTIONS,PUT,DELETE";
         }
-    }
-
-    private HashMap<String, Responder> getPartialContentMap(Request request) {
-        partialContentMap.put("GET", new PartialContentResponder(directory, request.getURI(), request.getByteRange()));
-
-        return partialContentMap;
     }
 
     public boolean isAValidMethod(Request request) {
@@ -113,18 +110,48 @@ public class Routes {
         return false;
     }
 
-    public Responder getHandler(Request request) {
-        if (request.getByteRange() != null && !request.getByteRange().equals("Range not given") && isAnExistingFileInDirectory(getDirectoryFileNames(), request)) {
-            return getPartialContentMap(request).get(request.getHTTPMethod());
-        }
-        if (request.getHTTPMethod().equals("PUT") || (request.getHTTPMethod().equals("DELETE") && isAnExistingFileInDirectory(getDirectoryFileNames(), request))) {
-            return getCRUDRouteMap(request).get(request.getHTTPMethod());
-        }
-        if (!"GET,POST,HEAD,OPTIONS,PUT,DELETE".contains(request.getHTTPMethod())) return new NotImplementedResponder();
-        if (request.getHTTPMethod().equals("HEAD") && request.getURI().equals("/")) return new HeadResponder();
-        if (request.getHTTPMethod().equals("OPTIONS")) return new MethodOptionsResponder(getOptions(request));
+    public Responder getResponder(Request request) {
+        return matchResponder(request);
+    }
+
+    public Responder matchResponder(Request request) {
+        if (partialContentResponder(request) != null) return responder;
+        if (crudResponder(request) != null) return responder;
+        if (notImplementedResponder(request) != null) return responder;
+        if (headResponder(request) != null) return responder;
+        if (methodOptionsResponder(request) != null) return responder;
         if (isAValidMethod(request)) return getRoutesMap(request).get(request.getURI()).get(request.getHTTPMethod());
-        if (!isAValidMethod(request) && (isAnExistingFileInDirectory(getDirectoryFileNames(), request) || request.getURI().equals("logs"))) return new MethodNotAllowedResponder();
+        if (methodNotAllowedResponder(request) != null) return responder;
         return new NotFoundResponder();
+    }
+
+    private Responder partialContentResponder(Request request) {
+        responder = partialContentHandler.getPartialContentResponder(request);
+        return responder;
+    }
+
+    private Responder crudResponder(Request request) {
+        responder = crudHandler.getCRUDResponder(request);
+        return responder;
+    }
+
+    private Responder notImplementedResponder(Request request) {
+        responder = notImplementedHandler.getNotImplementedResponder(request);
+        return responder;
+    }
+
+    private Responder headResponder(Request request) {
+        responder = headHandler.getHeadResponder(request);
+        return responder;
+    }
+
+    private Responder methodOptionsResponder(Request request) {
+        responder = methodOptionsHandler.getMethodOptionsResponder(request);
+        return responder;
+    }
+
+    private Responder methodNotAllowedResponder(Request request) {
+        responder = methodNotAllowedHandler.getMethodNotAllowedResponder(request);
+        return responder;
     }
 }

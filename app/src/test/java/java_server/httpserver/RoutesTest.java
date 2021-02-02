@@ -1,6 +1,7 @@
 package java_server.httpserver;
 
 import java_server.Constants;
+import java_server.httpserver.router.Routes;
 import java_server.responders.*;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
@@ -94,7 +95,7 @@ public class RoutesTest {
         request.setHTTPMethod("GET");
         request.setURI("file1");
 
-        Assert.assertThat(routes.getHandler(request), instanceOf(FileResponder.class));
+        Assert.assertThat(routes.getResponder(request), instanceOf(FileResponder.class));
     }
 
     @Test
@@ -110,7 +111,7 @@ public class RoutesTest {
         request.setHTTPMethod("GET");
         request.setURI("/");
 
-        Responder rootResponder = routes.getHandler(request);
+        Responder rootResponder = routes.getResponder(request);
         rootResponder.processResponse();
         String messageBody = new String(rootResponder.getMessageBody());
 
@@ -123,7 +124,7 @@ public class RoutesTest {
         request.setHTTPMethod("HEAD");
         request.setURI("/");
 
-        Assert.assertThat(routes.getHandler(request), instanceOf(HeadResponder.class));
+        Assert.assertThat(routes.getResponder(request), instanceOf(HeadResponder.class));
     }
 
     @Test
@@ -131,7 +132,7 @@ public class RoutesTest {
         request.setHTTPMethod("OPTIONS");
         request.setURI("file1");
 
-        Assert.assertThat(routes.getHandler(request), instanceOf(MethodOptionsResponder.class));
+        Assert.assertThat(routes.getResponder(request), instanceOf(MethodOptionsResponder.class));
     }
 
     @Test
@@ -139,7 +140,7 @@ public class RoutesTest {
         request.setHTTPMethod("GET");
         request.setURI("foobar");
 
-        Assert.assertThat(routes.getHandler(request), instanceOf(NotFoundResponder.class));
+        Assert.assertThat(routes.getResponder(request), instanceOf(NotFoundResponder.class));
     }
 
     @Test
@@ -147,7 +148,7 @@ public class RoutesTest {
         request.setHTTPMethod("POST");
         request.setURI("file1");
 
-        Assert.assertThat(routes.getHandler(request), instanceOf(MethodNotAllowedResponder.class));
+        Assert.assertThat(routes.getResponder(request), instanceOf(MethodNotAllowedResponder.class));
     }
 
     @Test
@@ -155,7 +156,7 @@ public class RoutesTest {
         request.setHTTPMethod("AAFFSS");
         request.setURI("file1");
 
-        Assert.assertThat(routes.getHandler(request), instanceOf(NotImplementedResponder.class));
+        Assert.assertThat(routes.getResponder(request), instanceOf(NotImplementedResponder.class));
     }
 
     @Test
@@ -164,6 +165,6 @@ public class RoutesTest {
         request.setURI("logs");
         request.setBasicAuthCredentials("admin:hunter2");
 
-        Assert.assertThat(routes.getHandler(request), instanceOf(MethodNotAllowedResponder.class));
+        Assert.assertThat(routes.getResponder(request), instanceOf(MethodNotAllowedResponder.class));
     }
 }

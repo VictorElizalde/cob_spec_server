@@ -4,7 +4,7 @@ import java_server.httpserver.parsers.RequestParser;
 import java_server.httpserver.Request;
 import java_server.httpserver.Response;
 import java_server.httpserver.parsers.ResponseParser;
-import java_server.httpserver.Routes;
+import java_server.httpserver.router.Routes;
 import java_server.httpserver.StatusCode;
 
 import java.io.DataOutputStream;
