@@ -24,6 +24,10 @@ public class TTTResponder implements Responder {
 
     @Override
     public void processResponse() {
+        if (data.equals("")) {
+            data = "1 2 3 4 5 6 7 8 9";
+        }
+
         String[] boardValues = data.split(" ");
         String responseHtml = "<h1>TTT Board</h1> <br><br>";
 
