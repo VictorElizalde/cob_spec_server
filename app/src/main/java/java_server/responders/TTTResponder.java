@@ -29,13 +29,15 @@ public class TTTResponder implements Responder {
         }
 
         String[] boardValues = data.split(" ");
+        String coordinates = "";
         String responseHtml = "<h1>TTT Board</h1> <br><br>";
 
         for (int i = 0; i < boardValues.length; i++) {
             if (boardValues[i].equals("X") || boardValues[i].equals("O")){
                 boardValues[i] = "<a>" + boardValues[i] + "</a>";
             } else {
-                boardValues[i] = "<a href='/asdf'>" + boardValues[i] + "</a>";
+                coordinates = getPositionCoordinates(i);
+                boardValues[i] = "<a href='http://localhost:4000/move?coor=" + coordinates + "'>" + boardValues[i] + "</a>";
             }
         }
 
@@ -44,5 +46,40 @@ public class TTTResponder implements Responder {
         responseHtml += "<a>| </a>" + boardValues[6] + "<a> | </a>" + boardValues[7] + "<a> | </a>" + boardValues[8] + "<a> |</a> <br>";
 
         body = responseHtml.getBytes();
+    }
+
+    private String getPositionCoordinates(int position){
+        String coordinates = "";
+        switch (position) {
+            case 0:
+                coordinates = "0,0";
+                break;
+            case 1:
+                coordinates = "0,1";
+                break;
+            case 2:
+                coordinates = "0,2";
+                break;
+            case 3:
+                coordinates = "1,0";
+                break;
+            case 4:
+                coordinates = "1,1";
+                break;
+            case 5:
+                coordinates = "1,2";
+                break;
+            case 6:
+                coordinates = "2,0";
+                break;
+            case 7:
+                coordinates = "2,1";
+                break;
+            case 8:
+                coordinates = "2,2";
+                break;
+        }
+
+        return coordinates;
     }
 }
