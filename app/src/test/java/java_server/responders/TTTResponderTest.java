@@ -54,5 +54,21 @@ public class TTTResponderTest {
         assertTrue(new String(fileBytes).contains("<a>| </a><a>7</a><a> | </a><a>8</a><a> | </a><a>9</a><a> |</a> <br>"));
         Assert.assertEquals(statusCode.OK, tttResponder.getStatusCode());
     }
+
+    @Test
+    public void returnsBoardOnEmptyData() throws Exception {
+        String uri = "ttt";
+        String httpMethod = "GET";
+        String data = "";
+
+        TTTResponder tttResponder = new TTTResponder(httpMethod, uri, data);
+        tttResponder.processResponse();
+        byte[] fileBytes = tttResponder.getMessageBody();
+
+        assertTrue(new String(fileBytes).contains("<a>| </a><a>1</a><a> | </a><a>2</a><a> | </a><a>3</a><a> |</a> <br>"));
+        assertTrue(new String(fileBytes).contains("<a>| </a><a>4</a><a> | </a><a>5</a><a> | </a><a>6</a><a> |</a> <br>"));
+        assertTrue(new String(fileBytes).contains("<a>| </a><a>7</a><a> | </a><a>8</a><a> | </a><a>9</a><a> |</a> <br>"));
+        Assert.assertEquals(statusCode.OK, tttResponder.getStatusCode());
+    }
 }
 
