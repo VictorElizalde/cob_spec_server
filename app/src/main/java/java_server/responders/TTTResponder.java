@@ -33,9 +33,9 @@ public class TTTResponder implements Responder {
 
         for (int i = 0; i < boardValues.length; i++) {
             if (boardValues[i].equals("X") || boardValues[i].equals("O")){
-                boardValues[i] = "<a href='/asdf'>" + boardValues[i] + "</a>";
-            } else {
                 boardValues[i] = "<a>" + boardValues[i] + "</a>";
+            } else {
+                boardValues[i] = "<a href='/asdf'>" + boardValues[i] + "</a>";
             }
         }
 

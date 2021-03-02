@@ -33,9 +33,7 @@ public class TTTResponderTest {
         tttResponder.processResponse();
         byte[] fileBytes = tttResponder.getMessageBody();
 
-        assertTrue(new String(fileBytes).contains("<a>| </a><a>1</a><a> | </a><a>2</a><a> | </a><a>3</a><a> |</a> <br>"));
-        assertTrue(new String(fileBytes).contains("<a>| </a><a>4</a><a> | </a><a>5</a><a> | </a><a>6</a><a> |</a> <br>"));
-        assertTrue(new String(fileBytes).contains("<a>| </a><a>7</a><a> | </a><a>8</a><a> | </a><a>9</a><a> |</a> <br>"));
+        assertTrue(new String(fileBytes).contains("<a>| </a><a href='/asdf'>1</a><a> | </a><a href='/asdf'>2</a><a> | </a><a href='/asdf'>3</a><a> |</a> <br>"));
         Assert.assertEquals(statusCode.OK, tttResponder.getStatusCode());
     }
 
@@ -49,9 +47,8 @@ public class TTTResponderTest {
         tttResponder.processResponse();
         byte[] fileBytes = tttResponder.getMessageBody();
 
-        assertTrue(new String(fileBytes).contains("<a>| </a><a>1</a><a> | </a><a>2</a><a> | </a><a href='/asdf'>X</a><a> |</a> <br>"));
-        assertTrue(new String(fileBytes).contains("<a>| </a><a>4</a><a> | </a><a>5</a><a> | </a><a href='/asdf'>O</a><a> |</a> <br>"));
-        assertTrue(new String(fileBytes).contains("<a>| </a><a>7</a><a> | </a><a>8</a><a> | </a><a>9</a><a> |</a> <br>"));
+        assertTrue(new String(fileBytes).contains("<a>| </a><a href='/asdf'>1</a><a> | </a><a href='/asdf'>2</a><a> | </a><a>X</a><a> |</a> <br>"));
+        assertTrue(new String(fileBytes).contains("<a>| </a><a href='/asdf'>4</a><a> | </a><a href='/asdf'>5</a><a> | </a><a>O</a><a> |</a> <br>"));
         Assert.assertEquals(statusCode.OK, tttResponder.getStatusCode());
     }
 
@@ -65,9 +62,7 @@ public class TTTResponderTest {
         tttResponder.processResponse();
         byte[] fileBytes = tttResponder.getMessageBody();
 
-        assertTrue(new String(fileBytes).contains("<a>| </a><a>1</a><a> | </a><a>2</a><a> | </a><a>3</a><a> |</a> <br>"));
-        assertTrue(new String(fileBytes).contains("<a>| </a><a>4</a><a> | </a><a>5</a><a> | </a><a>6</a><a> |</a> <br>"));
-        assertTrue(new String(fileBytes).contains("<a>| </a><a>7</a><a> | </a><a>8</a><a> | </a><a>9</a><a> |</a> <br>"));
+        assertTrue(new String(fileBytes).contains("<a>| </a><a href='/asdf'>7</a><a> | </a><a href='/asdf'>8</a><a> | </a><a href='/asdf'>9</a><a> |</a> <br>"));
         Assert.assertEquals(statusCode.OK, tttResponder.getStatusCode());
     }
 }

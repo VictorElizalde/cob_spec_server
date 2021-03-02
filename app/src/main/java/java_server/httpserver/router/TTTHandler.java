@@ -12,7 +12,6 @@ public class TTTHandler {
 
     private HashMap<String, Responder> getTTTRouteMap(Request request) {
         TTTRouteMap.put("GET", new TTTResponder(request.getHTTPMethod(), request.getURI(), request.getData()));
-        TTTRouteMap.put("POST", new TTTResponder(request.getHTTPMethod(), request.getURI(), request.getData()));
 
         return TTTRouteMap;
     }
