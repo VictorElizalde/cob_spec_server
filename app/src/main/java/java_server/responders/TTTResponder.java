@@ -37,7 +37,7 @@ public class TTTResponder implements Responder {
                 boardValues[i] = "<a>" + boardValues[i] + "</a>";
             } else {
                 coordinates = getPositionCoordinates(i);
-                boardValues[i] = "<a href='http://localhost:4000/move?coor=" + coordinates + "'>" + boardValues[i] + "</a>";
+                boardValues[i] = "<a href='http://localhost:4000/move?coor=" + coordinates + "' target=\"_blank\">" + boardValues[i] + "</a>";
             }
         }
 

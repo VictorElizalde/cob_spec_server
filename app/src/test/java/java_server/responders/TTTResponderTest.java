@@ -33,7 +33,7 @@ public class TTTResponderTest {
         tttResponder.processResponse();
         byte[] fileBytes = tttResponder.getMessageBody();
 
-        assertTrue(new String(fileBytes).contains("<a>| </a><a href='http://localhost:4000/move?coor=0,0'>1</a><a> | </a><a href='http://localhost:4000/move?coor=0,1'>2</a><a> | </a><a href='http://localhost:4000/move?coor=0,2'>3</a><a> |</a> <br>"));
+        assertTrue(new String(fileBytes).contains("<a>| </a><a href='http://localhost:4000/move?coor=0,0' target=\"_blank\">1</a><a> | </a><a href='http://localhost:4000/move?coor=0,1' target=\"_blank\">2</a><a> | </a><a href='http://localhost:4000/move?coor=0,2' target=\"_blank\">3</a><a> |</a> <br>"));
         Assert.assertEquals(statusCode.OK, tttResponder.getStatusCode());
     }
 
@@ -47,8 +47,8 @@ public class TTTResponderTest {
         tttResponder.processResponse();
         byte[] fileBytes = tttResponder.getMessageBody();
 
-        assertTrue(new String(fileBytes).contains("<a>| </a><a href='http://localhost:4000/move?coor=0,0'>1</a><a> | </a><a href='http://localhost:4000/move?coor=0,1'>2</a><a> | </a><a>X</a><a> |</a> <br>"));
-        assertTrue(new String(fileBytes).contains("<a>| </a><a href='http://localhost:4000/move?coor=1,0'>4</a><a> | </a><a href='http://localhost:4000/move?coor=1,1'>5</a><a> | </a><a>O</a><a> |</a> <br>"));
+        assertTrue(new String(fileBytes).contains("<a>| </a><a href='http://localhost:4000/move?coor=0,0' target=\"_blank\">1</a><a> | </a><a href='http://localhost:4000/move?coor=0,1' target=\"_blank\">2</a><a> | </a><a>X</a><a> |</a> <br>"));
+        assertTrue(new String(fileBytes).contains("<a>| </a><a href='http://localhost:4000/move?coor=1,0' target=\"_blank\">4</a><a> | </a><a href='http://localhost:4000/move?coor=1,1' target=\"_blank\">5</a><a> | </a><a>O</a><a> |</a> <br>"));
         Assert.assertEquals(statusCode.OK, tttResponder.getStatusCode());
     }
 
@@ -62,7 +62,7 @@ public class TTTResponderTest {
         tttResponder.processResponse();
         byte[] fileBytes = tttResponder.getMessageBody();
 
-        assertTrue(new String(fileBytes).contains("<a>| </a><a href='http://localhost:4000/move?coor=2,0'>7</a><a> | </a><a href='http://localhost:4000/move?coor=2,1'>8</a><a> | </a><a href='http://localhost:4000/move?coor=2,2'>9</a><a> |</a> <br>"));
+        assertTrue(new String(fileBytes).contains("<a>| </a><a href='http://localhost:4000/move?coor=2,0' target=\"_blank\">7</a><a> | </a><a href='http://localhost:4000/move?coor=2,1' target=\"_blank\">8</a><a> | </a><a href='http://localhost:4000/move?coor=2,2' target=\"_blank\">9</a><a> |</a> <br>"));
         Assert.assertEquals(statusCode.OK, tttResponder.getStatusCode());
     }
 }
