@@ -1,5 +1,4 @@
 package java_server.responders;
-
 import java.io.File;
 
 public class RootResponder implements Responder {

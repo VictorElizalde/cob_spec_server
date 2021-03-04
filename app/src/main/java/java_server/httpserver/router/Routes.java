@@ -16,6 +16,7 @@ public class Routes {
     private HeadHandler headHandler;
     private MethodOptionsHandler methodOptionsHandler;
     private MethodNotAllowedHandler methodNotAllowedHandler;
+    private TTTHandler tttHandler;
 
     private HashMap<String, HashMap<String, Responder>> routesMap = new HashMap<String, HashMap<String, Responder>>();
     private HashMap<String, Responder> rootMap = new HashMap<String, Responder>();
@@ -30,6 +31,7 @@ public class Routes {
         this.headHandler = new HeadHandler();
         this.methodOptionsHandler = new MethodOptionsHandler(this);
         this.methodNotAllowedHandler = new MethodNotAllowedHandler(this);
+        this.tttHandler = new TTTHandler();
     }
 
     public HashMap<String, HashMap<String, Responder>> getRoutesMap(Request request) {
@@ -115,6 +117,7 @@ public class Routes {
     }
 
     public Responder matchResponder(Request request) {
+        if (tttResponder(request) != null) return responder;
         if (partialContentResponder(request) != null) return responder;
         if (crudResponder(request) != null) return responder;
         if (notImplementedResponder(request) != null) return responder;
@@ -123,6 +126,11 @@ public class Routes {
         if (isAValidMethod(request)) return getRoutesMap(request).get(request.getURI()).get(request.getHTTPMethod());
         if (methodNotAllowedResponder(request) != null) return responder;
         return new NotFoundResponder();
+    }
+
+    private Responder tttResponder(Request request) {
+        responder = tttHandler.getTTTResponder(request);
+        return responder;
     }
 
     private Responder partialContentResponder(Request request) {
